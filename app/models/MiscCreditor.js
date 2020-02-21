@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const creditorSchema = new Schema({
+const miscCreditorSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now()
@@ -34,9 +34,15 @@ const creditorSchema = new Schema({
                 return 'Invalid format for email'
             }
         }
+    },
+    creditorCode: {
+        type: String,
+        unique: true,
+        required: true,
+        maxlength: 6
     }
 })
 
-const Creditor = mongoose.model('Creditor', creditorSchema)
+const MiscCreditor = mongoose.model('MiscCreditor', miscCreditorSchema)
 
-module.exports = Creditor
+module.exports = MiscCreditor

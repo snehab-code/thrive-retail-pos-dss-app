@@ -10,6 +10,12 @@ const supplierSchema = new Schema({
         type: String,
         required: true
     },
+    supplierCode: {
+        type: String,
+        required: true,
+        maxLength: 6,
+        unique: true
+    },
     phone: {
         type: Number,
         required: true

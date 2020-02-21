@@ -21,7 +21,7 @@ const cashBankSchema = new Schema({
         required: true
     },
     // the TRANSACTION or PAYABLE id to which this particular entry is linked
-    transactionId: {
+    linkedTo: {
         type: Schema.Types.ObjectId,
         required: true
     },

@@ -34,6 +34,11 @@ const purchaseOrderSchema = new Schema({
     unit: {
         type: String,
         required: true
+    },
+    status: {
+        type: String,
+        enum: ['Pending Delivery', 'Delivered', 'Completed'],
+        default: 'Pending Delivery'
     }
 })
 

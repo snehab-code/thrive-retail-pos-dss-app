@@ -57,14 +57,28 @@ const transactionSchema = new Schema({
     // BASICALLY - if something increases your inventory - debit this account, if it decreases your inventory - credit it.
     invoice: {
         type: String,
-        required: true
-            // in case of purchases - supplier invoice number, in case of sales - our invoice number. Unique cannot be true bec supplier inv numbers might clash. Maybe a custom validator? + invoice numbers HAVE to be serialised but they CAN be alpha numeric. Do I just ignore this?
+        required: true,
+        unique: true
+            // in case of purchases - supplier invoice number, in case of sales - our invoice number. Unique cannot be true bec supplier inv numbers might clash - PREFIX "SUPP-name?". 
+            // invoice numbers HAVE to be serialised but they CAN be alpha numeric. Do I just ignore this?
     },
     invoiceDate: {
         type: Date,
         required: true
     },
-    // cgst: {}, sgst: {}, igst: {}
+    poNumber: {
+        type: String
+    },
+    cgst: {
+        type: Number
+    }, 
+    sgst: {
+        type: Number
+    }, 
+    igst: {
+        type: Number
+    },
+    // auto calculated based on rate in the commodity id - in a presave hook probably.
     remark: {
         type: String,
         required: true

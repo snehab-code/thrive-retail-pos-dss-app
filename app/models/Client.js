@@ -16,6 +16,12 @@ const clientSchema = new Schema({
     },
     address: {
         type: String
+    },
+    clientCode: {
+        type: String,
+        maxlength: 6,
+        required: true,
+        unique: true
     }
 })
 
