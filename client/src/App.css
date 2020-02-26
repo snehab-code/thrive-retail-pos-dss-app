@@ -16,6 +16,15 @@ h1 {
 
 .headerLinks {
     margin-right: 20px;
+    display: flex;
+    justify-content: space-around;
+    width:10%;
+}
+
+.headerLinks a {
+    color: white;
+    text-decoration: none;
+    padding:5px;
 }
 
 .home {
