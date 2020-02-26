@@ -40,6 +40,10 @@ const miscCreditorSchema = new Schema({
         unique: true,
         required: true,
         maxlength: 6
+    },
+    business: {
+        type: Schema.Types.ObjectId,
+        required: true
     }
 })
 

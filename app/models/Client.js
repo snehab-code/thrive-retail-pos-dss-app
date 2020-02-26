@@ -22,6 +22,10 @@ const clientSchema = new Schema({
         maxlength: 6,
         required: true,
         unique: true
+    },
+    business: {
+        type: Schema.Types.ObjectId,
+        required: true
     }
 })
 

@@ -86,6 +86,10 @@ const transactionSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
         required: true
+    },
+    business: {
+        type: Schema.Types.ObjectId,
+        required: true
     }
 })
 

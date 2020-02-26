@@ -37,6 +37,10 @@ const journalSchema = new Schema({
     invoiceDate: {
         type: Date,
         required: true
+    },
+    business: {
+        type: Schema.Types.ObjectId,
+        required: true
     }
 })
 

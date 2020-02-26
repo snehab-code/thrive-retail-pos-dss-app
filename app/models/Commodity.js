@@ -26,6 +26,10 @@ const commoditySchema = new Schema({
     reorderPoint: {
         type: Number
         // number OF UNITS!
+    },
+    business: {
+        type: Schema.Types.ObjectId,
+        required: true
     }
 })
 

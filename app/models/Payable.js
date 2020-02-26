@@ -42,6 +42,10 @@ const payableSchema = new Schema({
     isPaid: {
         type: Boolean,
         default: false
+    },
+    business: {
+        type: Schema.Types.ObjectId,
+        required: true
     }
 })
 

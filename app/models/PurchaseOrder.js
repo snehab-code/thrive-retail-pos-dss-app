@@ -39,6 +39,10 @@ const purchaseOrderSchema = new Schema({
         type: String,
         enum: ['Pending Delivery', 'Delivered', 'Completed'],
         default: 'Pending Delivery'
+    },
+    business: {
+        type: Schema.Types.ObjectId,
+        required: true
     }
 })
 

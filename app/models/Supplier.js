@@ -39,6 +39,10 @@ const supplierSchema = new Schema({
                 return 'Invalid format for email'
             }
         }
+    },
+    business: {
+        type: Schema.Types.ObjectId,
+        required: true
     }
 })
 

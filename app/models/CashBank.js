@@ -38,6 +38,10 @@ const cashBankSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
         required: true
+    },
+    business: {
+        type: Schema.Types.ObjectId,
+        required: true
     }
 })
 

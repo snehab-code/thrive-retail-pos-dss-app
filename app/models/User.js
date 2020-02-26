@@ -35,11 +35,11 @@ const userSchema = new Schema({
         minlength: 6,
         maxlength: 128
     },
-    role: {
-        type: String,
-        enum: ['admin', 'employee'],
-        required: true
-    },
+    // role: {
+    //     type: String,
+    //     enum: ['admin', 'employee'],
+    //     required: true
+    // },
     tokens: [{
         token: {
             type: String
@@ -48,7 +48,11 @@ const userSchema = new Schema({
             type: Date,
             default: Date.now()
         }
-    }]
+    }],
+    businesses: {
+        type: [Schema.Types.ObjectId],
+        ref: 'Business'
+    }
 })
 
 userSchema.pre('save', function(next) {
@@ -112,7 +116,6 @@ userSchema.methods.generateToken = function() {
     const tokenData = {
         _id: user._id,
         username: user.username,
-        role: user.role
     }
 
     const token = jwt.sign(tokenData, process.env.TOKEN_SECRET)
