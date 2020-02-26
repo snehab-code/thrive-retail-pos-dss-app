@@ -2,6 +2,11 @@ h1 {
     margin:0;
 }
 
+a {
+    text-decoration: none;
+    color: #6fb98f;
+}
+
 .header {
     background: #004445;
     display:flex;
@@ -66,10 +71,11 @@ h1 {
     display:flex;
     flex-direction: column;
     align-items: center;
-    /* justify-content: center; */
+    justify-content: space-between;
     height:70vh;
     width:40%;
     min-width:350px;
+    max-width: 400px;
     padding:10px;
     background: #fcfdfd;
 }
@@ -84,4 +90,65 @@ h1 {
     width:30%;
     margin:0;
     padding:0
+}
+
+.loginPanel form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    padding:10px;
+    flex-grow: 2;
+}
+
+.loginPanel a {
+    font-size: 0.8em;
+}
+
+.loginPanel form .MuiTextField-root {
+    width:85%;
+    max-width:280px;
+}
+
+.MuiTextField-root {
+    margin:7px !important;
+}
+
+.MuiInputBase-input {
+    font-size: 0.9em !important;
+}
+
+.MuiFormLabel-root {
+    color: #6fb98f !important;
+    font-size: 1em !important;
+    text-transform: capitalize;
+}
+
+.MuiFormLabel-root.Mui-focused{
+    color: #004445 !important;
+}
+
+.MuiInput-underline:before {
+    border-bottom: 1px solid #6fb98f !important;
+}
+
+.MuiInput-underline:after {
+    border: 1px solid #004445 !important;
+}
+
+button {
+    font-size:0.9em !important; 
+    margin:10px !important;
+    padding:5px !important;
+    color: #2c7873 !important;
+    width: 85%;
+    margin-top:25px !important;
+    background-color: #edf7f7 !important;
+    margin-top: 20px !important;
+    border: 1px solid #6fb98f !important;
+}
+
+button:hover {
+    background-color: #dbf0f0 !important;
 }
