@@ -6,6 +6,9 @@ const userReducer = (state = {}, action) => {
         case 'LOGOUT_USER': {
             return {isLoggedIn: false}
         }
+        case 'LOGIN_FAILURE': {
+            return {isLoggedIn: false, notice: action.payload}
+        }
         default: {
             return state
         }

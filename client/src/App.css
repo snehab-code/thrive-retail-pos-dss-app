@@ -147,8 +147,37 @@ button {
     background-color: #edf7f7 !important;
     margin-top: 20px !important;
     border: 1px solid #6fb98f !important;
+    max-width:280px;
 }
 
 button:hover {
     background-color: #dbf0f0 !important;
+}
+
+.box {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.businessAddContainer {
+    border-radius: 50px;
+    height:70vh;
+    width:70%;
+    background-color: #f1f4f3;
+    border:2px solid white;
+}
+
+.businessAddBox {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width:50%;
+    height:100%;
+}
+
+.businessAddBox a {
+    font-size: 2em;
 }

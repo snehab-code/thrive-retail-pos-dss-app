@@ -7,7 +7,6 @@ class Register extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        console.log('handle submit')
     }
 
     render(){
@@ -28,7 +27,7 @@ class Register extends React.Component {
                   </Button>
                 </form>
                   <div>
-                    <Link to="/forgot-password">Forgot Password</Link>
+                    <Link to="/login">Already a member? Sign in.</Link>
                   </div>
               </div>
               

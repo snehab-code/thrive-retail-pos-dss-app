@@ -16,11 +16,15 @@ module.exports.register = (req, res) => {
 module.exports.login = (req, res) => {
     const body = req.body
     const search = {
-        email: body.email,
-        username: body.username,
         password: body.password
     }
-
+    if(search.password) {
+        if (body.username && body.username.includes('@')) {
+            search.email = body.username
+        } else {
+            body.username && (search.username = body.username)
+        }
+    }
     User.findByCredentials(search)
         .then(user => {
             return user.generateToken()
