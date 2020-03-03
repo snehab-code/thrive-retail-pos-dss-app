@@ -1,4 +1,4 @@
-const businessesReducer = (state, action) => {
+const businessesReducer = (state = [], action) => {
     switch(action.type) {
         default: {
             return state
