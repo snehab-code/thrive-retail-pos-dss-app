@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const validator = require('validator')
 const Schema = mongoose.Schema
 
 const miscCreditorSchema = new Schema({
@@ -16,8 +17,7 @@ const miscCreditorSchema = new Schema({
         required: true
     },
     address: {
-        type: String,
-        required: true
+        type: String
     },
     remarks: {
         type: String,

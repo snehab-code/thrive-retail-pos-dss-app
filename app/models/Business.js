@@ -6,27 +6,47 @@ const businessSchema = new Schema({
         type: String,
         required: true
     },
-    // inviteLink: {
-        //TTL?  alt tokens that expire - authenticate with business id in token + user ID matches the user for whom it is generated? and pull when used
-    // },
     owner: {
         type: Schema.Types.ObjectId,
         required: true
     },
-    admins: [{
-        type: Schema.Types.ObjectId
-    }],
     members: [{
         user: {
             type: Schema.Types.ObjectId
         },
         permissions: {
-            type: [String]
+            type: [String],
+            enum: ["view", "update", "create", "reports", "admin"]
         },
         addedBy: {
             type: Schema.Types.ObjectId
         } 
-    }]
+    }],
+    createdAt: {
+        type: Date,
+        default: Date.now()
+    }
+})
+
+// add owner as initial admin
+businessSchema.pre('save', function(next) {
+    const business = this
+    if (business.isNew) {
+        const members = business.members.map(member => {
+            member._doc.addedBy = business.owner
+            return member
+        })
+        business.members = [
+            {
+                user: business.owner,
+                permissions: ["admin"],
+                addedBy: business.owner
+            }, ...members
+        ]
+        next()
+    }   else {
+        next()
+    }
 })
 
 const Business = mongoose.model('Business', businessSchema)

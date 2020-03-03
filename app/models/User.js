@@ -115,7 +115,7 @@ userSchema.methods.generateToken = function() {
     const user = this
     const tokenData = {
         _id: user._id,
-        username: user.username,
+        username: user.username
     }
 
     const token = jwt.sign(tokenData, process.env.TOKEN_SECRET)

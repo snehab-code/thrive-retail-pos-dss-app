@@ -2,16 +2,25 @@ const express = require('express')
 const router = express.Router()
 
 // middleware
-const {authenticateUser, authoriseUser} = require('../app/middlewares/authenticateUser')
+const {authenticateUser, checkAuthorisation} = require('../app/middlewares/authenticateUser')
 
 // controllers
 const usersController = require('../app/controllers/usersController')
+const businessController = require('../app/controllers/businessController')
+const creditorsController = require('../app/controllers/creditorsController')
 
+router.get('/api/users', usersController.list)
 router.post('/api/users/register', usersController.register)
 router.post('/api/users/login', usersController.login)
 router.delete('/api/users/logout', authenticateUser, usersController.logout)
 router.delete('/api/users/logout-all', authenticateUser, usersController.logoutAll)
 router.get('/api/users/check-login', authenticateUser, usersController.checkLoginStatus)
+
+router.get('/api/businesses', authenticateUser, businessController.list)
+router.get('/api/businesses/:id', authenticateUser, businessController.show)
+router.post('/api/businesses', authenticateUser, businessController.create)
+router.put('/api/businesses/:id', authenticateUser, businessController.update)
+router.delete('/api/businesses/:id', authenticateUser, businessController.destroy)
 
 // router.get('/api/suppliers', authenticateUser)
 // router.get('/api/suppliers/:supplierId', authenticateUser)
@@ -31,11 +40,11 @@ router.get('/api/users/check-login', authenticateUser, usersController.checkLogi
 // router.put('/api/commodities/:commodityId', authenticateUser)
 // router.delete('/api/commodities/:commodityId', authenticateUser, authoriseUser)
 
-// router.get('/api/creditors', authenticateUser)
-// router.get('/api/creditors/:creditorId', authenticateUser)
-// router.post('/api/creditors', authenticateUser)
-// router.put('/api/creditors/:creditorId', authenticateUser)
-// router.delete('/api/creditors/:creditorId', authenticateUser, authoriseUser)
+router.get('/api/businesses/:businessId/creditors', authenticateUser, checkAuthorisation, creditorsController.list)
+router.get('/api/businesses/:businessId/creditors/:creditorId', authenticateUser, checkAuthorisation, creditorsController.show)
+router.post('/api/businesses/:businessId/creditors', authenticateUser, checkAuthorisation, creditorsController.create)
+router.put('/api/businesses/:businessId/creditors/:creditorId', authenticateUser, checkAuthorisation, creditorsController.update)
+router.delete('/api/businesses/:businessId/creditors/:creditorId', authenticateUser, checkAuthorisation, creditorsController.destroy)
 
 // router.get('/api/payables', authenticateUser)
 // router.get('/api/payables/:payableId', authenticateUser)

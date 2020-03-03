@@ -1,6 +1,13 @@
 const User = require('../models/User')
 const _ = require('lodash')
 
+module.exports.list = (req, res) => {
+    User.find()
+        .then(users => {
+            res.send(users)
+        })
+}
+
 module.exports.register = (req, res) => {
     const body = req.body
     const user = new User(body) 

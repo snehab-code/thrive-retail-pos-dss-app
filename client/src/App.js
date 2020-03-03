@@ -1,14 +1,15 @@
 import React from 'react'
 import CssBaseline from '@material-ui/core/CssBaseline'
-import {BrowserRouter, Route} from 'react-router-dom'
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import Header from './components/statics/Header'
 import Home from './components/statics/Home'
+
+import './App.css'
 
 import Login from './components/User/Login'
 import Register from './components/User/Register'
 import BusinessNew from './components/Admin/BusinessNew'
-
-import './App.css'
+import BusinessHome from './components/Admin/BusinessHome'
 
 
 function App() {
@@ -18,10 +19,14 @@ function App() {
       <Header/>
       
       <div className="appContent">
+      
+      <Switch>
       <Route path="/" component={Home} exact/>
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
-      <Route path="/businesses/new" component={BusinessNew} />
+      <Route path="/businesses/new" component={BusinessNew} exact/>
+      <Route path="/businesses/:id" component={BusinessHome} />
+      </Switch>
       </div>
     </BrowserRouter>
   )
