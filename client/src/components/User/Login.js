@@ -17,7 +17,7 @@ class Login extends React.Component {
 
     componentDidUpdate() {
       if (this.props.user.isLoggedIn && !this.props.user.notice) {
-        this.props.history.push('/')
+        this.props.history.push('/businesses')
       }
     }
 

@@ -5,21 +5,12 @@ import TextField from '@material-ui/core/TextField'
 
 function BusinessNew(props) {
 
-    // const handleBlur = () => {
-    //     console.log('hi')
-    // }
-
-    // const handleTeamChange = () => {
-    //     console.log('!')
-    // }
-
     const handleTeamSubmit = (values) => {
         console.log(values)
     }
 
     return (
         <>
-            
             <div className="businessAddContainer box">
                 <div className="businessAddBox" style={{borderRight:"2px solid white"}}>
                     <h1><Link to="/businesses/add">Create a New Business</Link></h1>

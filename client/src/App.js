@@ -8,6 +8,7 @@ import './App.css'
 
 import Login from './components/User/Login'
 import Register from './components/User/Register'
+import BusinessLanding from './components/Admin/BusinessLanding'
 import BusinessNew from './components/Admin/BusinessNew'
 import BusinessHome from './components/Admin/BusinessHome'
 
@@ -24,8 +25,9 @@ function App() {
       <Route path="/" component={Home} exact/>
       <Route path="/login" component={Login} />
       <Route path="/register" component={Register} />
+      <Route path="/businesses" component={BusinessLanding} exact/>
       <Route path="/businesses/new" component={BusinessNew} exact/>
-      <Route path="/businesses/:id" component={BusinessHome} />
+      <Route path="/businesses/:businessId" component={BusinessHome} />
       </Switch>
       </div>
     </BrowserRouter>
