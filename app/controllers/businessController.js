@@ -4,7 +4,6 @@ const User = require('../models/User')
 // for users to see businesses they're in
 module.exports.list = (req, res) => {
     const businesses = req.businesses
-    console.log(businesses)
     res.send(businesses)
 }
 
@@ -94,11 +93,9 @@ module.exports.createInvite = (req, res) => {
                     return business.createInvite(body)
                 })
                 .then(business => {
-                    console.log(business, 'bus')
                     res.send(business)
                 })
                 .catch(err => {
-                    console.log(err, 'err')
                     res.send(err)
                 })
             } else {
@@ -143,7 +140,13 @@ module.exports.join = (req, res) => {
             }
         })
         .then(business => {
-            res.send(business)
+            User.findByIdAndUpdate(user, {$pull: {invitedTo: business._id}})
+            .then(user => {
+                res.send(business)
+            })
+            .catch(err => {
+                res.send(err)
+            })
         })
         .catch(err => {
             res.send(err)

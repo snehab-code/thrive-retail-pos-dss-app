@@ -52,7 +52,8 @@ const userSchema = new Schema({
     businesses: {
         type: [Schema.Types.ObjectId],
         ref: 'Business'
-    }
+    },
+    invitedTo: [Schema.Types.ObjectId]
 })
 
 userSchema.pre('save', function(next) {
@@ -110,6 +111,21 @@ userSchema.statics.findByToken = function(token) {
 
     return User.findOne({_id: tokenData._id, 'tokens.token': token})
 }
+
+userSchema.methods.addInvite = function(businessId) {
+    const user = this
+
+    user.invitedTo.push(businessId)
+
+    return user.save()
+        .then(user => {
+            return Promise.resolve(user)
+        })
+        .catch(err => {
+            return Promise.reject(err)
+        })
+}
+
 
 userSchema.methods.generateToken = function() {
     const user = this
