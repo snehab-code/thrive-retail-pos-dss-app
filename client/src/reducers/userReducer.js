@@ -1,7 +1,7 @@
 const userReducer = (state = {}, action) => {
     switch(action.type) {
         case 'LOGIN_USER': {
-            return {isLoggedIn: true}
+            return {isLoggedIn: true,...action.payload}
         }
         case 'LOGOUT_USER': {
             return {isLoggedIn: false}

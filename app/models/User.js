@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const Business = require('./Business')
 
 const Schema = mongoose.Schema
 
@@ -35,11 +36,6 @@ const userSchema = new Schema({
         minlength: 6,
         maxlength: 128
     },
-    // role: {
-    //     type: String,
-    //     enum: ['admin', 'employee'],
-    //     required: true
-    // },
     tokens: [{
         token: {
             type: String
@@ -53,7 +49,10 @@ const userSchema = new Schema({
         type: [Schema.Types.ObjectId],
         ref: 'Business'
     },
-    invitedTo: [Schema.Types.ObjectId]
+    invitedTo: {
+        type: [Schema.Types.ObjectId],
+        ref: 'Business'
+    }
 })
 
 userSchema.pre('save', function(next) {
@@ -109,11 +108,12 @@ userSchema.statics.findByToken = function(token) {
         return Promise.reject(err)
     }
 
-    return User.findOne({_id: tokenData._id, 'tokens.token': token})
+    return User.findOne({_id: tokenData._id, 'tokens.token': token}).populate({path:'invitedTo', select:'name address phone', model: Business})
 }
 
 userSchema.methods.addInvite = function(businessId) {
     const user = this
+    console.log('add invite ran')
 
     user.invitedTo.push(businessId)
 
@@ -139,7 +139,12 @@ userSchema.methods.generateToken = function() {
 
     return user.save()
         .then(userWithToken => {
-            return Promise.resolve(token)
+            const userData = {
+                token,
+                username:userWithToken.username,
+                invitedTo: userWithToken.invitedTo
+            }
+            return Promise.resolve(userData)
         })
         .catch(err => {
             return Promise.reject(err)

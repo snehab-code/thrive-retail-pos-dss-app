@@ -96,6 +96,7 @@ module.exports.createInvite = (req, res) => {
                     res.send(business)
                 })
                 .catch(err => {
+                    console.log('hi2')
                     res.send(err)
                 })
             } else {
@@ -142,7 +143,7 @@ module.exports.join = (req, res) => {
         .then(business => {
             User.findByIdAndUpdate(user, {$pull: {invitedTo: business._id}})
             .then(user => {
-                res.send(business)
+                res.send(_.pick(business, ['_id', 'name']))
             })
             .catch(err => {
                 res.send(err)

@@ -25,6 +25,7 @@ module.exports.login = (req, res) => {
     const search = {
         password: body.password
     }
+    // use validator instead, improve quality of variable names! Clean this up!
     if(search.password) {
         if (body.username && body.username.includes('@')) {
             search.email = body.username
@@ -36,9 +37,8 @@ module.exports.login = (req, res) => {
         .then(user => {
             return user.generateToken()
         })
-        .then(token => {
-            // res.setHeader('x-auth', token).send({})
-            res.send(token)
+        .then(userData => {
+            res.send(userData)
         })
         .catch(err => {
             res.send(err)
@@ -47,7 +47,7 @@ module.exports.login = (req, res) => {
 }
 
 module.exports.checkLoginStatus = (req, res) => {
-    if (req.user) res.send({notice: 'valid user'})
+    if (req.user) res.send(_.pick(req.user, ['username', 'invitedTo']))
 }
 
 

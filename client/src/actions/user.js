@@ -1,9 +1,9 @@
 import axios from '../config/axios'
 import {startGetBusinesses} from './businesses'
 
-const loginUser = () => {
+const loginUser = (user) => {
     return {
-        type: 'LOGIN_USER'
+        type: 'LOGIN_USER', payload: user
     }
 }
 
@@ -23,8 +23,13 @@ export const startCheckUserAuth = () => {
     return dispatch => {
         axios.get('/users/check-login')
             .then(response => {
-                if (response.data.notice === 'valid user') {
-                    dispatch(loginUser())
+                console.log(response)
+                if (response.data.username) {
+                    const user = {
+                        username: response.data.username,
+                        invitedTo: response.data.invitedTo
+                    }
+                    dispatch(loginUser(user))
                     dispatch(startGetBusinesses())
                 }
             })
@@ -43,9 +48,14 @@ export const startPostUserLogin = (formData, history) => {
                     const notice = response.data.notice
                     dispatch(failedLogin(notice))
                 } else {
-                    const token = response.data
+                    console.log(response)
+                    const token = response.data.token
+                    const user = {
+                        username: response.data.userName,
+                        invitedTo: response.data.invitedTo
+                    }
                     localStorage.setItem('authToken', token)
-                    dispatch(loginUser())
+                    dispatch(loginUser(user))
                     history.push('/businesses')
                 }
             })
