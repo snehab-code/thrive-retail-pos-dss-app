@@ -70,13 +70,13 @@ businessSchema.pre('save', function(next) {
 businessSchema.methods.addMember = function(user, body) {
     const business = this
     const invite = business.teamInvitations.find(invite => String(invite.user) == user)
-    if (body.accepted === 'true') {
+    if (body.accepted) {
         const member = {
             user,
             permissions: ['view'],
             addedBy: invite.addedBy
         }
-        invite.status='accepted'
+        invite.status = 'accepted'
         business.members.push(member)
         return business.save()
             .then(newBusiness => {
@@ -89,7 +89,7 @@ businessSchema.methods.addMember = function(user, body) {
         invite.status = 'rejected'
         return business.save()
             .then(newBusiness => {
-                return Promise.reject({notice: 'You have rejected this invitation'})
+                return Promise.resolve({_id: newBusiness._id, notice:"You have rejected this invitation"})
             })
             .catch(err => {
                 return Promise.reject(err)
@@ -105,13 +105,10 @@ businessSchema.methods.createInvite = function(body) {
 
         return business.save()
             .then(newBusiness => {
-                User.findById(body.user, (err, user) => {
-                    if (err) console.log(err)
-                    user.addInvite(newBusiness._id, (err, user) => {
-                        if (err) console.log(err)
-                    })
-                })
-                return Promise.resolve(newBusiness)
+                return User.findInvitedUser(body.user, newBusiness)
+            })
+            .then(business => {
+                return Promise.resolve(business)
             })
             .catch(err => {
                 return Promise.reject(err)
@@ -123,13 +120,10 @@ businessSchema.methods.createInvite = function(body) {
 
         return business.save()
             .then(newBusiness => {
-                User.findById(body.user, (err, user) => {
-                    if (err) console.log(err)
-                    user.addInvite(newBusiness._id, (err, user) => {
-                        if (err) console.log(err)
-                    })
-                })
-                return Promise.resolve(newBusiness)
+                return User.findInvitedUser(body.user, newBusiness)
+            })
+            .then(business => {
+                return Promise.resolve(business)
             })
             .catch(err => {
                 return Promise.reject(err)

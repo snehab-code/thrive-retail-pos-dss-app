@@ -39,9 +39,14 @@ export const startPostBusiness = (formData) => {
     }
 }
 
-export const startPostJoin = (formData, id) => {
+export const startPostJoin = (id, formData) => {
     return (dispatch) => {
-        axios.post(`/businesses/:id/invites/accept`, formData)
-            .then()
+        axios.post(`/businesses/${id}/invites/accept`, formData)
+            .then(response => {
+                !response.data.notice && dispatch(addBusiness(response.data))
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 }

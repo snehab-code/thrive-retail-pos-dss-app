@@ -7,10 +7,17 @@ import MenuIcon from '@material-ui/icons/Menu'
 function Header(props) {
     return (
         <div className="header">
-            <div className="logo">
-            {props.location.pathname.includes('/businesses/') && <MenuIcon/>}
-            <Link to="/"><h1>THRIVE</h1></Link>
+            {props.location.pathname.includes('/businesses/') ?
+             <div className="logo">
+                <MenuIcon/>
+                <Link to="/businesses"><h1>THRIVE</h1></Link>
+             </div>
+             :
+             <div className="logo">
+                <Link to="/"><h1>THRIVE</h1></Link>
             </div>
+            }
+            
             <div className="headerLinks">
                 {
                     props.user.isLoggedIn ? 

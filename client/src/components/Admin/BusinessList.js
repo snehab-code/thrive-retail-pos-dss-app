@@ -51,7 +51,7 @@ function BusinessList(props) {
                                 Phone: {business.phone}
                                 </span>
                             {
-                                business.permissions.includes('admin') ? <span>Admin</span> : <span>Team member</span> 
+                                business.permissions && business.permissions.includes('admin') ? <span>Admin</span> : <span>Team member</span> 
                             }
                         </div>
                         </Link>

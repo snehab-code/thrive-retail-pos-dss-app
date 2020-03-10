@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const Business = require('./Business')
+// const Business = require('./Business')
 
 const Schema = mongoose.Schema
 
@@ -107,19 +107,33 @@ userSchema.statics.findByToken = function(token) {
     } catch(err) {
         return Promise.reject(err)
     }
-
+// weird error - if I require business in the top level, the method for creating invites in BUSINESS fails??? And there's no error message either. the business will save, but the find Invited user query fails and I can't figure out WHY it would????
+    const Business = require('./Business')
     return User.findOne({_id: tokenData._id, 'tokens.token': token}).populate({path:'invitedTo', select:'name address phone', model: Business})
 }
 
-userSchema.methods.addInvite = function(businessId) {
+userSchema.statics.findInvitedUser = function(user, business) {
+    const User = this
+    return User.findOne({_id: user})
+        .then(user => {
+            if (user) {
+                return user.addInvite(business)
+            } else {
+                return Promise.reject({"notice": 'user not found'})
+            }
+        })
+        .catch(err => {
+            return Promise.reject({"notice": "some error"})
+        })
+}
+
+userSchema.methods.addInvite = function(business) {
     const user = this
-    console.log('add invite ran')
 
-    user.invitedTo.push(businessId)
-
+    user.invitedTo.push(business._id)
     return user.save()
         .then(user => {
-            return Promise.resolve(user)
+            return Promise.resolve(business)
         })
         .catch(err => {
             return Promise.reject(err)

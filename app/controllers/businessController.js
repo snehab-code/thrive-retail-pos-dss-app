@@ -131,8 +131,7 @@ module.exports.join = (req, res) => {
     const id = req.params.id
     const user = req.user._id
     const body = req.body
-
-    Business.findOne({_id:id, 'teamInvitations.user': user})
+    Business.findOne({_id:id, 'teamInvitations.user': user, 'teamInvitations.status': 'pending'})
         .then(business => {
             if (business) {
                 return business.addMember(user, body)
@@ -141,9 +140,11 @@ module.exports.join = (req, res) => {
             }
         })
         .then(business => {
+            console.log(business)
             User.findByIdAndUpdate(user, {$pull: {invitedTo: business._id}})
             .then(user => {
-                res.send(_.pick(business, ['_id', 'name']))
+                if (!business.notice) res.send({_id: business._id, name: business.name, address: business.address, phone: business.phone})
+                else res.send({notice: business.notice})
             })
             .catch(err => {
                 res.send(err)
