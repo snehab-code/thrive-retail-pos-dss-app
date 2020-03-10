@@ -1,15 +1,16 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
+import Alert from '@material-ui/lab/Alert'
 
 function BusinessList(props) {
-    console.log(props)
     return (
         <>
+            <Alert severity="info">You have a new join request</Alert>
             {
                 props.businesses.map(business => {
                     return (
-                        <Link to={`/businesses/${business._id}`} className="businessCardLink">
+                        <Link key={business._id} to={`/businesses/${business._id}`} className="businessCardLink">
                         <div key={business._id} className="businessCard">   
                             <h2>{business.name}</h2>
                             {

@@ -25,7 +25,24 @@ const businessSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now()
-    }
+    },
+    address: {
+        type: String,
+        required: true
+    },
+    phone: {
+        type: Number,
+        required: true
+    },
+    teamInvitations: [{
+        user: Schema.Types.ObjectId,
+        addedBy: Schema.Types.ObjectId,
+        status: {
+            type: String,
+            default: 'pending',
+            enum: ['pending', 'accepted']
+        }
+    }]
 })
 
 // add owner as initial admin
@@ -48,6 +65,59 @@ businessSchema.pre('save', function(next) {
         next()
     }
 })
+
+businessSchema.methods.addMember = function(user, body) {
+    const business = this
+    const invite = business.teamInvitations.find(invite => String(invite.user) == user)
+    if (body.accepted) {
+        const member = {
+            user,
+            permissions: ["view"],
+            addedBy: invite.addedBy
+        }
+        invite.status='accepted'
+        business.members.push(member)
+        return business.save()
+            .then(newBusiness => {
+                return Promise.resolve(newBusiness)
+            })
+            .catch(err => {
+                return Promise.reject(err)
+            })
+    } else {
+        invite.pull()
+    }
+} 
+
+businessSchema.methods.createInvite = function(body) {
+    const business = this
+    const checkDuplicate = business.teamInvitations.find(invite => String(invite.user) == body.user)
+    if (!checkDuplicate) {
+        business.teamInvitations.push(body)
+        return business.save()
+            .then(businessWithInvite => {
+                return Promise.resolve(businessWithInvite)
+            })
+            .catch(err => {
+                return Promise.reject(err)
+            })
+    } else if(checkDuplicate.status('rejected')) {
+        checkDuplicate.status = 'pending'
+        checkDuplicate.addedBy = body.addedBy
+        return business.save()
+            .then(businessWithInvite => {
+                return Promise.resolve(businessWithInvite)
+            })
+            .catch(err => {
+                return Promise.reject(err)
+            })
+    } else if(checkDuplicate.status('pending')) {
+        return Promise.reject({notice: "user already invited"})
+    } else {
+        return Promise.reject({notice: 'User is already a member of your team'})
+    }
+
+}
 
 const Business = mongoose.model('Business', businessSchema)
 

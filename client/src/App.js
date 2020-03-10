@@ -11,6 +11,7 @@ import Register from './components/User/Register'
 import BusinessLanding from './components/Admin/BusinessLanding'
 import BusinessNew from './components/Admin/BusinessNew'
 import BusinessHome from './components/Admin/BusinessHome'
+import BusinessAdd from './components/Admin/BusinessAdd'
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
       <Route path="/register" component={Register} />
       <Route path="/businesses" component={BusinessLanding} exact/>
       <Route path="/businesses/new" component={BusinessNew} exact/>
+      <Route path="/businesses/add" component={BusinessAdd} exact />
       <Route path="/businesses/:businessId" component={BusinessHome} />
       </Switch>
       </div>

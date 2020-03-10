@@ -15,12 +15,16 @@ router.post('/api/users/login', usersController.login)
 router.delete('/api/users/logout', authenticateUser, usersController.logout)
 router.delete('/api/users/logout-all', authenticateUser, usersController.logoutAll)
 router.get('/api/users/check-login', authenticateUser, usersController.checkLoginStatus)
+// add a route for all invites
 
 router.get('/api/businesses', authenticateUser, businessController.list)
 router.get('/api/businesses/:id', authenticateUser, businessController.show)
 router.post('/api/businesses', authenticateUser, businessController.create)
 router.put('/api/businesses/:id', authenticateUser, businessController.update)
 router.delete('/api/businesses/:id', authenticateUser, businessController.destroy)
+router.get('/api/businesses/:id/invites', authenticateUser, businessController.viewInvite)
+router.post('/api/businesses/:id/invites', authenticateUser, businessController.createInvite)
+router.post('/api/businesses/:id/invites/accept', authenticateUser, businessController.join)
 
 // router.get('/api/suppliers', authenticateUser)
 // router.get('/api/suppliers/:supplierId', authenticateUser)

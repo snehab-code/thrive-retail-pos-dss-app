@@ -1,4 +1,5 @@
 const Business = require('../models/Business')
+const User = require('../models/User')
 
 // for users to see businesses they're in
 module.exports.list = (req, res) => {
@@ -33,6 +34,7 @@ module.exports.show = (req, res) => {
 // any valid user can create
 module.exports.create = (req, res) => {
     const body = req.body
+    body.owner = req.user._id
     const business = new Business(body)
     business.save()
         .then(business => {
@@ -72,5 +74,71 @@ module.exports.destroy = (req, res) => {
         })
         .catch(err => {
             res.send(err)
+        })
+}
+
+module.exports.createInvite = (req, res) => {
+    const id = req.params.id
+    const user = req.user._id
+    User.findOne({email: req.body.user})
+        .then(invitedUser => {
+            if (invitedUser) {
+            const body = {
+                user: invitedUser._id,
+                addedBy: user,
+            }
+            Business.findById(id)
+                .then(business => {
+                    return business.createInvite(body)
+                })
+                .then(business => {
+                    console.log(business, 'bus')
+                    res.send(business)
+                })
+                .catch(err => {
+                    console.log(err, 'err')
+                    res.send(err)
+                })
+            } else {
+                res.send({notice: 'no such user'})
+            }
+        })
+        .catch(err => {
+            res.send(err)
+        })
+}
+
+module.exports.viewInvite = (req, res) => {
+    const id = req.params.id
+    const user = req.user._id
+    Business.findOne({_id:id, teamInvitations: user})
+        .then(business => {
+            if (business) {
+                res.send(business)
+            } else {
+                res.send({notice: 'You have not been invited to join this team'})
+            }
+        })
+        .catch(err => {
+            res.send(err)
+        })
+}
+
+module.exports.join = (req, res) => {
+    const id = req.params.id
+    const user = req.user._id
+    const body = req.body
+
+    Business.findOne({_id:id, 'teamInvitations.user': user})
+        .then(business => {
+            if (business) {
+                business.addMember(user, body)
+                    .then()
+                    .catch(err => {
+                        console.log(err)
+                    })
+            } else {
+                res.send({notice: 'You have not been invited to join this team'})
+            }
         })
 }

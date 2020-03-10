@@ -5,7 +5,6 @@ import {startPostUserLogout} from '../../actions/user'
 import MenuIcon from '@material-ui/icons/Menu'
 
 function Header(props) {
-    console.log(props, 'headerprops')
     return (
         <div className="header">
             <div className="logo">

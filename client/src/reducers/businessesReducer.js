@@ -3,6 +3,9 @@ const businessesReducer = (state = [], action) => {
         case 'SET_BUSINESSES': {
             return [...action.payload]
         }
+        case 'ADD_BUSINESS': {
+            return [...state, action.payload]
+        }
         default: {
             return state
         }
