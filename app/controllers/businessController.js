@@ -8,7 +8,6 @@ module.exports.list = (req, res) => {
     res.send(businesses)
 }
 
-// only team members can see business info, might change to admin only not sure yet
 module.exports.show = (req, res) => {
     const id = req.params.id
     const businesses = req.businesses
@@ -46,6 +45,7 @@ module.exports.create = (req, res) => {
 }
 
 // require admin or update perm to update
+// at end of testing - reminder to disallow updating business members/team/invites via this route. Seperate dedicated routes for that.
 module.exports.update = (req, res) => {
     const id = req.params.id
     const body = req.body
@@ -80,7 +80,9 @@ module.exports.destroy = (req, res) => {
 module.exports.createInvite = (req, res) => {
     const id = req.params.id
     const user = req.user._id
-    User.findOne({email: req.body.user})
+    const find = req.businesses.find(business => business._id == id)
+    if (find && find.permissions.includes('update') || find.permissions.includes('admin')) {
+        User.findOne({email: req.body.user})
         .then(invitedUser => {
             if (invitedUser) {
             const body = {
@@ -106,6 +108,9 @@ module.exports.createInvite = (req, res) => {
         .catch(err => {
             res.send(err)
         })
+    } else {
+        res.sendStatus('401')
+    }
 }
 
 module.exports.viewInvite = (req, res) => {
@@ -132,13 +137,15 @@ module.exports.join = (req, res) => {
     Business.findOne({_id:id, 'teamInvitations.user': user})
         .then(business => {
             if (business) {
-                business.addMember(user, body)
-                    .then()
-                    .catch(err => {
-                        console.log(err)
-                    })
+                return business.addMember(user, body)
             } else {
                 res.send({notice: 'You have not been invited to join this team'})
             }
+        })
+        .then(business => {
+            res.send(business)
+        })
+        .catch(err => {
+            res.send(err)
         })
 }

@@ -16,7 +16,7 @@ const businessSchema = new Schema({
         },
         permissions: {
             type: [String],
-            enum: ["view", "update", "create", "reports", "admin"]
+            enum: ['view', 'update', 'create', 'reports', 'admin']
         },
         addedBy: {
             type: Schema.Types.ObjectId
@@ -40,7 +40,7 @@ const businessSchema = new Schema({
         status: {
             type: String,
             default: 'pending',
-            enum: ['pending', 'accepted']
+            enum: ['pending', 'accepted', 'rejected']
         }
     }]
 })
@@ -56,7 +56,7 @@ businessSchema.pre('save', function(next) {
         business.members = [
             {
                 user: business.owner,
-                permissions: ["admin"],
+                permissions: ['admin'],
                 addedBy: business.owner
             }, ...members
         ]
@@ -69,10 +69,11 @@ businessSchema.pre('save', function(next) {
 businessSchema.methods.addMember = function(user, body) {
     const business = this
     const invite = business.teamInvitations.find(invite => String(invite.user) == user)
-    if (body.accepted) {
+    console.log(body.accepted)
+    if (body.accepted === 'true') {
         const member = {
             user,
-            permissions: ["view"],
+            permissions: ['view'],
             addedBy: invite.addedBy
         }
         invite.status='accepted'
@@ -85,7 +86,14 @@ businessSchema.methods.addMember = function(user, body) {
                 return Promise.reject(err)
             })
     } else {
-        invite.pull()
+        invite.status = 'rejected'
+        return business.save()
+            .then(newBusiness => {
+                return Promise.reject({notice: 'You have rejected this invitation'})
+            })
+            .catch(err => {
+                return Promise.reject(err)
+            })
     }
 } 
 
@@ -101,7 +109,7 @@ businessSchema.methods.createInvite = function(body) {
             .catch(err => {
                 return Promise.reject(err)
             })
-    } else if(checkDuplicate.status('rejected')) {
+    } else if(checkDuplicate.status === 'rejected') {
         checkDuplicate.status = 'pending'
         checkDuplicate.addedBy = body.addedBy
         return business.save()
@@ -111,8 +119,8 @@ businessSchema.methods.createInvite = function(body) {
             .catch(err => {
                 return Promise.reject(err)
             })
-    } else if(checkDuplicate.status('pending')) {
-        return Promise.reject({notice: "user already invited"})
+    } else if(checkDuplicate.status === 'pending') {
+        return Promise.reject({notice: 'user already invited'})
     } else {
         return Promise.reject({notice: 'User is already a member of your team'})
     }
