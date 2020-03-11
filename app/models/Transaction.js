@@ -13,7 +13,8 @@ const transactionSchema = new Schema({
     },
     commodity: {
         type: Schema.Types.ObjectId,
-        required: true
+        required: true,
+        ref: 'Commodity'
     },
     // supplier or client id
     party: {
@@ -27,11 +28,10 @@ const transactionSchema = new Schema({
     rate: {
         type: Number,
         required: true
-    }, 
+    },
     unit: {
         type: String,
         required: true
-        // TO LOWERCASE this before storing
     },
     // GRN - for full order goods received, MRN for wrong receipts/returns, Debit note for short receipts, Warranty for failed items returned to seller on warranty, Credit note for excess received not returned to seller, 
     documentType: {
@@ -55,6 +55,7 @@ const transactionSchema = new Schema({
         type: Number
     },
     // BASICALLY - if something increases your inventory - debit this account, if it decreases your inventory - credit it.
+    // in case of purchases, supplier invoice number here. Sales we end up entering this twice??
     invoice: {
         type: String,
         required: true,
@@ -66,8 +67,8 @@ const transactionSchema = new Schema({
         type: Date,
         required: true
     },
-    poNumber: {
-        type: String
+    purchaseOrder: {
+        type: Schema.Types.ObjectId
     },
     cgst: {
         type: Number

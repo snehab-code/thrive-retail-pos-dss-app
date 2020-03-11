@@ -27,6 +27,7 @@ module.exports.create = (req, res) => {
     if (req.business.permissions.includes('admin') || req.business.permissions.includes('create')) {
         const body = req.body
         body.business = req.business._id
+        body.user = req.user._id
         const cashBank = new CashBank(body)
         cashBank.save()
             .then(cashBank => {

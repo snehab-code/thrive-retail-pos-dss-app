@@ -12,15 +12,17 @@ const purchaseOrderSchema = new Schema({
     },
     supplier: {
         type: Schema.Types.ObjectId,
+        ref: 'Supplier',
         required: true
     },
-    poNumber: {
+    orderNumber: {
         type: String,
         required: true,
         unique: true
     },
     commodity: {
         type: Schema.Types.ObjectId,
+        ref: 'Commodity',
         required: true
     },
     quantity: {
@@ -39,6 +41,14 @@ const purchaseOrderSchema = new Schema({
         type: String,
         enum: ['Pending Delivery', 'Delivered', 'Completed'],
         default: 'Pending Delivery'
+    },
+    remark: {
+        type: String,
+        required: true
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        required: true
     },
     business: {
         type: Schema.Types.ObjectId,

@@ -26,6 +26,7 @@ module.exports.show = (req, res) => {
 module.exports.create = (req, res) => {
     if (req.business.permissions.includes('admin') || req.business.permissions.includes('create')) {
         const body = req.body
+        body.user = req.user._id
         body.business = req.business._id
         const transaction = new Transaction(body)
         transaction.save()

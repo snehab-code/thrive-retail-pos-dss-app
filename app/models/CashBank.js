@@ -12,13 +12,11 @@ const cashBankSchema = new Schema({
     },
     // Cash dr to, ie. RECEIVED FROM - cash sales, customers on credit etc
     debitFrom: {
-        type: Schema.Types.ObjectId,
-        required: true
+        type: Schema.Types.ObjectId
     },
     // cash/back cr to, i.e. PAID TO - supplier or misc Creditor
     creditTo: {
         type: Schema.Types.ObjectId,
-        required: true
     },
     // the TRANSACTION or PAYABLE id to which this particular entry is linked
     linkedTo: {
@@ -28,6 +26,10 @@ const cashBankSchema = new Schema({
     // if debitFrom - increases balance, if creditTo - decreases balance
     amount: {
         type: Number,
+        required: true
+    },
+    remark: {
+        type: String,
         required: true
     },
     mode: {

@@ -2,7 +2,7 @@ const PurchaseOrder = require('../models/PurchaseOrder')
 
 module.exports.list = (req, res) => {
     const businessId = req.business._id
-    PurchaseOrder.find({business: businessId})
+    PurchaseOrder.find({business: businessId}).populate('supplier', 'name').populate('commodity', 'name unit')
         .then(purchaseOrders => {
             res.send(purchaseOrders)
         })
@@ -27,6 +27,7 @@ module.exports.create = (req, res) => {
     if (req.business.permissions.includes('admin') || req.business.permissions.includes('create')) {
         const body = req.body
         body.business = req.business._id
+        body.user = req.user._id
         const purchaseOrder = new PurchaseOrder(body)
         purchaseOrder.save()
             .then(purchaseOrder => {

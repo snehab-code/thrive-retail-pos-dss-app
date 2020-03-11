@@ -1,7 +1,7 @@
 // for misc entries - currently discounts given and received
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-
+// CAN automatically calculate discount via selling price minus actual sale rate tho
 // entry created via form to add debtors when adding payment due to you or sales
 // OOOH - prepaid expenses/assets too
 const journalSchema = new Schema({
