@@ -25,7 +25,6 @@ const miscCreditorSchema = new Schema({
     },
     email: {
         type: String,
-        unique: true,
         validate: {
             validator: (value) => {
                 return validator.isEmail(value)

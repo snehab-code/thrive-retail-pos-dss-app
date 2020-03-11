@@ -13,6 +13,11 @@ import BusinessNew from './components/Admin/BusinessNew'
 import BusinessHome from './components/Admin/BusinessHome'
 import BusinessAdd from './components/Admin/BusinessAdd'
 
+import PurchaseList from './components/Purchases/PurchaseList'
+import PayablesList from './components/Expenses/PayablesList'
+import SalesList from './components/Sales/SalesList'
+import ReportList from './components/Reports/ReportList'
+import TeamList from './components/Team/TeamList'
 
 function App() {
   return (
@@ -29,7 +34,12 @@ function App() {
       <Route path="/businesses" component={BusinessLanding} exact/>
       <Route path="/businesses/new" component={BusinessNew} exact/>
       <Route path="/businesses/add" component={BusinessAdd} exact />
-      <Route path="/businesses/:businessId" component={BusinessHome} />
+      <Route path="/businesses/:businessId" component={BusinessHome} exact/>
+      <Route path="/businesses/:businessId/invoices" component={SalesList} exact />
+      <Route path="/businesses/:businessId/purchases" component={PurchaseList} exact/>
+      <Route path="/businesses/:businessId/expenses" component={PayablesList} exact/>
+      <Route path="/businesses/:businessId/reports" component={ReportList} exact/>
+      <Route path="/businesses/:businessId/teams" component={TeamList} exact/>
       </Switch>
       </div>
     </BrowserRouter>

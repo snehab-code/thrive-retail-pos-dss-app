@@ -27,7 +27,7 @@ class Header extends React.Component {
 
     toggleDrawer = (open) => {
         this.setState({drawerIsOpen: open, activeBusiness: this.props.location.pathname.slice(12, 36)})
-    }
+    } 
 
     render() {
         return (
@@ -37,7 +37,6 @@ class Header extends React.Component {
              <>
              <Drawer open={this.state.drawerIsOpen} onClose={() => this.toggleDrawer(false)}>
                 <List>
-
                     <ListItem button>
                         <ListItemIcon><AccountBalanceWalletIcon/></ListItemIcon>
                         <ListItemText primary={'Business'} />
@@ -46,23 +45,38 @@ class Header extends React.Component {
                 </List>
                 <Divider />
                 <List>
-                    <ListItem button>
+                    <ListItem button  onClick={() => {
+                        this.toggleDrawer(false)
+                        this.props.history.push(`/businesses/${this.state.activeBusiness}/invoices`)
+                    }}>
                         <ListItemIcon><StorefrontIcon/></ListItemIcon>
-                        <ListItemText primary={'Sales'} />
+                        <ListItemText primary={'Invoices'} />
                     </ListItem>
-                    <ListItem button>
+                    <ListItem button  onClick={() => {
+                        this.toggleDrawer(false)
+                        this.props.history.push(`/businesses/${this.state.activeBusiness}/purchases`)
+                    }}>
                         <ListItemIcon><ShoppingBasketIcon/></ListItemIcon>
                         <ListItemText primary={'Purchases'} />
                     </ListItem>
-                    <ListItem button>
+                    <ListItem button  onClick={() => {
+                        this.toggleDrawer(false)
+                        this.props.history.push(`/businesses/${this.state.activeBusiness}/expenses`)
+                    }}>
                         <ListItemIcon><AccountBalanceWalletIcon/></ListItemIcon>
                         <ListItemText primary={'Expenses'} />
                     </ListItem>
-                    <ListItem button>
+                    <ListItem button  onClick={() => {
+                        this.toggleDrawer(false)
+                        this.props.history.push(`/businesses/${this.state.activeBusiness}/reports`)
+                    }}>
                         <ListItemIcon><ShowChartIcon/></ListItemIcon>
                         <ListItemText primary={'Reports'} />
                     </ListItem>
-                    <ListItem button>
+                    <ListItem button  onClick={() => {
+                        this.toggleDrawer(false)
+                        this.props.history.push(`/businesses/${this.state.activeBusiness}/teams`)
+                    }}>
                         <ListItemIcon><PeopleIcon/></ListItemIcon>
                         <ListItemText primary={'Team'} />
                     </ListItem>

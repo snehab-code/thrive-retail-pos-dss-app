@@ -62,11 +62,11 @@ router.post('/api/businesses/:businessId/payables', authenticateUser, checkAutho
 router.put('/api/businesses/:businessId/payables/:payableId', authenticateUser, checkAuthorisation, payablesController.update)
 router.delete('/api/businesses/:businessId/payables/:payableId', authenticateUser, checkAuthorisation, payablesController.destroy)
 
-router.get('/api/businesses/:businessId/purchaseOrders', authenticateUser, checkAuthorisation, purchaseOrdersController.list)
-router.get('/api/businesses/:businessId/purchaseOrders/:purchaseOrderId', authenticateUser, checkAuthorisation, purchaseOrdersController.show)
-router.post('/api/businesses/:businessId/purchaseOrders', authenticateUser, checkAuthorisation, purchaseOrdersController.create)
-router.put('/api/businesses/:businessId/purchaseOrders/:purchaseOrderId', authenticateUser, checkAuthorisation, purchaseOrdersController.update)
-router.delete('/api/businesses/:businessId/purchaseOrders/:purchaseOrderId', authenticateUser, checkAuthorisation, purchaseOrdersController.destroy)
+router.get('/api/businesses/:businessId/purchase-orders', authenticateUser, checkAuthorisation, purchaseOrdersController.list)
+router.get('/api/businesses/:businessId/purchase-orders/:purchaseOrderId', authenticateUser, checkAuthorisation, purchaseOrdersController.show)
+router.post('/api/businesses/:businessId/purchase-orders', authenticateUser, checkAuthorisation, purchaseOrdersController.create)
+router.put('/api/businesses/:businessId/purchase-orders/:purchaseOrderId', authenticateUser, checkAuthorisation, purchaseOrdersController.update)
+router.delete('/api/businesses/:businessId/purchase-orders/:purchaseOrderId', authenticateUser, checkAuthorisation, purchaseOrdersController.destroy)
 
 router.get('/api/businesses/:businessId/suppliers', authenticateUser, checkAuthorisation, suppliersController.list)
 router.get('/api/businesses/:businessId/suppliers/:supplierId', authenticateUser, checkAuthorisation, suppliersController.show)

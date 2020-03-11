@@ -16,6 +16,7 @@ const payableSchema = new Schema({
     },
     payableTo: {
         type: Schema.Types.ObjectId,
+        ref: 'MiscCreditor',
         required: true
     },
     dueDate: {

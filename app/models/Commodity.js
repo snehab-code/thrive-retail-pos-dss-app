@@ -16,16 +16,23 @@ const commoditySchema = new Schema({
     },
     brand: {
         type: String,
+        default: 'Unbranded'
     },
     category: {
-        type: String
+        type: String,
+        default: 'Uncategorised'
     },
     gstRate: {
-        type: Number
+        type: Number,
+        default: 0
     },
     reorderPoint: {
         type: Number
         // number OF UNITS!
+    },
+    unit: {
+        type: String,
+        required: true
     },
     business: {
         type: Schema.Types.ObjectId,
