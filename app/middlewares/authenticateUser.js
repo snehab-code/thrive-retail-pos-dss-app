@@ -1,7 +1,7 @@
 const User = require('../models/User')
 const Business = require('../models/Business')
 
-// IMPORTANT: wouldn't it be better if the USER model was the one that had this info?
+// IMPORTANT: move info over to user model instead of business model to avoid querying TWO models on every single request!
 const authenticateUser = (req, res, next) => {
     const token = req.header('x-auth')
     User.findByToken(token)

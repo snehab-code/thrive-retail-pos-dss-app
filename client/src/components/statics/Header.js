@@ -10,6 +10,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import Divider from '@material-ui/core/Divider'
 import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import StorefrontIcon from '@material-ui/icons/Storefront'
+import ShowChartIcon from '@material-ui/icons/ShowChart';
+import PeopleIcon from '@material-ui/icons/People';
 
 class Header extends React.Component {
 
@@ -22,12 +26,10 @@ class Header extends React.Component {
     }
 
     toggleDrawer = (open) => {
-        console.log('i ran')
         this.setState({drawerIsOpen: open, activeBusiness: this.props.location.pathname.slice(12, 36)})
     }
 
     render() {
-        console.log(this.state)
         return (
         <div className="header">
             
@@ -35,34 +37,34 @@ class Header extends React.Component {
              <>
              <Drawer open={this.state.drawerIsOpen} onClose={() => this.toggleDrawer(false)}>
                 <List>
-                    
+
                     <ListItem button>
                         <ListItemIcon><AccountBalanceWalletIcon/></ListItemIcon>
-                        <ListItemText primary={'expenses'} />
+                        <ListItemText primary={'Business'} />
                     </ListItem>
                     
                 </List>
                 <Divider />
                 <List>
                     <ListItem button>
-                        <ListItemIcon><AccountBalanceWalletIcon/></ListItemIcon>
-                        <ListItemText primary={'exp'} />
+                        <ListItemIcon><StorefrontIcon/></ListItemIcon>
+                        <ListItemText primary={'Sales'} />
+                    </ListItem>
+                    <ListItem button>
+                        <ListItemIcon><ShoppingBasketIcon/></ListItemIcon>
+                        <ListItemText primary={'Purchases'} />
                     </ListItem>
                     <ListItem button>
                         <ListItemIcon><AccountBalanceWalletIcon/></ListItemIcon>
-                        <ListItemText primary={'exp'} />
+                        <ListItemText primary={'Expenses'} />
                     </ListItem>
                     <ListItem button>
-                        <ListItemIcon><AccountBalanceWalletIcon/></ListItemIcon>
-                        <ListItemText primary={'exp'} />
+                        <ListItemIcon><ShowChartIcon/></ListItemIcon>
+                        <ListItemText primary={'Reports'} />
                     </ListItem>
                     <ListItem button>
-                        <ListItemIcon><AccountBalanceWalletIcon/></ListItemIcon>
-                        <ListItemText primary={'exp'} />
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon><AccountBalanceWalletIcon/></ListItemIcon>
-                        <ListItemText primary={'exp'} />
+                        <ListItemIcon><PeopleIcon/></ListItemIcon>
+                        <ListItemText primary={'Team'} />
                     </ListItem>
                 </List>
              </Drawer>
