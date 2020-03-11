@@ -275,3 +275,7 @@ button:hover {
     width:100%;
     max-width:400px;
 }
+
+.MuiDrawer-paperAnchorLeft {
+    width: min(60vw, 230px)
+}
