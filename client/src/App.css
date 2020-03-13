@@ -74,6 +74,7 @@ a {
     flex-direction: column;
     /* justify-content: center; */
     align-items: center;
+    /* color: #fcfdfd */
 }
 
 .loginPanel {
@@ -278,4 +279,9 @@ button:hover {
 
 .MuiDrawer-paperAnchorLeft {
     width: min(60vw, 230px)
+}
+
+.tableButton {
+    width:44px;
+    border: 4px solid white !important
 }

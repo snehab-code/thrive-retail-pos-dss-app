@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {startPostJoin} from '../../actions/businesses'
 import {setActiveBusiness} from '../../actions/user'
+import {startGetBusinessInfo} from '../../actions/businesses'
 import Button from '@material-ui/core/Button'
 
 function BusinessList(props) {
@@ -16,6 +17,7 @@ function BusinessList(props) {
 
     const handleClick = (id) => {
         props.dispatch(setActiveBusiness(id))
+        props.dispatch(startGetBusinessInfo(id))
     }
 
     return (

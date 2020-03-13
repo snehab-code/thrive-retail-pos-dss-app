@@ -1,13 +1,6 @@
 import axios from '../config/axios'
 import {startGetBusinesses} from './businesses'
-import {startGetCashBank} from './cashBank'
-import {startGetClients} from './clients'
-import {startGetCommodities} from './commodities'
-import {startGetCreditors} from './creditors'
-import {startGetPayables} from './payables'
-import {startGetPurchaseOrders} from './purchaseOrders'
-import {startGetSuppliers} from './suppliers'
-import {startGetTransactions} from './transactions'
+import {startGetBusinessInfo} from './businesses'
 
 const loginUser = (user) => {
     return {
@@ -47,14 +40,7 @@ export const startCheckUserAuth = () => {
                     dispatch(startGetBusinesses())
                     const businessId = getState().user.activeBusiness
                     if (businessId) {
-                        dispatch(startGetCashBank(businessId))
-                        dispatch(startGetClients(businessId))
-                        dispatch(startGetCommodities(businessId))
-                        dispatch(startGetCreditors(businessId))
-                        dispatch(startGetPayables(businessId))
-                        dispatch(startGetPurchaseOrders(businessId))
-                        dispatch(startGetSuppliers(businessId))
-                        dispatch(startGetTransactions(businessId))
+                        dispatch(startGetBusinessInfo(businessId))
                     }
                 }
             })
@@ -82,14 +68,6 @@ export const startPostUserLogin = (formData, history) => {
                     localStorage.setItem('authToken', token)
                     dispatch(loginUser(user))
                     dispatch(startGetBusinesses())
-                    dispatch(startGetCashBank())
-                    dispatch(startGetClients())
-                    dispatch(startGetCommodities())
-                    dispatch(startGetCreditors())
-                    dispatch(startGetPayables())
-                    dispatch(startGetPurchaseOrders())
-                    dispatch(startGetSuppliers())
-                    dispatch(startGetTransactions())
                     history.push('/businesses')
                 }
             })

@@ -25,6 +25,7 @@ router.delete('/api/businesses/:id', authenticateUser, businessController.destro
 router.get('/api/businesses/:id/invites', authenticateUser, businessController.viewInvite)
 router.post('/api/businesses/:id/invites', authenticateUser, businessController.createInvite)
 router.post('/api/businesses/:id/invites/accept', authenticateUser, businessController.join)
+router.get('/api/businesses/:id/all-info', authenticateUser, businessController.listInfo)
 
 router.get('/api/businesses/:businessId/cash-bank', authenticateUser, checkAuthorisation, cashBankController.list)
 router.get('/api/businesses/:businessId/cash-bank/:cashBankId', authenticateUser, checkAuthorisation, cashBankController.show)

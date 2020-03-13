@@ -25,8 +25,56 @@ module.exports.show = (req, res) => {
     } else {
         res.sendStatus('401')
     }
-    
+}
 
+// aggregation test - not currently using
+module.exports.listInfo = (req, res) => {
+    const businessId = req.params.id
+    const businesses = req.businesses
+    console.log(businessId)
+    if (businesses.find(business => business._id == businessId)) {
+        const mongoose = require('mongoose')
+        Business.aggregate([
+            {
+                $project: {name: 1, address: 1}
+            },
+            {
+                $match: {_id: mongoose.Types.ObjectId(businessId)}
+            },
+            {
+                $lookup: {
+                    from: 'clients',
+                    localField: '_id',
+                    foreignField: 'business',
+                    as: 'clients'
+                }
+            },
+            {
+                $lookup: {
+                    from: 'payables',
+                    localField: '_id',
+                    foreignField: 'business',
+                    as: 'payables'
+                }
+            },
+            {
+                $lookup: {
+                    from: 'payables',
+                    localField: '_id',
+                    foreignField: 'business',
+                    as: 'payables'
+                }
+            }
+        ])
+        // .unwind('clients')
+        // .replaceRoot('clients')
+        .exec(function(err, info) {
+            if (err) res.send(err)
+            else res.send(info)
+        })
+    } else {
+        res.send('umm')
+    }
 }
 
 // any valid user can create

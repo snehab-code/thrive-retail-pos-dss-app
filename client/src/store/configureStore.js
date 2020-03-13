@@ -2,10 +2,26 @@ import {createStore, combineReducers, applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
 import userReducer from '../reducers/userReducer'
 import businessesReducer from '../reducers/businessesReducer'
+import cashBankReducer from '../reducers/cashBankReducer'
+import clientsReducer from '../reducers/clientsReducer'
+import commoditiesReducer from '../reducers/commoditiesReducer'
+import creditorsReducer from '../reducers/creditorsReducer'
+import payablesReducer from '../reducers/payablesReducer'
+import purchaseOrdersReducer from '../reducers/purchaseOrdersReducer'
+import suppliersReducer from '../reducers/suppliersReducer'
+import transactionsReducer from '../reducers/transactionsReducer'
 
 const appReducer = combineReducers({
     user: userReducer,
     businesses: businessesReducer,
+    cashbank: cashBankReducer,
+    clients: clientsReducer,
+    commodities: commoditiesReducer,
+    creditors: creditorsReducer,
+    payables: payablesReducer,
+    purchaseOrders: purchaseOrdersReducer,
+    suppliers: suppliersReducer,
+    transactions: transactionsReducer
 })
 
 const rootReducer = (state, action) => {

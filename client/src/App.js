@@ -4,6 +4,7 @@ import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import Header from './components/statics/Header'
 import Home from './components/statics/Home'
 
+import './config/dataTableTheme'
 import './App.css'
 
 import Login from './components/User/Login'
@@ -18,6 +19,7 @@ import PayablesList from './components/Expenses/PayablesList'
 import SalesList from './components/Sales/SalesList'
 import ReportList from './components/Reports/ReportList'
 import TeamList from './components/Team/TeamList'
+
 
 function App() {
   return (

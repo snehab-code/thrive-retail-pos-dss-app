@@ -26,8 +26,9 @@ class Header extends React.Component {
 
     componentDidMount() {
         const id = this.props.location.pathname.slice(12, 36)
-        if (this.state.activeBusiness !== id) {
+        if (this.props.user.activeBusiness !== id) {
             this.props.dispatch(setActiveBusiness(id))
+            console.log('i ran')
         }
     }
 
