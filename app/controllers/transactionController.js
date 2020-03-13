@@ -2,7 +2,7 @@ const Transaction = require('../models/Transaction')
 
 module.exports.list = (req, res) => {
     const businessId = req.business._id
-    Transaction.find({business: businessId})
+    Transaction.find({business: businessId}).populate('commodity', 'name')
         .then(transactions => {
             res.send(transactions)
         })

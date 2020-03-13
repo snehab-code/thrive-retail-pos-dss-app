@@ -23,10 +23,16 @@ const dataTableTheme = createTheme('green', {
 })
 
 export const customStylesTable = {
-    header: {
+    headCells: {
         style: {
-            fontSize: '7vmin',
-            width:'100%'
+            paddingLeft:'5px',
+            paddingRight: '5px'
+        }
+    },
+    cells: {
+        style: {
+            paddingLeft: '5px',
+            paddingRight: '5px'
         }
     }
 }

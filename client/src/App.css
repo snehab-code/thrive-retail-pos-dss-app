@@ -74,7 +74,6 @@ a {
     flex-direction: column;
     /* justify-content: center; */
     align-items: center;
-    /* color: #fcfdfd */
 }
 
 .loginPanel {
@@ -281,7 +280,28 @@ button:hover {
     width: min(60vw, 230px)
 }
 
+.contentHeader {
+    font-size: 6vmin;
+    width:100%;
+    text-align: center;
+    height:60px;
+}
+
+.contentHeader .headerText {
+    padding-left:44px;
+    line-height:60px;
+}
+
 .tableButton {
     width:44px;
-    border: 4px solid white !important
+    border: 4px solid white !important;
+    margin-top: 10px !important;
+    float: right
+}
+
+.businessContent {
+    max-width:900px;
+    border-radius: 12px;
+    border: 1px solid #edf7f7;
+    margin-top:5px;
 }

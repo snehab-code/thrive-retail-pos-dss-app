@@ -15,7 +15,9 @@ import BusinessHome from './components/Admin/BusinessHome'
 import BusinessAdd from './components/Admin/BusinessAdd'
 
 import PurchaseList from './components/Purchases/PurchaseList'
+import OrderShow from './components/Purchases/OrderShow'
 import PayablesList from './components/Expenses/PayablesList'
+import PayableShow from './components/Expenses/PayableShow'
 import SalesList from './components/Sales/SalesList'
 import ReportList from './components/Reports/ReportList'
 import TeamList from './components/Team/TeamList'
@@ -39,7 +41,9 @@ function App() {
       <Route path="/businesses/:businessId" component={BusinessHome} exact/>
       <Route path="/businesses/:businessId/invoices" component={SalesList} exact />
       <Route path="/businesses/:businessId/purchases" component={PurchaseList} exact/>
+      <Route path="/businesses/:businessId/purchases/new" component={OrderShow} exact />
       <Route path="/businesses/:businessId/expenses" component={PayablesList} exact/>
+      <Route path="/businesses/:businessId/expenses/new" component={PayableShow} exact />
       <Route path="/businesses/:businessId/reports" component={ReportList} exact/>
       <Route path="/businesses/:businessId/teams" component={TeamList} exact/>
       </Switch>

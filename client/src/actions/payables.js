@@ -25,7 +25,7 @@ export const startGetPayables = (businessId) => {
             dispatch(setPayables(payables))
         })
         .catch(err => {
-            if (err.response.status == 401) {
+            if (err.response && err.response.status == 401) {
                 dispatch({type: 'LOGOUT'})
             }
         })
