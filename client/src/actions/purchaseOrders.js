@@ -1,28 +1,28 @@
 import axios from '../config/axios'
 import Swal from 'sweetalert2'
 
-const setBusinesses = (businesses) => {
-    return {type: 'SET_BUSINESSES', payload: businesses}
+const setPurchaseOrders = (purchaseOrders) => {
+    return {type: 'SET_PURCHASEORDERS', payload: purchaseOrders}
 }
 
-const addBusiness = (business) => {
-    return {type: 'ADD_BUSINESS', payload: business}
+const addPurchaseOrder = (purchaseOrder) => {
+    return {type: 'ADD_PURCHASEORDER', payload: purchaseOrder}
 }
 
-const updateBusiness = (id, business) => {
-    return {type: 'UPDATE_BUSINESS', payload: {id, business}}
+const updatePurchaseOrder = (id, purchaseOrder) => {
+    return {type: 'UPDATE_PURCHASEORDER', payload: {id, purchaseOrder}}
 }
 
-const removeBusiness = (id) => {
-    return {type: 'REMOVE_BUSINESS', payload: id}
+const removePurchaseOrder = (id) => {
+    return {type: 'REMOVE_PURCHASEORDER', payload: id}
 }
 
-export const startGetBusinesses = () => {
+export const startGetPurchaseOrders = (businessId) => {
     return (dispatch) => {
-        axios.get(`/businesses`)
+        axios.get(`/businesses/${businessId}/purchase-orders`)
         .then(response => {
-            const businesses = response.data
-            dispatch(setBusinesses(businesses))
+            const purchaseOrders = response.data
+            dispatch(setPurchaseOrders(purchaseOrders))
         })
         .catch(err => {
             if (err.response.status == 401) {
@@ -32,13 +32,13 @@ export const startGetBusinesses = () => {
     }
 }
 
-export const startPostBusiness = (formData) => {
+export const startPostPurchaseOrder = (businessId, formData) => {
     return (dispatch) => {
-        axios.post('/businesses', formData)
+        axios.post(`/businesses/${businessId}/purchase-orders`, formData)
             .then(response => {
                 console.log(response)
-                const business = response.data
-                dispatch(addBusiness(business))
+                const purchaseOrder = response.data
+                dispatch(addPurchaseOrder(purchaseOrder))
             })
             .catch(err => {
                 Swal.fire({
@@ -49,9 +49,9 @@ export const startPostBusiness = (formData) => {
     }
 }
 
-export const startPutBusiness = (id, formData, history) => {
+export const startPutPurchaseOrder = (businessId, id, formData, history) => {
     return (dispatch) => {
-        axios.put(`/businesses/${id}`, formData)
+        axios.put(`/businesses/${businessId}/purchase-orders/${id}`, formData)
         .then(response=>{
             if (response.data.errors) {
                 Swal.fire({
@@ -59,10 +59,10 @@ export const startPutBusiness = (id, formData, history) => {
                     text: response.data.message,
                 })
             } else {
-                const business = response.data
-                const id = business._id
-                dispatch(updateBusiness(id, business))
-                history && history.push(`/businesses/${id}`)
+                const purchaseOrder = response.data
+                const id = purchaseOrder._id
+                dispatch(updatePurchaseOrder(id, purchaseOrder))
+                history && history.push(`/businesses/${businessId}/purchase-orders/${id}`)
             }
         })
         .catch(err => {
@@ -80,12 +80,12 @@ export const startPutBusiness = (id, formData, history) => {
     }
 } 
 
-export const startDeleteBusiness = (id) => {
+export const startDeletePurchaseOrder = (businessId, id) => {
     return (dispatch) => {
-        axios.delete(`/businesses/${id}`)
+        axios.delete(`/businesses/${businessId}/purchase-orders/${id}`)
             .then(response => {
                 const id = response.data._id
-                dispatch(removeBusiness(id))
+                dispatch(removePurchaseOrder(id))
             })
             .catch(err => {
                 if (err.response.status == 401) {
@@ -94,22 +94,9 @@ export const startDeleteBusiness = (id) => {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'There was an error while deleting your business',
+                    text: 'There was an error while deleting your transaction',
                     footer: 'Please try again'
                   })
             })
     }
 }
-
-export const startPostJoin = (id, formData) => {
-    return (dispatch) => {
-        axios.post(`/businesses/${id}/invites/accept`, formData)
-            .then(response => {
-                !response.data.notice && dispatch(addBusiness(response.data))
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }
-}
-

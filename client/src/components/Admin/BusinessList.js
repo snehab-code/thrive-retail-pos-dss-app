@@ -2,6 +2,7 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {startPostJoin} from '../../actions/businesses'
+import {setActiveBusiness} from '../../actions/user'
 import Button from '@material-ui/core/Button'
 
 function BusinessList(props) {
@@ -11,6 +12,10 @@ function BusinessList(props) {
             accepted: true
         }
         props.dispatch(startPostJoin(id, formData))
+    }
+
+    const handleClick = (id) => {
+        props.dispatch(setActiveBusiness(id))
     }
 
     return (
@@ -42,7 +47,7 @@ function BusinessList(props) {
             {
                 props.businesses.map(business => {
                     return (
-                        <Link key={business._id} to={`/businesses/${business._id}`} className="businessCardLink">
+                        <Link key={business._id} to={`/businesses/${business._id}`} onClick = {() => handleClick(business._id)}className="businessCardLink">
                         <div className="businessCard">
                                 <h2>{business.name}</h2>
                                 <span>

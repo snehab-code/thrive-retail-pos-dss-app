@@ -1,28 +1,28 @@
 import axios from '../config/axios'
 import Swal from 'sweetalert2'
 
-const setBusinesses = (businesses) => {
-    return {type: 'SET_BUSINESSES', payload: businesses}
+const setClients = (clients) => {
+    return {type: 'SET_CLIENTS', payload: clients}
 }
 
-const addBusiness = (business) => {
-    return {type: 'ADD_BUSINESS', payload: business}
+const addClient = (client) => {
+    return {type: 'ADD_CLIENT', payload: client}
 }
 
-const updateBusiness = (id, business) => {
-    return {type: 'UPDATE_BUSINESS', payload: {id, business}}
+const updateClient = (id, client) => {
+    return {type: 'UPDATE_CLIENT', payload: {id, client}}
 }
 
-const removeBusiness = (id) => {
-    return {type: 'REMOVE_BUSINESS', payload: id}
+const removeClient = (id) => {
+    return {type: 'REMOVE_CLIENT', payload: id}
 }
 
-export const startGetBusinesses = () => {
+export const startGetClients = (businessId) => {
     return (dispatch) => {
-        axios.get(`/businesses`)
+        axios.get(`/businesses/${businessId}/clients`)
         .then(response => {
-            const businesses = response.data
-            dispatch(setBusinesses(businesses))
+            const clients = response.data
+            dispatch(setClients(clients))
         })
         .catch(err => {
             if (err.response.status == 401) {
@@ -32,13 +32,13 @@ export const startGetBusinesses = () => {
     }
 }
 
-export const startPostBusiness = (formData) => {
+export const startPostClient = (businessId, formData) => {
     return (dispatch) => {
-        axios.post('/businesses', formData)
+        axios.post(`/businesses/${businessId}/clients`, formData)
             .then(response => {
                 console.log(response)
-                const business = response.data
-                dispatch(addBusiness(business))
+                const client = response.data
+                dispatch(addClient(client))
             })
             .catch(err => {
                 Swal.fire({
@@ -49,9 +49,9 @@ export const startPostBusiness = (formData) => {
     }
 }
 
-export const startPutBusiness = (id, formData, history) => {
+export const startPutClient = (businessId, id, formData, history) => {
     return (dispatch) => {
-        axios.put(`/businesses/${id}`, formData)
+        axios.put(`/businesses/${businessId}/clients/${id}`, formData)
         .then(response=>{
             if (response.data.errors) {
                 Swal.fire({
@@ -59,10 +59,10 @@ export const startPutBusiness = (id, formData, history) => {
                     text: response.data.message,
                 })
             } else {
-                const business = response.data
-                const id = business._id
-                dispatch(updateBusiness(id, business))
-                history && history.push(`/businesses/${id}`)
+                const client = response.data
+                const id = client._id
+                dispatch(updateClient(id, client))
+                history && history.push(`/businesses/${businessId}/clients/${id}`)
             }
         })
         .catch(err => {
@@ -80,12 +80,12 @@ export const startPutBusiness = (id, formData, history) => {
     }
 } 
 
-export const startDeleteBusiness = (id) => {
+export const startDeleteClient = (businessId, id) => {
     return (dispatch) => {
-        axios.delete(`/businesses/${id}`)
+        axios.delete(`/businesses/${businessId}/clients/${id}`)
             .then(response => {
                 const id = response.data._id
-                dispatch(removeBusiness(id))
+                dispatch(removeClient(id))
             })
             .catch(err => {
                 if (err.response.status == 401) {
@@ -94,22 +94,9 @@ export const startDeleteBusiness = (id) => {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: 'There was an error while deleting your business',
+                    text: 'There was an error while deleting your transaction',
                     footer: 'Please try again'
                   })
             })
     }
 }
-
-export const startPostJoin = (id, formData) => {
-    return (dispatch) => {
-        axios.post(`/businesses/${id}/invites/accept`, formData)
-            .then(response => {
-                !response.data.notice && dispatch(addBusiness(response.data))
-            })
-            .catch(err => {
-                console.log(err)
-            })
-    }
-}
-

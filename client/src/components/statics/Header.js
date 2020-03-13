@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import {startPostUserLogout} from '../../actions/user'
+import {startPostUserLogout, setActiveBusiness} from '../../actions/user'
 import MenuIcon from '@material-ui/icons/Menu'
 import Drawer from '@material-ui/core/Drawer'
 import List from '@material-ui/core/List'
@@ -20,13 +20,19 @@ class Header extends React.Component {
     constructor() {
         super()
         this.state = {
-            drawerIsOpen: false,
-            activeBusiness: ''
+            drawerIsOpen: false
+        }
+    }
+
+    componentDidMount() {
+        const id = this.props.location.pathname.slice(12, 36)
+        if (this.state.activeBusiness !== id) {
+            this.props.dispatch(setActiveBusiness(id))
         }
     }
 
     toggleDrawer = (open) => {
-        this.setState({drawerIsOpen: open, activeBusiness: this.props.location.pathname.slice(12, 36)})
+        this.setState({drawerIsOpen: open})
     } 
 
     render() {
@@ -47,35 +53,35 @@ class Header extends React.Component {
                 <List>
                     <ListItem button  onClick={() => {
                         this.toggleDrawer(false)
-                        this.props.history.push(`/businesses/${this.state.activeBusiness}/invoices`)
+                        this.props.history.push(`/businesses/${this.props.user.activeBusiness}/invoices`)
                     }}>
                         <ListItemIcon><StorefrontIcon/></ListItemIcon>
                         <ListItemText primary={'Invoices'} />
                     </ListItem>
                     <ListItem button  onClick={() => {
                         this.toggleDrawer(false)
-                        this.props.history.push(`/businesses/${this.state.activeBusiness}/purchases`)
+                        this.props.history.push(`/businesses/${this.props.user.activeBusiness}/purchases`)
                     }}>
                         <ListItemIcon><ShoppingBasketIcon/></ListItemIcon>
                         <ListItemText primary={'Purchases'} />
                     </ListItem>
                     <ListItem button  onClick={() => {
                         this.toggleDrawer(false)
-                        this.props.history.push(`/businesses/${this.state.activeBusiness}/expenses`)
+                        this.props.history.push(`/businesses/${this.props.user.activeBusiness}/expenses`)
                     }}>
                         <ListItemIcon><AccountBalanceWalletIcon/></ListItemIcon>
                         <ListItemText primary={'Expenses'} />
                     </ListItem>
                     <ListItem button  onClick={() => {
                         this.toggleDrawer(false)
-                        this.props.history.push(`/businesses/${this.state.activeBusiness}/reports`)
+                        this.props.history.push(`/businesses/${this.props.user.activeBusiness}/reports`)
                     }}>
                         <ListItemIcon><ShowChartIcon/></ListItemIcon>
                         <ListItemText primary={'Reports'} />
                     </ListItem>
                     <ListItem button  onClick={() => {
                         this.toggleDrawer(false)
-                        this.props.history.push(`/businesses/${this.state.activeBusiness}/teams`)
+                        this.props.history.push(`/businesses/${this.props.user.activeBusiness}/teams`)
                     }}>
                         <ListItemIcon><PeopleIcon/></ListItemIcon>
                         <ListItemText primary={'Team'} />
