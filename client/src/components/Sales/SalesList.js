@@ -112,7 +112,7 @@ function SalesList(props) {
             </Modal>
             <div className='contentHeader'>
             <span className='headerText'>Sales</span>
-            <Link to={`/businesses/${props.match.params.businessId}/sales/new`}><IconButton className='tableButton' >
+            <Link to={`/businesses/${props.match.params.businessId}/invoices/new`}><IconButton className='tableButton' >
                 <Add />
             </IconButton>
             </Link>

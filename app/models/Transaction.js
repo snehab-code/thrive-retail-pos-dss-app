@@ -58,10 +58,7 @@ const transactionSchema = new Schema({
     // in case of purchases, supplier invoice number here. Sales we end up entering this twice??
     invoice: {
         type: String,
-        required: true,
-        unique: true
-            // in case of purchases - supplier invoice number, in case of sales - our invoice number. Unique cannot be true bec supplier inv numbers might clash - PREFIX "SUPP-name?". 
-            // invoice numbers HAVE to be serialised but they CAN be alpha numeric. Do I just ignore this?
+        required: true
     },
     invoiceDate: {
         type: Date,

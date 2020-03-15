@@ -43,6 +43,10 @@ const commoditySchema = new Schema({
     business: {
         type: Schema.Types.ObjectId,
         required: true
+    },
+    stock: {
+        type: Number,
+        default: 0
     }
 })
 

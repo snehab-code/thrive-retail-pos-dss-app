@@ -16,7 +16,11 @@ const payablesController = require('../app/controllers/payablesController')
 const purchaseOrdersController = require('../app/controllers/purchaseOrdersController')
 const suppliersController = require('../app/controllers/suppliersController')
 const transactionsController = require('../app/controllers/transactionController')
+const salesController = require('../app/controllers/salesController')
 
+// routes
+
+// reminder: add limits etc for pagination
 router.get('/api/businesses', authenticateUser, businessController.list)
 router.get('/api/businesses/:id', authenticateUser, businessController.show)
 router.post('/api/businesses', authenticateUser, businessController.create)
@@ -24,8 +28,9 @@ router.put('/api/businesses/:id', authenticateUser, businessController.update)
 router.delete('/api/businesses/:id', authenticateUser, businessController.destroy)
 router.get('/api/businesses/:id/invites', authenticateUser, businessController.viewInvite)
 router.post('/api/businesses/:id/invites', authenticateUser, businessController.createInvite)
-router.post('/api/businesses/:id/invites/accept', authenticateUser, businessController.join)
-router.get('/api/businesses/:id/all-info', authenticateUser, businessController.listInfo)
+router.post('/api/businesses/:id/invites/acceptance', authenticateUser, businessController.join)
+
+// router.get('/api/businesses/:id/all-info', authenticateUser, businessController.listInfo)
 
 router.get('/api/businesses/:businessId/cash-bank', authenticateUser, checkAuthorisation, cashBankController.list)
 router.get('/api/businesses/:businessId/cash-bank/:cashBankId', authenticateUser, checkAuthorisation, cashBankController.show)
@@ -81,12 +86,18 @@ router.post('/api/businesses/:businessId/transactions', authenticateUser, checkA
 router.put('/api/businesses/:businessId/transactions/:transactionId', authenticateUser, checkAuthorisation, transactionsController.update)
 router.delete('/api/businesses/:businessId/transactions/:transactionId', authenticateUser, checkAuthorisation, transactionsController.destroy)
 
+router.get('/api/businesses/:businessId/sales', authenticateUser, checkAuthorisation, salesController.list)
+router.get('/api/businesses/:businessId/sales/:saleId', authenticateUser, checkAuthorisation, salesController.show)
+router.post('/api/businesses/:businessId/sales', authenticateUser, checkAuthorisation, salesController.create)
+router.put('/api/businesses/:businessId/sales/:saleId', authenticateUser, checkAuthorisation, salesController.update)
+router.delete('/api/businesses/:businessId/sales/:saleId', authenticateUser, checkAuthorisation, transactionsController.destroy)
+
 router.get('/api/users', usersController.list)
 router.post('/api/users/register', usersController.register)
 router.post('/api/users/login', usersController.login)
 router.delete('/api/users/logout', authenticateUser, usersController.logout)
 router.delete('/api/users/logout-all', authenticateUser, usersController.logoutAll)
-router.get('/api/users/check-login', authenticateUser, usersController.checkLoginStatus)
+router.get('/api/users/relogin', authenticateUser, usersController.checkLoginStatus)
 // add a route for all invites
 
 module.exports = router

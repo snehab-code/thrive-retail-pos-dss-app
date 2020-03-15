@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 
-function OrderShow(props) {
+function PurchaseShow(props) {
     return (
         <>
             <h3>Order details</h3>
@@ -16,4 +16,4 @@ const mapStateToProps = (state, props) => {
     }
 }
 
-export default connect(mapStateToProps)(OrderShow)
+export default connect(mapStateToProps)(PurchaseShow)

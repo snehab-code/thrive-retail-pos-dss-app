@@ -124,7 +124,7 @@ export const startDeleteBusiness = (id) => {
 
 export const startPostJoin = (id, formData) => {
     return (dispatch) => {
-        axios.post(`/businesses/${id}/invites/accept`, formData)
+        axios.post(`/businesses/${id}/invites/acceptance`, formData)
         .then(response => {
             !response.data.notice && dispatch(addBusiness(response.data))
         })

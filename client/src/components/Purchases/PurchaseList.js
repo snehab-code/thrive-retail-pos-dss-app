@@ -8,7 +8,7 @@ import Add from '@material-ui/icons/Add'
 import Modal from 'react-modal'
 import modalStyles from '../../config/modalCss'
 import { customStylesTable } from '../../config/dataTableTheme'
-import OrderShow from './OrderShow'
+import PurchaseShow from './PurchaseShow'
 
 const dataColumns = [{
     name: 'Date',
@@ -81,7 +81,7 @@ function PurchaseList(props) {
                 // onAfterOpen={this.afterOpenModal}
                 onRequestClose={closeModal}
             >
-                <OrderShow id={orderId}/>
+                <PurchaseShow id={orderId}/>
             </Modal>
             <div className='contentHeader'>
             <span className='headerText'>Purchases</span>

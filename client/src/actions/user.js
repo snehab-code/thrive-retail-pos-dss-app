@@ -28,7 +28,7 @@ export const setActiveBusiness = (id) => {
 
 export const startCheckUserAuth = () => {
     return (dispatch, getState) => {
-        axios.get('/users/check-login')
+        axios.get('/users/relogin')
             .then(response => {
                 console.log(response)
                 if (response.data.username) {
