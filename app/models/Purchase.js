@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 // might refactor so invoice numbers can be unique... which they're not right now
-const saleSchema = new Schema({
+const purchaseSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now()
@@ -11,14 +11,20 @@ const saleSchema = new Schema({
         type: Date,
         required: true
     },
-    invoiceDate: {
-        type: Date,
-        required: true
+    documentType: {
+        type: String,
+        required: true,
+        enum: ['GRN', 'MRN', 'Debit Note', 'Warranty', 'Credit Note']
     },
-    invoiceNumber: {
+        // GRN - for full order goods received, MRN for wrong receipts/returns, Debit note for short receipts, Warranty for failed items returned to seller on warranty, Credit note for excess received not returned to seller, 
+    documentNumber: {
         type: String,
         required: true,
         unique: true
+    },
+    documentDate: {
+        type: Date,
+        required: true
     },
     commodities: [{
         product: {
@@ -44,9 +50,23 @@ const saleSchema = new Schema({
             type: Number
         }
     }],
-    client: {
+    supplier: {
         type: Schema.Types.ObjectId,
-        ref: 'Client'
+        ref: 'Supplier',
+        required: true
+    },
+    supplierInvoice: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    invoiceDate: {
+        type: Date,
+        required: true
+    },
+    creditPeriodDays: {
+        type: Number,
+        default: 0
     },
     amount: {
         type: Number,
@@ -66,6 +86,6 @@ const saleSchema = new Schema({
     }
 })
 
-const Sale = mongoose.model('Sale', saleSchema)
+const Purchase = mongoose.model('Purchase', purchaseSchema)
 
-module.exports = Sale
+module.exports = Purchase

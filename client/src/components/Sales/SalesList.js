@@ -47,7 +47,7 @@ const dataColumns = [
 },
 {
     name: 'Item',
-    selector: 'commodity.name',
+    selector: 'commodity',
     sortable: true
 },
 {
@@ -133,7 +133,7 @@ function SalesList(props) {
 
 const mapStateToProps = (state) => {
     return {
-        sales: state.transactions.filter(transaction => transaction.documentType === 'Invoice').map(sale => {
+        transactionSales: state.transactions.filter(transaction => transaction.documentType === 'Invoice').map(sale => {
             const client = state.clients.find(client => client._id == sale.party)
             const newData = {
                 party: {_id: sale.party, name: client && client.name},
@@ -142,7 +142,8 @@ const mapStateToProps = (state) => {
                 qty: sale.quantity + ' ' + sale.unit
             }
             return {...sale, ...newData}
-        })
+        }),
+        sales: state.sales
     }
 }
 

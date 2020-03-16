@@ -8,6 +8,8 @@ import {startGetPayables} from './payables'
 import {startGetPurchaseOrders} from './purchaseOrders'
 import {startGetSuppliers} from './suppliers'
 import {startGetTransactions} from './transactions'
+import {startGetPurchases} from './purchases'
+import {startGetSales} from './sales'
 
 const setBusinesses = (businesses) => {
     return {type: 'SET_BUSINESSES', payload: businesses}
@@ -25,6 +27,7 @@ const removeBusiness = (id) => {
     return {type: 'REMOVE_BUSINESS', payload: id}
 }
 
+// replace with a promise.all later
 export const startGetBusinessInfo = (businessId) => {
     return (dispatch) => {
         dispatch(startGetCashBank(businessId))
@@ -35,6 +38,8 @@ export const startGetBusinessInfo = (businessId) => {
         dispatch(startGetPurchaseOrders(businessId))
         dispatch(startGetSuppliers(businessId))
         dispatch(startGetTransactions(businessId))
+        dispatch(startGetSales(businessId))
+        dispatch(startGetPurchases(businessId))
     }
 }
 

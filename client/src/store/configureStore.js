@@ -10,6 +10,8 @@ import payablesReducer from '../reducers/payablesReducer'
 import purchaseOrdersReducer from '../reducers/purchaseOrdersReducer'
 import suppliersReducer from '../reducers/suppliersReducer'
 import transactionsReducer from '../reducers/transactionsReducer'
+import salesReducer from '../reducers/salesReducer'
+import purchasesReducer from '../reducers/purchasesReducer'
 
 const appReducer = combineReducers({
     user: userReducer,
@@ -21,7 +23,9 @@ const appReducer = combineReducers({
     payables: payablesReducer,
     purchaseOrders: purchaseOrdersReducer,
     suppliers: suppliersReducer,
-    transactions: transactionsReducer
+    transactions: transactionsReducer,
+    sales: salesReducer,
+    purchases: purchasesReducer
 })
 
 const rootReducer = (state, action) => {
