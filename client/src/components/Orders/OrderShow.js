@@ -5,7 +5,7 @@ function OrderShow(props) {
     return (
         <>
             <h3>Order details</h3>
-            {props.order.commodity.name}
+            {props.order}
         </>
     )
 }

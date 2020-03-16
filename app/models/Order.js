@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const purchaseOrderSchema = new Schema({
+const orderSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now()
@@ -63,6 +63,6 @@ const purchaseOrderSchema = new Schema({
     }
 })
 
-const PurchaseOrder = mongoose.model('PurchaseOrder', purchaseOrderSchema)
+const Order = mongoose.model('Order', orderSchema)
 
-module.exports = PurchaseOrder
+module.exports = Order

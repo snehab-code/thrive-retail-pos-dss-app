@@ -18,6 +18,7 @@ const suppliersController = require('../app/controllers/suppliersController')
 const transactionsController = require('../app/controllers/transactionController')
 const salesController = require('../app/controllers/salesController')
 const purchasesController = require('../app/controllers/purchasesController')
+const ordersController = require('../app/controllers/ordersController')
 
 // routes
 

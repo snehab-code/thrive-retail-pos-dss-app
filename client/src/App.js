@@ -29,6 +29,11 @@ import SaleShow from './components/Sales/SaleShow'
 import SaleAdd from './components/Sales/SaleAdd'
 import SaleEdit from './components/Sales/SaleEdit'
 
+import OrdersList from './components/Orders/OrdersList'
+import OrderShow from './components/Orders/OrderShow'
+import OrderAdd from './components/Orders/OrderAdd'
+import OrderEdit from './components/Orders/OrderEdit'
+
 import ReportList from './components/Reports/ReportList'
 import TeamList from './components/Team/TeamList'
 
@@ -60,7 +65,7 @@ function App() {
       <Route path="/businesses/:businessId/purchases/edit" component={PurchaseEdit} />
       <Route path="/businesses/:businessId/purchases/:purchaseId" component={PurchaseShow}/>
 
-      <Route path="/businesses/:businessId/orders" component={OrderList} exact/>
+      <Route path="/businesses/:businessId/orders" component={OrdersList} exact/>
       <Route path="/businesses/:businessId/orders/new" component={OrderShow} exact />
       <Route path="/businesses/:businessId/orders/edit" component={OrderEdit} />
       <Route path="/businesses/:businessId/orders/:orderId" component={OrderShow}/>

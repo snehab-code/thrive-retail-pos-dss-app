@@ -1,4 +1,4 @@
-const CasnBankReducer = (state=[], action) => {
+const CashBankReducer = (state=[], action) => {
     switch(action.type) {
         case 'SET_CASHBANK' : {
             return [...action.payload]
@@ -24,5 +24,5 @@ const CasnBankReducer = (state=[], action) => {
     }
 }
 
-export default CasnBankReducer
+export default CashBankReducer
 
