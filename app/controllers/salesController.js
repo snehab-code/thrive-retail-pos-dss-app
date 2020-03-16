@@ -2,7 +2,7 @@ const Sale = require('../models/Sale')
 
 module.exports.list = (req, res) => {
     const businessId = req.business._id
-    Sale.find({business: businessId}).populate('commodities.product', 'name').populate('party', 'name')
+    Sale.find({business: businessId}).populate('commodities.product', 'name').populate('client', 'name')
         .then(sales => {
             res.send(sales)
         })

@@ -306,7 +306,21 @@ button:hover {
     margin-top:5px;
 }
 
-.businessContentForm {
+.subList {
+    display: flex;
+    flex-direction: column;
+    padding-top:5px;
+    padding-bottom:5px;
+}
 
+.subList span {
+    text-transform: capitalize;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: right;
+    padding:3px;
+}
 
+.textSubList span {
+    text-align: left;
 }

@@ -41,39 +41,79 @@ const dataColumns = [
 },
 {
     name: 'Invoice',
-    selector: 'invoice',
+    selector: 'invoiceNumber',
     sortable: true,
     width:'75px'
 },
 {
     name: 'Item',
-    selector: 'commodity',
-    sortable: true
+    selector: 'commodities',
+    sortable: true,
+    grow: 1,
+    cell: row => (
+            <div className="subList textSubList">
+                {row.commodities.map(commodity => {
+                    return (
+                        <span key ={commodity.product._id}>{commodity.product.name}</span>
+                    )
+                })}
+            </div>)
 },
 {
     name: 'Quantity',
-    selector: 'qty',
+    selector: 'commodities',
     minWidth: '50px',
     maxWidth: '75px',
-    center: true
+    right: true,
+    cell: row => (
+            <div className="subList">
+                {row.commodities.map(commodity => {
+                    return (
+                        <span key ={commodity.product._id}>{commodity.quantity}</span>
+                    )
+                })}
+            </div>)
 },
 {
     name: 'Rate',
     selector: 'rate',
     minWidth: '50px',
     maxWidth: '75px',
-    center: true
+    right: true,
+    cell: row => (
+        <div className="subList">
+            {row.commodities.map(commodity => {
+                return (
+                    <span key ={commodity.product._id}>{commodity.rate}</span>
+                )
+            })}
+    </div>)
 },
 {
     name: 'Amount', 
     selector: 'amount',
     minWidth: '50px',
     maxWidth:'70px',
-    center: true
+    right: true,
+    cell: row => (
+        <div className="subList">
+            {row.commodities.map(commodity => {
+                return (
+                    <span key ={commodity.product._id}>{commodity.amount}</span>
+                )
+            })}
+        </div>)
+},
+{
+    name: 'Total', 
+    selector: 'amount',
+    minWidth: '50px',
+    maxWidth:'70px',
+    right: true,
 },
 {
     name: 'Client',
-    selector: 'party.name',
+    selector: 'client.name',
     sortable: true
 },
 {
@@ -133,17 +173,15 @@ function SalesList(props) {
 
 const mapStateToProps = (state) => {
     return {
-        transactionSales: state.transactions.filter(transaction => transaction.documentType === 'Invoice').map(sale => {
-            const client = state.clients.find(client => client._id == sale.party)
-            const newData = {
-                party: {_id: sale.party, name: client && client.name},
-                transactionDate: {date: sale.transactionDate, id: sale._id},
-                amount: sale.quantity * sale.rate,
-                qty: sale.quantity + ' ' + sale.unit
-            }
-            return {...sale, ...newData}
-        }),
-        sales: state.sales
+        sales: state.sales.map(sale => {
+            const commodities = sale.commodities.map(commodity => {
+                const computedData = {
+                    amount: commodity.quantity * commodity.rate
+                }
+                return {...commodity, ...computedData}
+            })
+            return {...sale, commodities}
+        })
     }
 }
 
