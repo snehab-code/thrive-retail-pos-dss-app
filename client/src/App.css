@@ -324,3 +324,13 @@ button:hover {
 .textSubList span {
     text-align: left;
 }
+
+.businessHome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.heading {
+    font-size: 6vmin
+}
