@@ -99,6 +99,12 @@ router.post('/api/businesses/:businessId/purchases', authenticateUser, checkAuth
 router.put('/api/businesses/:businessId/purchases/:purchaseId', authenticateUser, checkAuthorisation, purchasesController.update)
 router.delete('/api/businesses/:businessId/purchases/:purchaseId', authenticateUser, checkAuthorisation, transactionsController.destroy)
 
+router.get('/api/businesses/:businessId/orders', authenticateUser, checkAuthorisation, ordersController.list)
+router.get('/api/businesses/:businessId/orders/:orderId', authenticateUser, checkAuthorisation, ordersController.show)
+router.post('/api/businesses/:businessId/orders', authenticateUser, checkAuthorisation, ordersController.create)
+router.put('/api/businesses/:businessId/orders/:orderId', authenticateUser, checkAuthorisation, ordersController.update)
+router.delete('/api/businesses/:businessId/orders/:orderId', authenticateUser, checkAuthorisation, transactionsController.destroy)
+
 router.get('/api/users', usersController.list)
 router.post('/api/users/register', usersController.register)
 router.post('/api/users/login', usersController.login)
