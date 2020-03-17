@@ -12,7 +12,8 @@ import Button from '@material-ui/core/Button'
 
 function OrderForm(props) {
 
-    const [transactionDate, handleDateChange] = useState(Date.now())
+    const [transactionDate, setDate] = useState(Date.now())
+    const [count, setCount] = useState(['1'])
 
     const handleSubmit = (val, {setSubmitting}) => {
         console.log('hi', val, transactionDate)
@@ -27,7 +28,8 @@ function OrderForm(props) {
                 phone: '',
                 orderNumber: '',
                 status: '',
-                remark: ''
+                remark: '',
+                commodities: []
             }}
             onSubmit={handleSubmit}
             validate={values => {
@@ -44,24 +46,13 @@ function OrderForm(props) {
                 <KeyboardDatePicker
                         id='transactionDate'
                         name='transactionDate'
-                        onChange={handleDateChange}
+                        onChange={(date) => setDate(date)}
                         value={transactionDate}
                         format='MM/DD/YYYY'
                         label='Transaction Date'
                     />
 
                 <div className="formSubGroup">
-                    {/* <TextField
-                        error = {errors.supplier && touched.supplier}
-                        id='supplier'
-                        name='supplier'
-                        value={values.supplier}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        label='supplier'
-                        helperText={errors.supplier}
-                    /> */}
-                    
                     {
                         suppliers[0] && 
                         <FormControl>
@@ -97,6 +88,51 @@ function OrderForm(props) {
                         helperText={errors.orderNumber}
                     />
                 </div>
+                {
+                    count.map(ele => {
+                        console.log(ele)
+                    return (
+                    <div className="formSubGroup" style={{border: '1px solid #f1f4f3'}}>
+                    <TextField
+                        error = {errors.commoditiesproduct && touched.product}
+                        id={`product${ele}`}
+                        name={`commodities[${ele-1}].product`}
+                        value={values[`commodities[${ele-1}].product`]}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        label='Product'
+                        helperText={errors.commodities && errors.commodities[ele-1].product}
+                    />
+                    <TextField
+                        error = {errors.rateremark && touched.rate}
+                        id={`rate${ele}`}
+                        name={`commodities[${ele-1}].rate`}
+                        value={values[`commodities[${ele-1}].rate`]}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        label='Rate'
+                        helperText={errors.rate}
+                    />
+                    <TextField
+                        error = {errors.quantity && touched.quantity}
+                        id={`quantity${ele}`}
+                        name={`commodities[${ele-1}].quantity`}
+                        value={values[`commodities[${ele-1}].quantity`]}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        label='quantity'
+                        helperText={errors.quantity}
+                    />
+                    <div style={{padding:10, fontSize: '4vmin', minWidth: '40%', height: '60px', textAlign: 'right'}}>
+                        <span>{values.quantity && values.rate && values.quantity * values.rate}</span>
+                    </div>
+                    <button onClick={() => {
+                        const newCount = [...count, (count.length+1)]
+                        setCount(newCount)
+                    }} style={{width:20}} type="button">+</button>
+                </div>
+                    )}
+                )}
                 <div className="formSubGroup">
                     <FormControl>
                     <InputLabel id="status">Status</InputLabel>
