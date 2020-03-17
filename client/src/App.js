@@ -1,6 +1,9 @@
 import React from 'react'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import MomentUtils from '@date-io/moment'
+import { MuiPickersUtilsProvider } from '@material-ui/pickers'
+
 import Header from './components/statics/Header'
 import Home from './components/statics/Home'
 
@@ -41,6 +44,7 @@ import TeamList from './components/Team/TeamList'
 function App() {
   return (
     <BrowserRouter>
+    <MuiPickersUtilsProvider utils={MomentUtils}>
       <CssBaseline />
       <Header/>
       
@@ -61,17 +65,17 @@ function App() {
       <Route path="/businesses/:businessId/invoices/:invoiceId" component={SaleShow}/>
 
       <Route path="/businesses/:businessId/purchases" component={PurchaseList} exact/>
-      <Route path="/businesses/:businessId/purchases/new" component={PurchaseShow} exact />
+      <Route path="/businesses/:businessId/purchases/new" component={PurchaseAdd} exact />
       <Route path="/businesses/:businessId/purchases/edit" component={PurchaseEdit} />
       <Route path="/businesses/:businessId/purchases/:purchaseId" component={PurchaseShow}/>
 
       <Route path="/businesses/:businessId/orders" component={OrdersList} exact/>
-      <Route path="/businesses/:businessId/orders/new" component={OrderShow} exact />
+      <Route path="/businesses/:businessId/orders/new" component={OrderAdd} exact />
       <Route path="/businesses/:businessId/orders/edit" component={OrderEdit} />
       <Route path="/businesses/:businessId/orders/:orderId" component={OrderShow}/>
 
       <Route path="/businesses/:businessId/expenses" component={PayablesList} exact/>
-      <Route path="/businesses/:businessId/expenses/new" component={PayableShow} exact />
+      <Route path="/businesses/:businessId/expenses/new" component={PayableAdd} exact />
       <Route path="/businesses/:businessId/expenses/edit" component={PayableEdit} />
       <Route path="/businesses/:businessId/expenses/:expenseId" component={PayableShow}/>
 
@@ -80,6 +84,7 @@ function App() {
 
       </Switch>
       </div>
+    </MuiPickersUtilsProvider>
     </BrowserRouter>
   )
 }

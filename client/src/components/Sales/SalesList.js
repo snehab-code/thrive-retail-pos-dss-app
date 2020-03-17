@@ -138,8 +138,6 @@ function SalesList(props) {
         setModalState(false)
     }
 
-    console.log(props)
-
     return (
         <div className="businessContent">
             <Modal 

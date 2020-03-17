@@ -150,7 +150,7 @@ a {
 .MuiInput-underline:after {
     border: 1px solid #004445 !important;
 }
-
+/* 
 button {
     font-size:min(4vmin, 16px) !important; 
     margin:10px !important;
@@ -162,7 +162,7 @@ button {
     margin-top: 20px !important;
     border: 1px solid #6fb98f !important;
     max-width:280px;
-}
+} */
 
 button:hover {
     background-color: #dbf0f0 !important;
@@ -333,4 +333,42 @@ button:hover {
 
 .heading {
     font-size: 6vmin
+}
+
+.businessForms {
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    margin-top: 2vh
+}
+
+.businessForms form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    min-width: 310px;
+}
+
+.businessForms form .MuiFormControl-root {
+    width: 98%;
+    margin: 7px;
+    margin-top: 5px;
+}
+
+.formSubGroup {
+    display:flex;
+    width:100%;
+}
+
+.MuiIconButton-root {
+    border: 0px !important;
+    background-color: transparent !important; 
+    min-width: 40px !important;
+    width: 40px !important;
+    height: 40px;
+    margin: 0px !important;
 }

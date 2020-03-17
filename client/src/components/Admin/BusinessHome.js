@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {Chart} from 'react-google-charts'
 
 function BusinessHome(props){
-    console.log(props)
     return(
     <div className="businessHome">
         <h2>{props.business && props.business.name}</h2>

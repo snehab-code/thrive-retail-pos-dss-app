@@ -13,6 +13,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@date-io/moment": "^2.4.0",
+    "@material-ui/pickers": "^3.2.10",
     "bcryptjs": "^2.4.3",
     "concurrently": "^5.1.0",
     "cors": "^2.8.5",
