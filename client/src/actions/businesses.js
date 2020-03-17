@@ -10,6 +10,7 @@ import {startGetSuppliers} from './suppliers'
 import {startGetTransactions} from './transactions'
 import {startGetPurchases} from './purchases'
 import {startGetSales} from './sales'
+import {startGetOrders} from './orders'
 
 const setBusinesses = (businesses) => {
     return {type: 'SET_BUSINESSES', payload: businesses}
@@ -40,6 +41,7 @@ export const startGetBusinessInfo = (businessId) => {
         dispatch(startGetTransactions(businessId))
         dispatch(startGetSales(businessId))
         dispatch(startGetPurchases(businessId))
+        dispatch(startGetOrders(businessId))
     }
 }
 

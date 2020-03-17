@@ -341,7 +341,12 @@ button:hover {
     align-items: center;
     justify-content: center;
     width: 80%;
-    margin-top: 2vh
+    min-width: 310px;
+    margin-top: 2vh;
+    border: 1px solid #dbe6e3;
+    border-radius: 12px;
+    background-color: #fcfdfd;
+    padding:20px;
 }
 
 .businessForms form {
@@ -362,6 +367,11 @@ button:hover {
 .formSubGroup {
     display:flex;
     width:100%;
+}
+
+.formSubGroup div .MuiFormLabel-root {
+    font-size: min(4vmin, 1rem) !important;
+    
 }
 
 .MuiIconButton-root {

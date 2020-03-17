@@ -8,7 +8,7 @@ function OrderAdd(props) {
         <div className="businessForms">
         <h1>Order Add</h1>
         
-        <OrderForm />
+        <OrderForm businessId={props.match.params.businessId}/>
         </div>
     )
 }

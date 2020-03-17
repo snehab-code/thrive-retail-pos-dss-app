@@ -23,12 +23,12 @@ const dataColumns = [{
     width:'75px',
     sortable: true
 },
-{
-    name: 'Item',
-    selector: 'commodity.name',
-    grow: 2,
-    sortable: true
-},
+// {
+//     name: 'Item',
+//     selector: 'commodity.name',
+//     grow: 2,
+//     sortable: true
+// },
 {
     name: 'Supplier',
     selector: 'supplier.name',
@@ -41,13 +41,13 @@ const dataColumns = [{
     center: true,
     sortable: true
 },
-{
-    name: 'Quantity',
-    selector: 'qty',
-    minWidth: '50px',
-    maxWidth: '75px',
-    center: true
-},
+// {
+//     name: 'Quantity',
+//     selector: 'qty',
+//     minWidth: '50px',
+//     maxWidth: '75px',
+//     center: true
+// },
 {
     name: 'Amount', 
     selector: 'amount',

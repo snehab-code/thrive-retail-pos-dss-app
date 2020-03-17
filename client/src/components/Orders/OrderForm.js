@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import {connect} from 'react-redux'
+import {startPostOrder} from '../../actions/orders'
 import {Formik, Form} from 'formik'
 import { KeyboardDatePicker } from '@material-ui/pickers'
 import TextField from '@material-ui/core/TextField'
@@ -8,28 +9,37 @@ import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import Button from '@material-ui/core/Button'
+import Autocomplete from '@material-ui/lab/Autocomplete'
 
 
 function OrderForm(props) {
 
     const [transactionDate, setDate] = useState(Date.now())
     const [count, setCount] = useState(['1'])
+    const [supplier, setSupplier] = useState('')
 
     const handleSubmit = (val, {setSubmitting}) => {
-        console.log('hi', val, transactionDate)
+        val.commodities = val.commodities.slice(0, count.length)
+        const formData = {...val,...{
+            supplier: supplier._id,
+            transactionDate
+        }}
+        console.log(formData, props)
+        props.dispatch(startPostOrder(props.businessId, formData))
+        setSubmitting(false)
     }
 
-    const suppliers = props.suppliers
-    console.log(props.suppliers, 'hihi')
+    console.log(props)
+    
     return (
         <Formik
-            initialValues={{
-                supplier: '', 
-                phone: '',
+            // enableReinitialize 
+            initialValues={{ 
+                supplier: '',
                 orderNumber: '',
                 status: '',
                 remark: '',
-                commodities: []
+                commodities: Array(10).fill({product: '', rate: '', quantity: ''})
             }}
             onSubmit={handleSubmit}
             validate={values => {
@@ -39,8 +49,8 @@ function OrderForm(props) {
             }
         >
         {
-        (props) => {
-            const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit} = props
+        (formikProps) => {
+            const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit} = formikProps
             return (
             <Form onSubmit={handleSubmit}>
                 <KeyboardDatePicker
@@ -54,27 +64,25 @@ function OrderForm(props) {
 
                 <div className="formSubGroup">
                     {
-                        suppliers[0] && 
-                        <FormControl>
-                        <InputLabel id="supplier">Supplier</InputLabel>
-                        <Select
-                            labelId="supplier"
-                            id="supplier"
-                            name='supplier'
-                            value={values.supplier}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            label='supplier'
-                            helperText={errors.supplier}
-                        >
-                            {
-                                suppliers.map(supplier => {
-                                    return <MenuItem key={supplier._id} value={supplier._id}>{supplier.name}</MenuItem>
-                                })
-                            }
-                        
-                        </Select>
-                        </FormControl>
+                        <Autocomplete
+                        style={{width:'100%'}}
+                        options={props.suppliers}
+                        getOptionLabel={option => option.name}
+                        name="supplier" 
+                        id="supplierac"
+                        disableClearable
+                        value={supplier}
+                        onChange={(e, newValue) => setSupplier(newValue)
+                        }
+                        renderInput={params => 
+                            <TextField {...params} 
+                                label="supplier" 
+                                id="supplierac" 
+                                value={values.supplier}
+                                onChange={handleChange}
+                                margin="normal"
+                            />}
+                      />
                     }
                     
                     <TextField
@@ -90,41 +98,55 @@ function OrderForm(props) {
                 </div>
                 {
                     count.map(ele => {
-                        console.log(ele)
                     return (
-                    <div className="formSubGroup" style={{border: '1px solid #f1f4f3'}}>
-                    <TextField
-                        error = {errors.commoditiesproduct && touched.product}
-                        id={`product${ele}`}
-                        name={`commodities[${ele-1}].product`}
-                        value={values[`commodities[${ele-1}].product`]}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        label='Product'
-                        helperText={errors.commodities && errors.commodities[ele-1].product}
-                    />
+                    <div key={ele} className="formSubGroup" style={{border: '1px solid #f1f4f3'}}>
+                    {
+                        props.products && 
+                        <FormControl>
+                        <InputLabel id={`product${ele}`}>Product</InputLabel>
+                        <Select
+                            error = {errors[`commodities[${ele-1}].product`] && touched[`commodities[${ele-1}].product`]}
+                            labelId={`product${ele}`}
+                            id={`product${ele}`}
+                            name={`commodities[${ele-1}].product`}
+                            value={values['commodities'][ele-1] && values['commodities'][ele-1]['product']}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            label='Product'
+                            // helperText={errors.commodities && errors.commodities[ele-1].product}
+                        >
+                            {
+                                props.products.map(product => {
+                                    return <MenuItem key={product._id} value={product._id}>{product.name}</MenuItem>
+                                })
+                            }
+                        
+                        </Select>
+                        </FormControl>
+                    }
                     <TextField
                         error = {errors.rateremark && touched.rate}
                         id={`rate${ele}`}
                         name={`commodities[${ele-1}].rate`}
-                        value={values[`commodities[${ele-1}].rate`]}
+                        value={values['commodities'][ele-1] && values['commodities'][ele-1]['rate']}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         label='Rate'
+                        placeholder='test'
                         helperText={errors.rate}
                     />
                     <TextField
                         error = {errors.quantity && touched.quantity}
                         id={`quantity${ele}`}
                         name={`commodities[${ele-1}].quantity`}
-                        value={values[`commodities[${ele-1}].quantity`]}
+                        value={values['commodities'][ele-1] && values['commodities'][ele-1]['quantity']}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         label='quantity'
                         helperText={errors.quantity}
                     />
                     <div style={{padding:10, fontSize: '4vmin', minWidth: '40%', height: '60px', textAlign: 'right'}}>
-                        <span>{values.quantity && values.rate && values.quantity * values.rate}</span>
+                        <span>{values['commodities'][ele-1] && values['commodities'][ele-1]['quantity'] && values['commodities'][ele-1]['rate'] && values['commodities'][ele-1]['quantity'] * values['commodities'][ele-1]['rate']}</span>
                     </div>
                     <button onClick={() => {
                         const newCount = [...count, (count.length+1)]
@@ -144,7 +166,7 @@ function OrderForm(props) {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         label='status'
-                        helperText={errors.status}
+                        // helperText={errors.status}
                     >
                         {
                             ['Pending Delivery', 'Delivered', 'Completed'].map((status, i) => {
@@ -175,7 +197,8 @@ function OrderForm(props) {
 
 const mapStateToProps = (state) => {
     return {
-        suppliers: state.suppliers
+        suppliers: state.suppliers,
+        products: state.commodities
     }
 }
 
