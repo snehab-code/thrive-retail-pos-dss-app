@@ -1,14 +1,18 @@
 import React from 'react'
-import {connect} from 'react-redux'
 import OrderForm from './OrderForm'
-
+import {startPostOrder} from '../../actions/orders'
 
 function OrderAdd(props) {
+
+    const handleSubmit = (formData) => {
+        props.dispatch(startPostOrder(props.match.params.businessId, formData))
+    }
+
     return (
         <div className="businessForms">
         <h1>Order Add</h1>
         
-        <OrderForm businessId={props.match.params.businessId}/>
+        <OrderForm businessId={props.match.params.businessId} handleSubmit={handleSubmit}/>
         </div>
     )
 }

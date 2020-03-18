@@ -111,7 +111,12 @@ function OrderList(props) {
 
 const mapStateToProps = (state) => {
     return {
-        orders: state.orders
+        orders: state.orders.map(order => {
+            const newData = {
+                transactionDate: {date: order.transactionDate, id: order._id}
+            }
+            return {...order, ...newData}
+        })
     }
 }
 

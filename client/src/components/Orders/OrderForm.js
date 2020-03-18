@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import {connect} from 'react-redux'
-import {startPostOrder} from '../../actions/orders'
 import {Formik, Form} from 'formik'
 import { KeyboardDatePicker } from '@material-ui/pickers'
 import TextField from '@material-ui/core/TextField'
@@ -15,8 +14,8 @@ import Autocomplete from '@material-ui/lab/Autocomplete'
 function OrderForm(props) {
 
     const [transactionDate, setDate] = useState(Date.now())
-    const [count, setCount] = useState(['1'])
-    const [supplier, setSupplier] = useState('')
+    const [count, setCount] = useState(props.commodities ? Array(props.commodities.length).fill().map((item, i) => i + 1) : ['1'])
+    const [supplier, setSupplier] = useState(props.supplier)
 
     const handleSubmit = (val, {setSubmitting}) => {
         val.commodities = val.commodities.slice(0, count.length)
@@ -25,21 +24,21 @@ function OrderForm(props) {
             transactionDate
         }}
         console.log(formData, props)
-        props.dispatch(startPostOrder(props.businessId, formData))
+        props.handleSubmit(formData)
         setSubmitting(false)
     }
 
-    console.log(props)
+    console.log(props, 'proprpor')
     
     return (
         <Formik
-            // enableReinitialize 
+            enableReinitialize 
             initialValues={{ 
-                supplier: '',
-                orderNumber: '',
-                status: '',
-                remark: '',
-                commodities: Array(10).fill({product: '', rate: '', quantity: ''})
+                supplier: props.supplier ? props.supplier._id : '',
+                orderNumber: props.orderNumber ? props.orderNumber : '',
+                status: props.status ? props.status : '',
+                remark: props.remark ? props.remark : '',
+                commodities: props.commodities ? props.commodities.map(commodity => ({product: commodity.product._id, rate: commodity.rate, quantity: commodity.quantity})) : Array(10).fill({product: '', rate: '', quantity: ''})
             }}
             onSubmit={handleSubmit}
             validate={values => {

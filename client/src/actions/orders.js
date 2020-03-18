@@ -62,7 +62,7 @@ export const startPutOrder = (businessId, id, formData, history) => {
                 const order = response.data
                 const id = order._id
                 dispatch(updateOrder(id, order))
-                history && history.push(`/businesses/${businessId}/orders/${id}`)
+                history && history.push(`/businesses/${businessId}/orders`)
             }
         })
         .catch(err => {
