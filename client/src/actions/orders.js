@@ -81,9 +81,11 @@ export const startPutOrder = (businessId, id, formData, history) => {
 } 
 
 export const startDeleteOrder = (businessId, id) => {
+    console.log(businessId, id)
     return (dispatch) => {
         axios.delete(`/businesses/${businessId}/orders/${id}`)
             .then(response => {
+                console.log(response)
                 const id = response.data._id
                 dispatch(removeOrder(id))
             })

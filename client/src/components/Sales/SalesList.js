@@ -1,17 +1,3 @@
-//     return (
-//         <>
-//             <h1>Sales</h1>
-//             - Add transaction
-//             - generate invoice
-//             - Add a client 
-//             - add a commodity!
-//             - basic total sales report on home page with a selectable period?
-//         </>
-//     )
-// }
-
-
-
 import React, {useState} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
@@ -23,6 +9,7 @@ import Modal from 'react-modal'
 import modalStyles from '../../config/modalCss'
 import { customStylesTable } from '../../config/dataTableTheme'
 import SaleShow from './SaleShow'
+import {startDeleteSale} from '../../actions/sales'
 
 const dataColumns = [
 {
@@ -125,13 +112,18 @@ const dataColumns = [
 function SalesList(props) {
 
     const [modalIsOpen, setModalState] = useState(false)
-    const [transactionId, setTransactionId] = useState('')
+    const [saleId, setSaleId] = useState('')
 
     Modal.setAppElement('#root')  
 
     const handleRowClicked = (row) => {
-        setTransactionId(row.transactionDate.id)
+        setSaleId(row.transactionDate.id)
         setModalState(true)
+    }
+
+    const handleRemove = (id) => {
+        props.dispatch(startDeleteSale(props.match.params.businessId, id))
+        setModalState(false)
     }
 
     const closeModal = () => {
@@ -146,7 +138,7 @@ function SalesList(props) {
                 // onAfterOpen={this.afterOpenModal}
                 onRequestClose={closeModal}
             >
-                <SaleShow id={transactionId}/>
+                <SaleShow id={saleId} handleRemove={handleRemove}/>
             </Modal>
             <div className='contentHeader'>
             <span className='headerText'>Sales</span>
@@ -178,7 +170,14 @@ const mapStateToProps = (state) => {
                 }
                 return {...commodity, ...computedData}
             })
-            return {...sale, commodities}
+            const newData = {
+                transactionDate: {
+                    date: sale.transactionDate, 
+                    id: sale._id
+                },
+                commodities
+            }
+            return {...sale, ...newData}
         })
     }
 }

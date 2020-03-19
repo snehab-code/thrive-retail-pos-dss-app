@@ -61,23 +61,19 @@ function App() {
       
       <Route path="/businesses/:businessId/invoices" component={SalesList} exact />
       <Route path="/businesses/:businessId/invoices/new" component={SaleAdd} />
-      <Route path="/businesses/:businessId/invoices/edit" component={SaleEdit} />
-      <Route path="/businesses/:businessId/invoices/:invoiceId" component={SaleShow}/>
+      <Route path="/businesses/:businessId/invoices/:saleId/edit" component={SaleEdit} />
 
       <Route path="/businesses/:businessId/purchases" component={PurchaseList} exact/>
       <Route path="/businesses/:businessId/purchases/new" component={PurchaseAdd} exact />
-      <Route path="/businesses/:businessId/purchases/edit" component={PurchaseEdit} />
-      <Route path="/businesses/:businessId/purchases/:purchaseId" component={PurchaseShow}/>
+      <Route path="/businesses/:businessId/purchases/:purchaseIdedit" component={PurchaseEdit} />
 
       <Route path="/businesses/:businessId/orders" component={OrdersList} exact/>
       <Route path="/businesses/:businessId/orders/new" component={OrderAdd} exact />
       <Route path="/businesses/:businessId/orders/:orderId/edit/" component={OrderEdit} />
-      {/* <Route path="/businesses/:businessId/orders/:orderId" component={OrderShow}/> */}
 
       <Route path="/businesses/:businessId/expenses" component={PayablesList} exact/>
       <Route path="/businesses/:businessId/expenses/new" component={PayableAdd} exact />
-      <Route path="/businesses/:businessId/expenses/edit" component={PayableEdit} />
-      <Route path="/businesses/:businessId/expenses/:expenseId" component={PayableShow}/>
+      <Route path="/businesses/:businessId/expenses/:expenseId/edit" component={PayableEdit} />
 
       <Route path="/businesses/:businessId/reports" component={ReportList} exact/>
       <Route path="/businesses/:businessId/teams" component={TeamList} exact/>

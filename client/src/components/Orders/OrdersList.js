@@ -9,6 +9,7 @@ import Modal from 'react-modal'
 import modalStyles from '../../config/modalCss'
 import { customStylesTable } from '../../config/dataTableTheme'
 import OrderShow from './OrderShow'
+import { startDeleteOrder } from '../../actions/orders'
 
 const dataColumns = [{
     name: 'Date',
@@ -23,12 +24,6 @@ const dataColumns = [{
     width:'75px',
     sortable: true
 },
-// {
-//     name: 'Item',
-//     selector: 'commodity.name',
-//     grow: 2,
-//     sortable: true
-// },
 {
     name: 'Supplier',
     selector: 'supplier.name',
@@ -36,20 +31,72 @@ const dataColumns = [{
     sortable: true
 },
 {
+    name: 'Item',
+    selector: 'commodities',
+    sortable: true,
+    grow: 1,
+    cell: row => (
+            <div className="subList textSubList">
+                {row.commodities.map(commodity => {
+                    return (
+                        <span key ={commodity.product._id}>{commodity.product.name}</span>
+                    )
+                })}
+            </div>)
+},
+{
+    name: 'Quantity',
+    selector: 'commodities',
+    minWidth: '50px',
+    maxWidth: '75px',
+    right: true,
+    cell: row => (
+            <div className="subList">
+                {row.commodities.map(commodity => {
+                    return (
+                        <span key ={commodity.product._id}>{commodity.quantity}</span>
+                    )
+                })}
+            </div>)
+},
+{
+    name: 'Rate',
+    selector: 'rate',
+    minWidth: '50px',
+    maxWidth: '75px',
+    right: true,
+    cell: row => (
+        <div className="subList">
+            {row.commodities.map(commodity => {
+                return (
+                    <span key ={commodity.product._id}>{commodity.rate}</span>
+                )
+            })}
+    </div>)
+},
+{
+    name: 'Amount', 
+    selector: 'amount',
+    minWidth: '50px',
+    maxWidth:'70px',
+    right: true,
+    cell: row => (
+        <div className="subList">
+            {row.commodities.map(commodity => {
+                return (
+                    <span key ={commodity.product._id}>{commodity.amount}</span>
+                )
+            })}
+        </div>)
+},
+{
     name: 'Status',
     selector: 'status',
     center: true,
     sortable: true
 },
-// {
-//     name: 'Quantity',
-//     selector: 'qty',
-//     minWidth: '50px',
-//     maxWidth: '75px',
-//     center: true
-// },
 {
-    name: 'Amount', 
+    name: 'Total', 
     selector: 'amount',
     minWidth: '50px',
     maxWidth:'70px',
@@ -69,19 +116,24 @@ function OrderList(props) {
         setModalState(true)
     }
 
+    const handleRemove = (id) => {
+        props.dispatch(startDeleteOrder(props.match.params.businessId, id))
+        setModalState(false)
+    }
+
     const closeModal = () => {
         setModalState(false)
     }
 
     return (
-        <>
+        <div className="businessContent">
             <Modal 
                 style={modalStyles}
                 isOpen={modalIsOpen}
                 // onAfterOpen={this.afterOpenModal}
                 onRequestClose={closeModal}
             >
-                <OrderShow id={orderId}/>
+                <OrderShow id={orderId} handleRemove={handleRemove}/>
             </Modal>
             <div className='contentHeader'>
             <span className='headerText'>Orders</span>
@@ -100,20 +152,26 @@ function OrderList(props) {
                 customStyles={customStylesTable}
                 onRowClicked={handleRowClicked}
             />
-            {/* - add a Supplier
-            <Button>Add Supplier</Button> */}
-            {/* - add GRNs on receiving goods ie write to transactions
-            <Button>Material Received</Button> */}
-            
-        </>
+        </div>
     )
 }
 
 const mapStateToProps = (state) => {
     return {
         orders: state.orders.map(order => {
+            const commodities = order.commodities.map(commodity => {
+                const computedData = {
+                    amount: commodity.quantity * commodity.rate
+                }
+                return {...commodity, ...computedData}
+            })
+            const amount = order.commodities.reduce((acc, currentval) => {
+                return acc.rate*acc.quantity + currentval.rate*currentval.quantity
+            })
             const newData = {
-                transactionDate: {date: order.transactionDate, id: order._id}
+                transactionDate: {date: order.transactionDate, id: order._id},
+                commodities,
+                amount: typeof(amount) === 'number' ? amount : amount.rate*amount.quantity
             }
             return {...order, ...newData}
         })

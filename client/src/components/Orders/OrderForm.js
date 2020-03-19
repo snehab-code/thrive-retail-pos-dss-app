@@ -10,7 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Button from '@material-ui/core/Button'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 
-
+// validations pending
 function OrderForm(props) {
 
     const [transactionDate, setDate] = useState(Date.now())
@@ -23,12 +23,10 @@ function OrderForm(props) {
             supplier: supplier._id,
             transactionDate
         }}
-        console.log(formData, props)
         props.handleSubmit(formData)
         setSubmitting(false)
     }
 
-    console.log(props, 'proprpor')
     
     return (
         <Formik
@@ -63,25 +61,25 @@ function OrderForm(props) {
 
                 <div className="formSubGroup">
                     {
-                        <Autocomplete
-                        style={{width:'100%'}}
-                        options={props.suppliers}
-                        getOptionLabel={option => option.name}
-                        name="supplier" 
-                        id="supplierac"
-                        disableClearable
-                        value={supplier}
-                        onChange={(e, newValue) => setSupplier(newValue)
-                        }
-                        renderInput={params => 
-                            <TextField {...params} 
-                                label="supplier" 
-                                id="supplierac" 
-                                value={values.supplier}
-                                onChange={handleChange}
-                                margin="normal"
-                            />}
-                      />
+                    <Autocomplete
+                    style={{width:'100%'}}
+                    options={props.suppliers}
+                    getOptionLabel={option => option.name}
+                    name="supplier" 
+                    id="supplierac"
+                    disableClearable
+                    value={supplier}
+                    onChange={(e, newValue) => setSupplier(newValue)
+                    }
+                    renderInput={params => 
+                        <TextField {...params} 
+                            label="supplier" 
+                            id="supplierac" 
+                            value={values.supplier}
+                            onChange={handleChange}
+                            margin="normal"
+                        />}
+                    />
                     }
                     
                     <TextField
@@ -124,7 +122,7 @@ function OrderForm(props) {
                         </FormControl>
                     }
                     <TextField
-                        error = {errors.rateremark && touched.rate}
+                        error = {errors.rate && touched.rate}
                         id={`rate${ele}`}
                         name={`commodities[${ele-1}].rate`}
                         value={values['commodities'][ele-1] && values['commodities'][ele-1]['rate']}

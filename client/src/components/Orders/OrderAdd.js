@@ -1,5 +1,6 @@
 import React from 'react'
 import OrderForm from './OrderForm'
+import {connect} from 'react-redux'
 import {startPostOrder} from '../../actions/orders'
 
 function OrderAdd(props) {
@@ -17,4 +18,4 @@ function OrderAdd(props) {
     )
 }
 
-export default OrderAdd
+export default connect()(OrderAdd)

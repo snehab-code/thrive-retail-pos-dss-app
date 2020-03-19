@@ -92,19 +92,19 @@ router.get('/api/businesses/:businessId/sales', authenticateUser, checkAuthorisa
 router.get('/api/businesses/:businessId/sales/:saleId', authenticateUser, checkAuthorisation, salesController.show)
 router.post('/api/businesses/:businessId/sales', authenticateUser, checkAuthorisation, salesController.create)
 router.put('/api/businesses/:businessId/sales/:saleId', authenticateUser, checkAuthorisation, salesController.update)
-router.delete('/api/businesses/:businessId/sales/:saleId', authenticateUser, checkAuthorisation, transactionsController.destroy)
+router.delete('/api/businesses/:businessId/sales/:saleId', authenticateUser, checkAuthorisation, salesController.destroy)
 
 router.get('/api/businesses/:businessId/purchases', authenticateUser, checkAuthorisation, purchasesController.list)
 router.get('/api/businesses/:businessId/purchases/:purchaseId', authenticateUser, checkAuthorisation, purchasesController.show)
 router.post('/api/businesses/:businessId/purchases', authenticateUser, checkAuthorisation, purchasesController.create)
 router.put('/api/businesses/:businessId/purchases/:purchaseId', authenticateUser, checkAuthorisation, purchasesController.update)
-router.delete('/api/businesses/:businessId/purchases/:purchaseId', authenticateUser, checkAuthorisation, transactionsController.destroy)
+router.delete('/api/businesses/:businessId/purchases/:purchaseId', authenticateUser, checkAuthorisation, purchasesController.destroy)
 
 router.get('/api/businesses/:businessId/orders', authenticateUser, checkAuthorisation, ordersController.list)
 router.get('/api/businesses/:businessId/orders/:orderId', authenticateUser, checkAuthorisation, ordersController.show)
 router.post('/api/businesses/:businessId/orders', authenticateUser, checkAuthorisation, ordersController.create)
 router.put('/api/businesses/:businessId/orders/:orderId', authenticateUser, checkAuthorisation, ordersController.update)
-router.delete('/api/businesses/:businessId/orders/:orderId', authenticateUser, checkAuthorisation, transactionsController.destroy)
+router.delete('/api/businesses/:businessId/orders/:orderId', authenticateUser, checkAuthorisation, ordersController.destroy)
 
 router.get('/api/users', usersController.list)
 router.post('/api/users/register', usersController.register)

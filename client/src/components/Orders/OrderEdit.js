@@ -12,7 +12,7 @@ function OrderEdit(props) {
         <div className="businessForms">
         <h1>Order Edit</h1>
         
-        {props.order && props.order._id && <OrderForm businessId={props.match.params.businessId} orderId={''} {...props.order} handleSubmit={handleSubmit}/>}
+        {props.order && props.order._id && <OrderForm businessId={props.match.params.businessId} {...props.order} handleSubmit={handleSubmit}/>}
         </div>
     )
 }
