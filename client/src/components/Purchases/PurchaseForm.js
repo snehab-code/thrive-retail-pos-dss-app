@@ -14,6 +14,8 @@ import Autocomplete from '@material-ui/lab/Autocomplete'
 function PurchaseForm(props) {
 
     const [transactionDate, setDate] = useState(Date.now())
+    // const [documentDate, setDocDate] = useState(Date.now())
+    const [invoiceDate, setInvDate] = useState(Date.now())
     const [count, setCount] = useState(props.commodities ? Array(props.commodities.length).fill().map((item, i) => i + 1) : ['1'])
     const [supplier, setSupplier] = useState(props.supplier)
 
@@ -21,22 +23,30 @@ function PurchaseForm(props) {
         val.commodities = val.commodities.slice(0, count.length)
         const formData = {...val,...{
             supplier: supplier._id,
-            transactionDate
+            transactionDate,
+            // documentDate,
+            invoiceDate,
+            amount: val.commodities.length > 1 ? val.commodities.reduce((acc, currentval) => {
+                return acc.rate*acc.quantity + currentval.rate*currentval.quantity
+            }) : val.commodities[0].rate*val.commodities[0].quantity
         }}
         props.handleSubmit(formData)
         setSubmitting(false)
     }
 
+    console.log(props, supplier)
     
     return (
         <Formik
             enableReinitialize 
             initialValues={{ 
                 supplier: props.supplier ? props.supplier._id : '',
-                purchaseNumber: props.purchaseNumber ? props.purchaseNumber : '',
-                status: props.status ? props.status : '',
+                supplierInvoice: props.supplierInvoice ? props.supplierInvoice : '',
+                documentType: props.documentType ? props.documentType : '',
                 remark: props.remark ? props.remark : '',
-                commodities: props.commodities ? props.commodities.map(commodity => ({product: commodity.product._id, rate: commodity.rate, quantity: commodity.quantity})) : Array(10).fill({product: '', rate: '', quantity: ''})
+                documentNumber: props.documentNumber ? props.documentNumber : '',
+                commodities: props.commodities ? props.commodities.map(commodity => ({product: commodity.product._id, rate: commodity.rate, quantity: commodity.quantity})) : Array(10).fill({product: '', rate: '', quantity: ''}),
+                amount: props.amount ? props.amount : ''
             }}
             onSubmit={handleSubmit}
             validate={values => {
@@ -50,7 +60,8 @@ function PurchaseForm(props) {
             const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit} = formikProps
             return (
             <Form onSubmit={handleSubmit}>
-                <KeyboardDatePicker
+                <div className="formSubGroup">
+                    <KeyboardDatePicker
                         id='transactionDate'
                         name='transactionDate'
                         onChange={(date) => setDate(date)}
@@ -58,39 +69,98 @@ function PurchaseForm(props) {
                         format='MM/DD/YYYY'
                         label='Transaction Date'
                     />
-
-                <div className="formSubGroup">
-                    {
-                    <Autocomplete
-                    style={{width:'100%'}}
-                    options={props.suppliers}
-                    getOptionLabel={option => option.name}
-                    name="supplier" 
-                    id="supplierac"
-                    disableClearable
-                    value={supplier}
-                    onChange={(e, newValue) => setSupplier(newValue)
-                    }
-                    renderInput={params => 
-                        <TextField {...params} 
-                            label="supplier" 
-                            id="supplierac" 
-                            value={values.supplier}
-                            onChange={handleChange}
-                            margin="normal"
-                        />}
+                    {/* Invoice date */}
+                    <KeyboardDatePicker
+                        id='invoiceDate'
+                        name='invoiceDate'
+                        onChange={(date) => setInvDate(date)}
+                        value={invoiceDate}
+                        format='MM/DD/YYYY'
+                        label='Supplier Invoice Date'
                     />
-                    }
+                </div>
+                <div className="formSubGroup">
                     
+                    {/* supplier */}
+                    {
+                        <Autocomplete
+                        style={{width:'100%'}}
+                        options={props.suppliers}
+                        getOptionLabel={option => option.name}
+                        name="supplier" 
+                        id="supplierac"
+                        disableClearable
+                        value={supplier}
+                        onChange={(e, newValue) => setSupplier(newValue)
+                        }
+                        renderInput={params => 
+                            <TextField {...params} 
+                                label="supplier" 
+                                id="supplierac" 
+                                value={values.supplier}
+                                onChange={handleChange}
+                                margin="normal"
+                            />}
+                        />
+                    }
+                    <div className="dimText">
+                        <span>
+                            {
+                            supplier ? `${supplier.supplierCode}-` : 'CODE-'
+                            }
+                        </span>
+                    </div>
                     <TextField
-                        error = {errors.purchaseNumber && touched.purchaseNumber}
-                        id='purchaseNumber'
-                        name='purchaseNumber'
-                        value={values.purchaseNumber}
+                        error = {errors.supplierInvoice && touched.supplierInvoice}
+                        id='supplierInvoice'
+                        name='supplierInvoice'
+                        value={values.supplierInvoice}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        label='purchase Number'
-                        helperText={errors.purchaseNumber}
+                        label='Supplier Invoice'
+                        helperText={errors.supplierInvoice}
+                    />
+                </div>
+                <div className="formSubGroup">
+                    {/* document date */}
+                    {/* <KeyboardDatePicker
+                            id='documentDate'
+                            name='documentDate'
+                            onChange={(date) => setDocDate(date)}
+                            value={documentDate}
+                            format='MM/DD/YYYY'
+                            label='Document Date'
+                    /> */}
+                    {/* too many dates? merge transaction date and document date */}
+                    <FormControl>
+                    <InputLabel id="documentType">Document</InputLabel>
+                    <Select
+                        labelId="documentType"
+                        id="documentType"
+                        name='documentType'
+                        value={values.documentType}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        label='Document'
+                        // helperText={errors.documentType}
+                    >
+                        {
+                            ['GRN', 'MRN', 'Debit Note', 'Warranty', 'Credit Note'].map((documentType, i) => {
+                                return <MenuItem key={i} value={documentType}>{documentType}</MenuItem>
+                            })
+                        }
+                    
+                    </Select>
+                    </FormControl>
+                    <TextField
+                        error = {errors.documentNumber && touched.documentNumber}
+                        id='documentNumber'
+                        name='documentNumber'
+                        value={values.documentNumber}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        label='Number'
+                        helperText={errors.documentNumber}
                     />
                 </div>
                 {
@@ -142,37 +212,53 @@ function PurchaseForm(props) {
                         label='quantity'
                         helperText={errors.quantity}
                     />
-                    <div style={{padding:10, fontSize: '4vmin', minWidth: '40%', height: '60px', textAlign: 'right'}}>
-                        <span>{values['commodities'][ele-1] && values['commodities'][ele-1]['quantity'] && values['commodities'][ele-1]['rate'] && values['commodities'][ele-1]['quantity'] * values['commodities'][ele-1]['rate']}</span>
+                    <div className="formCommodityAmount">
+                    {
+                        values['commodities'][ele-1] && 
+                        values['commodities'][ele-1]['quantity'] && 
+                        values['commodities'][ele-1]['rate'] &&
+                        <>
+                        <span>
+                            {
+                            values['commodities'][ele-1]['quantity'] * values['commodities'][ele-1]['rate']
+                            }
+                        </span>
+                        <button 
+                        className="addButton"
+                        onClick={() => {
+                            const newCount = [...count, (count.length+1)]
+                            setCount(newCount)
+                        }} 
+                        type="button"
+                        >
+                            +
+                        </button>
+                        </>
+                    }
                     </div>
-                    <button onClick={() => {
-                        const newCount = [...count, (count.length+1)]
-                        setCount(newCount)
-                    }} style={{width:20}} type="button">+</button>
                 </div>
                     )}
                 )}
+                {
+                    values.commodities[1].rate && values.commodities[1].quantity && (
+                    <div style={{padding:10, fontSize: '4vmin', width: '90%', height: '60px', textAlign: 'right'}}>
+                        <span>
+                            {
+                                values.commodities.map(commodity => {
+                                    if (commodity.rate && commodity.quantity) {
+                                        return commodity.rate * commodity.quantity
+                                    } else {
+                                        return 0
+                                    }
+                                }).reduce((acc, currentVal) => {
+                                    return acc + currentVal
+                                })
+                            }
+                        </span>
+                    </div>
+                    )
+                }
                 <div className="formSubGroup">
-                    <FormControl>
-                    <InputLabel id="status">Status</InputLabel>
-                    <Select
-                        labelId="status"
-                        id="status"
-                        name='status'
-                        value={values.status}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        label='status'
-                        // helperText={errors.status}
-                    >
-                        {
-                            ['Pending Delivery', 'Delivered', 'Completed'].map((status, i) => {
-                                return <MenuItem key={i} value={status}>{status}</MenuItem>
-                            })
-                        }
-                    
-                    </Select>
-                    </FormControl>
                     <TextField
                         error = {errors.remark && touched.remark}
                         id='remark'

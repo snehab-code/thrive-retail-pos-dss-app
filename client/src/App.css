@@ -156,10 +156,10 @@ button {
     margin:10px !important;
     padding:5px !important;
     color: #2c7873 !important;
-    width: 85%;
-    margin-top:25px !important;
+    /* width: 85%; */
+    /* margin-top:25px !important; */
     background-color: #edf7f7 !important;
-    margin-top: 20px !important;
+    /* margin-top: 20px !important; */
     border: 1px solid #6fb98f !important;
     max-width:280px; 
 }
@@ -300,7 +300,12 @@ button:hover {
 }
 
 .businessContent {
+    width: 100%;
     max-width:900px;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
     border-radius: 12px;
     border: 1px solid #edf7f7;
     margin-top:5px;
@@ -374,6 +379,38 @@ button:hover {
     
 }
 
+.formCommodityAmount {
+    display: flex; 
+    font-size: min(6vmin, 24px); 
+    min-width: 40%; 
+    justify-content: flex-end; 
+    align-items: flex-end
+}
+
+.formCommodityAmount span {
+    margin-bottom: 5px;
+}
+
+.addButton {
+    margin-top: 10px !important;
+    width: 20px;
+}
+
+.dimText {
+    color: #cbd8d0;
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    line-height: 1em;
+    padding: 7px;
+    padding-right:0px;
+}
+
+.dimText span {
+    padding-bottom: 8px
+}
+
 .MuiIconButton-root {
     border: 0px !important;
     background-color: transparent !important; 
@@ -381,4 +418,16 @@ button:hover {
     width: 40px !important;
     height: 40px;
     margin: 0px !important;
+}
+
+.showButton {
+    border: 10px solid pink
+}
+
+.modalForm form {
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid pink; */
+    justify-content: center;
+    align-items: center;
 }

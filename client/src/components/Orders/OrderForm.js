@@ -1,5 +1,8 @@
 import React, {useState} from 'react'
 import {connect} from 'react-redux'
+import CommodityAdd from '../Commodities/CommodityAdd'
+import Modal from 'react-modal'
+import modalStyles from '../../config/modalCss'
 import {Formik, Form} from 'formik'
 import { KeyboardDatePicker } from '@material-ui/pickers'
 import TextField from '@material-ui/core/TextField'
@@ -13,9 +16,16 @@ import Autocomplete from '@material-ui/lab/Autocomplete'
 // validations pending
 function OrderForm(props) {
 
+    const [modalIsOpen, setModalState] = useState(false)
     const [transactionDate, setDate] = useState(Date.now())
     const [count, setCount] = useState(props.commodities ? Array(props.commodities.length).fill().map((item, i) => i + 1) : ['1'])
     const [supplier, setSupplier] = useState(props.supplier)
+
+    Modal.setAppElement('#root')  
+
+    const closeModal = () => {
+        setModalState(false)
+    }
 
     const handleSubmit = (val, {setSubmitting}) => {
         val.commodities = val.commodities.slice(0, count.length)
@@ -26,9 +36,16 @@ function OrderForm(props) {
         props.handleSubmit(formData)
         setSubmitting(false)
     }
-
     
     return (
+        <>
+        <Modal
+            style={modalStyles}
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+        >
+            <CommodityAdd businessId={props.businessId}/>
+        </Modal>
         <Formik
             enableReinitialize 
             initialValues={{ 
@@ -92,6 +109,9 @@ function OrderForm(props) {
                         label='order Number'
                         helperText={errors.orderNumber}
                     />
+                </div>
+                <div style={{textAlign: 'left', width:'100%', color: '#cbd8d0'}}>
+                    <span style={{paddingLeft:5, paddingTop:15, cursor: 'pointer'}} onClick={() => setModalState(true)}>New product?</span>
                 </div>
                 {
                     count.map(ele => {
@@ -189,6 +209,7 @@ function OrderForm(props) {
             )
         }}
         </Formik>
+        </>
     )
 }
 

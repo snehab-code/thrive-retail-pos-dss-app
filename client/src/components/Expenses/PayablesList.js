@@ -70,7 +70,7 @@ function PayablesList(props) {
     }
 
     return (
-        <>
+        <div className="businessContent">
             <Modal 
                 style={modalStyles}
                 isOpen={modalIsOpen}
@@ -100,8 +100,7 @@ function PayablesList(props) {
             <Button>Add Supplier</Button> */}
             {/* - add GRNs on receiving goods ie write to transactions
             <Button>Material Received</Button> */}
-            
-        </>
+        </div>
     )
 }
 

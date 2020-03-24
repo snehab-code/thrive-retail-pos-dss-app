@@ -11,6 +11,24 @@ const purchaseSchema = new Schema({
         type: Date,
         required: true
     },
+    invoiceDate: {
+        type: Date,
+        required: true
+    },
+    supplier: {
+        type: Schema.Types.ObjectId,
+        ref: 'Supplier',
+        required: true
+    },
+    supplierInvoice: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    documentDate: {
+        type: Date,
+        required: true
+    },
     documentType: {
         type: String,
         required: true,
@@ -21,10 +39,6 @@ const purchaseSchema = new Schema({
         type: String,
         required: true,
         unique: true
-    },
-    documentDate: {
-        type: Date,
-        required: true
     },
     commodities: [{
         product: {
@@ -50,20 +64,6 @@ const purchaseSchema = new Schema({
             type: Number
         }
     }],
-    supplier: {
-        type: Schema.Types.ObjectId,
-        ref: 'Supplier',
-        required: true
-    },
-    supplierInvoice: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    invoiceDate: {
-        type: Date,
-        required: true
-    },
     creditPeriodDays: {
         type: Number,
         default: 0
