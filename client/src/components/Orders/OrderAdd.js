@@ -6,7 +6,7 @@ import {startPostOrder} from '../../actions/orders'
 function OrderAdd(props) {
 
     const handleSubmit = (formData) => {
-        props.dispatch(startPostOrder(props.match.params.businessId, formData))
+        props.dispatch(startPostOrder(props.match.params.businessId, formData, props.history))
     }
 
     return (

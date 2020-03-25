@@ -4,7 +4,6 @@ import {Link} from 'react-router-dom'
 import Button from '@material-ui/core/Button'
 
 function SaleShow(props) {
-    console.log(props)
     return (
         <>
             <h3>Sale details</h3>

@@ -5,36 +5,42 @@ import {Chart} from 'react-google-charts'
 function BusinessHome(props){
     return(
     <div className="businessHome">
-        <h2>{props.business && props.business.name}</h2>
-        <span className="heading">Welcome</span>
+        <span className="heading">{props.business && props.business.name}</span>
+        
         Click on the toggle bar for the business menu.
 
         // profit for term, total payables, total receivables
-
-        {props.payableHeads[0] && <Chart
-            width={'500px'}
-            height={'100px'}
-            chartType="BarChart"
-            loader={<div>Loading Chart</div>}
-            data={[
-                ['', ...props.payableHeads, 'purchases'],
-                ['', ...props.payableAmounts, props.purchases]
-              ]}
-              options={{
-                chartArea: { width: '50%' },
-                isStacked: true,
-                hAxis: {
-                  title: '',
-                  minValue: 0,
-                },
-                animation: {
-                    startup: true,
-                    easing: 'linear',
-                    duration: 1000,
-                },
-                backgroundColor: 'transparent'
-              }}
-        />}
+        <div className="businessSubContent">
+            <div className="subContentBox halfbox">
+                {props.payableHeads[0] && <Chart
+                    width={'100%'}
+                    height={'100px'}
+                    chartType="BarChart"
+                    loader={<div>Loading Chart</div>}
+                    data={[
+                        ['', ...props.payableHeads, 'purchases'],
+                        ['', ...props.payableAmounts, props.purchases]
+                    ]}
+                    options={{
+                        chartArea: { width: '50%' },
+                        isStacked: true,
+                        hAxis: {
+                        title: '',
+                        minValue: 0,
+                        },
+                        animation: {
+                            startup: true,
+                            easing: 'linear',
+                            duration: 1000,
+                        },
+                        backgroundColor: 'transparent'
+                    }}
+                />}
+            </div>
+            <div className="subContentBox halfbox">
+                hiya
+            </div>
+        </div>
     </div>
     
     )

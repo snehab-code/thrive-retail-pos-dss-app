@@ -33,8 +33,6 @@ function PurchaseForm(props) {
         props.handleSubmit(formData)
         setSubmitting(false)
     }
-
-    console.log(props, supplier)
     
     return (
         <Formik

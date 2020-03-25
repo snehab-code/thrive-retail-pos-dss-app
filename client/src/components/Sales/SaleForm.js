@@ -27,7 +27,6 @@ function SaleForm(props) {
                 return acc.rate*acc.quantity + currentval.rate*currentval.quantity
             }) : val.commodities[0].rate*val.commodities[0].quantity
         }}
-        // console.log(formData)
         props.handleSubmit(formData)
         setSubmitting(false)
     }

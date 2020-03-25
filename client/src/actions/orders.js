@@ -32,13 +32,14 @@ export const startGetOrders = (businessId) => {
     }
 }
 
-export const startPostOrder = (businessId, formData) => {
+export const startPostOrder = (businessId, formData, history) => {
     return (dispatch) => {
         axios.post(`/businesses/${businessId}/orders`, formData)
             .then(response => {
                 console.log(response)
                 const order = response.data
                 dispatch(addOrder(order))
+                history.push(`/businesses/${businessId}/orders`)
             })
             .catch(err => {
                 Swal.fire({

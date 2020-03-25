@@ -101,11 +101,15 @@ const dataColumns = [
 {
     name: 'Client',
     selector: 'client.name',
-    sortable: true
+    sortable: true,
+    maxWidth: '80px',
+    minWidth: '80px'
 },
 {
     name: 'Note',
-    selector: 'remark'
+    selector: 'remark', 
+    maxWidth: '100px',
+    minWidth: '80px'
 }
 ]
 
@@ -131,6 +135,7 @@ function SalesList(props) {
     }
 
     return (
+        <div className="businessContentContainer">
         <div className="businessContent">
             <Modal 
                 style={modalStyles}
@@ -157,6 +162,21 @@ function SalesList(props) {
                 customStyles={customStylesTable}
                 onRowClicked={handleRowClicked}
             />
+            <div className="businessSubContent">
+                <div className="subContentBox thirdbox">
+                    <h3>More actions</h3>
+                    See and edit your product catalogue
+                </div>
+                <div className="subContentBox thirdbox">
+                    <h3>Total Sales by period</h3>
+                    nothing now bec covid
+                </div>
+                <div className="subContentBox thirdbox">
+                    <h3>Things</h3>
+                    i don care bout no ghosts
+                </div>
+            </div>
+        </div>
         </div>
     )
 }

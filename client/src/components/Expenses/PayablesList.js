@@ -70,6 +70,7 @@ function PayablesList(props) {
     }
 
     return (
+        <div className="businessContentContainer">
         <div className="businessContent">
             <Modal 
                 style={modalStyles}
@@ -96,10 +97,22 @@ function PayablesList(props) {
                 customStyles={customStylesTable}
                 onRowClicked={handleRowClicked}
             />
-            {/* - add a Supplier
-            <Button>Add Supplier</Button> */}
-            {/* - add GRNs on receiving goods ie write to transactions
-            <Button>Material Received</Button> */}
+            {/* A way to add miscellaneous creditors */}
+            <div className="businessSubContent">
+                <div className="subContentBox thirdbox">
+                    <h3>More actions</h3>
+                    Payables by period
+                </div>
+                <div className="subContentBox thirdbox">
+                    <h3>Creditors</h3>
+                    See a list of your creditors
+                </div>
+                <div className="subContentBox thirdbox">
+                    <h3>Stats</h3>
+                    ????
+                </div>
+            </div>
+        </div>
         </div>
     )
 }

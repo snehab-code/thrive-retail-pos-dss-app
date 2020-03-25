@@ -31,7 +31,6 @@ module.exports.show = (req, res) => {
 module.exports.listInfo = (req, res) => {
     const businessId = req.params.id
     const businesses = req.businesses
-    console.log(businessId)
     if (businesses.find(business => business._id == businessId)) {
         const mongoose = require('mongoose')
         Business.aggregate([
@@ -144,7 +143,6 @@ module.exports.createInvite = (req, res) => {
                     res.send(business)
                 })
                 .catch(err => {
-                    console.log('hi2')
                     res.send(err)
                 })
             } else {
@@ -188,7 +186,6 @@ module.exports.join = (req, res) => {
             }
         })
         .then(business => {
-            console.log(business)
             User.findByIdAndUpdate(user, {$pull: {invitedTo: business._id}})
             .then(user => {
                 if (!business.notice) res.send({_id: business._id, name: business.name, address: business.address, phone: business.phone})

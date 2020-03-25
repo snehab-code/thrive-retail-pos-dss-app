@@ -37,6 +37,8 @@ function OrderForm(props) {
         setSubmitting(false)
     }
     
+    
+
     return (
         <>
         <Modal
@@ -44,7 +46,7 @@ function OrderForm(props) {
             isOpen={modalIsOpen}
             onRequestClose={closeModal}
         >
-            <CommodityAdd businessId={props.businessId}/>
+            <CommodityAdd businessId={props.businessId} closeModal={closeModal}/>
         </Modal>
         <Formik
             enableReinitialize 
@@ -149,7 +151,7 @@ function OrderForm(props) {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         label='Rate'
-                        placeholder='test'
+                        placeholder={props.products.find(product => product._id === values.commodities[ele-1].product) && props.products.find(product => product._id === values.commodities[ele-1].product).sellingPrice}
                         helperText={errors.rate}
                     />
                     <TextField

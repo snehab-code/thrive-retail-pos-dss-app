@@ -1,11 +1,13 @@
 import React from 'react'
 import CommodityForm from '../Commodities/CommodityForm'
+import {connect} from 'react-redux'
 import {startPostCommodity} from '../../actions/commodities'
 
 function CommodityAdd(props) {
 
     const handleSubmit = (formData) => {
         props.dispatch(startPostCommodity(props.businessId, formData))
+        props.closeModal()
     }
     return (
         <div className="modalForm">
@@ -15,4 +17,4 @@ function CommodityAdd(props) {
     )
 }
 
-export default CommodityAdd
+export default connect()(CommodityAdd)

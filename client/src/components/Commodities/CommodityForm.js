@@ -5,12 +5,13 @@ import TextField from '@material-ui/core/TextField'
 
 function CommodityForm(props) {
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log('submit in comm')
+    const handleSubmit = (val) => {
+        const formData = {}
+        for (let key in val) {
+            if(val[key]) formData[key] = val[key]
+        }
+        props.handleSubmit(formData)
     }
-
-    console.log(props)
 
     return (
         <Formik

@@ -126,6 +126,7 @@ function OrderList(props) {
     }
 
     return (
+        <div className="businessContentContainer">
         <div className="businessContent">
             <Modal 
                 style={modalStyles}
@@ -152,6 +153,21 @@ function OrderList(props) {
                 customStyles={customStylesTable}
                 onRowClicked={handleRowClicked}
             />
+            <div className="businessSubContent">
+                <div className="subContentBox thirdbox">
+                    <h3>More actions</h3>
+                    See your completed purchases
+                </div>
+                <div className="subContentBox thirdbox">
+                    <h3>Stats</h3>
+                    
+                </div>
+                <div className="subContentBox thirdbox">
+                    <h3>Things</h3>
+                    ????
+                </div>
+            </div>
+        </div>
         </div>
     )
 }

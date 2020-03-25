@@ -299,45 +299,13 @@ button:hover {
     float: right
 }
 
-.businessContent {
-    width: 100%;
-    max-width:900px;
-    display: flex;
-    flex-direction: column;
-    /* justify-content: center; */
-    align-items: center;
-    border-radius: 12px;
-    border: 1px solid #edf7f7;
-    margin-top:5px;
-}
-
-.subList {
-    display: flex;
-    flex-direction: column;
-    padding-top:5px;
-    padding-bottom:5px;
-}
-
-.subList span {
-    text-transform: capitalize;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-align: right;
-    padding:3px;
-}
-
-.textSubList span {
-    text-align: left;
-}
-
 .businessHome {
+    padding-top:10px;
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.heading {
-    font-size: 6vmin
+    width: 90%;
+    max-width: 870px;
 }
 
 .businessForms {
@@ -430,4 +398,93 @@ button:hover {
     /* border: 1px solid pink; */
     justify-content: center;
     align-items: center;
+}
+
+.businessContentContainer {
+    width: 100%;
+    max-width:870px;
+    border-radius: 12px;
+    border: 1px solid #edf7f7;
+    margin-top:5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.businessContent {
+    width: 98%;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+.heading {
+    font-size: 6vmin
+}
+
+.subList {
+    display: flex;
+    flex-direction: column;
+    padding-top:5px;
+    padding-bottom:5px;
+}
+
+.subList span {
+    text-transform: capitalize;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: right;
+    padding:3px;
+}
+
+.textSubList span {
+    text-align: left;
+}
+
+.businessSubContent {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: stretch;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.subContentBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 12px;
+    border: 1px solid #edf7f7;
+    padding: 20px;
+    background-color: #fcfdfd;
+}
+
+.subContentBox h3 {
+    margin-top:0;
+    padding: 0;
+    font-weight: 500;
+    font-size: 4vmin
+}
+
+.halfbox {    
+    width: 49%;
+}
+
+.thirdbox {
+    width: 32.5%;
+}
+
+@media screen and (max-width: 600px) {
+    .thirdbox {
+        width: 100%;
+        margin-top: 10px;
+    }
+    .halfbox {
+        width: 100%;
+        margin-top: 10px;
+    }
 }

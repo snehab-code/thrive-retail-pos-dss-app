@@ -64,7 +64,6 @@ export const startPostBusiness = (formData) => {
     return (dispatch) => {
         axios.post('/businesses', formData)
         .then(response => {
-            console.log(response)
             const business = response.data
             dispatch(addBusiness(business))
         })
