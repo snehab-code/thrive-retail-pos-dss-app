@@ -25,7 +25,7 @@ export const startGetTransactions = (businessId) => {
             dispatch(setTransactions(transactions))
         })
         .catch(err => {
-            if (err.response && err.response.status == 401) {
+            if (err.response && err.response.status === 401) {
                 dispatch({type: 'LOGOUT'})
             }
         })
@@ -66,7 +66,7 @@ export const startPutTransaction = (businessId, id, formData, history) => {
             }
         })
         .catch(err => {
-            if (err.response.status == 401) {
+            if (err.response.status === 401) {
                 dispatch({type: 'LOGOUT'})
             }
             Swal.fire({
@@ -88,7 +88,7 @@ export const startDeleteTransaction = (businessId, id) => {
                 dispatch(removeTransaction(id))
             })
             .catch(err => {
-                if (err.response.status == 401) {
+                if (err.response.status === 401) {
                     dispatch({type: 'LOGOUT'})
                 }
                 Swal.fire({

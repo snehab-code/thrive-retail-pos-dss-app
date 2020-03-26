@@ -9,7 +9,7 @@ function BusinessHome(props){
         
         Click on the toggle bar for the business menu.
 
-        // profit for term, total payables, total receivables
+        profit for term, total payables, total receivables
         <div className="businessSubContent">
             <div className="subContentBox halfbox">
                 {props.payableHeads[0] && <Chart
@@ -48,7 +48,7 @@ function BusinessHome(props){
 
 const mapStateToProps = (state, props) => {
     return {
-        business: state.businesses.find(business => business._id == props.match.params.businessId),
+        business: state.businesses.find(business => business._id === props.match.params.businessId),
         payableHeads: state.payables.map(payable => {
             return payable.remark
         }),

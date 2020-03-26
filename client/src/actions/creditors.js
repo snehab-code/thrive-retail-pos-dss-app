@@ -25,7 +25,7 @@ export const startGetCreditors = (businessId) => {
             dispatch(setCreditors(creditors))
         })
         .catch(err => {
-            if (err.response.status == 401) {
+            if (err.response.status === 401) {
                 dispatch({type: 'LOGOUT'})
             }
         })
@@ -66,7 +66,7 @@ export const startPutCreditor = (businessId, id, formData, history) => {
             }
         })
         .catch(err => {
-            if (err.response.status == 401) {
+            if (err.response.status === 401) {
                 dispatch({type: 'LOGOUT'})
             }
             Swal.fire({
@@ -88,7 +88,7 @@ export const startDeleteCreditor = (businessId, id) => {
                 dispatch(removeCreditor(id))
             })
             .catch(err => {
-                if (err.response.status == 401) {
+                if (err.response.status === 401) {
                     dispatch({type: 'LOGOUT'})
                 }
                 Swal.fire({

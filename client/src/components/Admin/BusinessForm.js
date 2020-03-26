@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { Formik, Form, ErrorMessage } from 'formik'
+import { Formik, Form} from 'formik'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import {startPostBusiness} from '../../actions/businesses'

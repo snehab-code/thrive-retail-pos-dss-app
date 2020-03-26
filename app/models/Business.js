@@ -13,7 +13,8 @@ const businessSchema = new Schema({
     },
     members: [{
         user: {
-            type: Schema.Types.ObjectId
+            type: Schema.Types.ObjectId,
+            ref: 'User'
         },
         permissions: {
             type: [String],

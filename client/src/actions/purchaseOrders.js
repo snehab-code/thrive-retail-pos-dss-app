@@ -25,7 +25,7 @@ export const startGetPurchaseOrders = (businessId) => {
             dispatch(setPurchaseOrders(purchaseOrders))
         })
         .catch(err => {
-            if (err.response && err.response.status == 401) {
+            if (err.response && err.response.status === 401) {
                 dispatch({type: 'LOGOUT'})
             }
         })
@@ -66,7 +66,7 @@ export const startPutPurchaseOrder = (businessId, id, formData, history) => {
             }
         })
         .catch(err => {
-            if (err.response.status == 401) {
+            if (err.response.status === 401) {
                 dispatch({type: 'LOGOUT'})
             }
             Swal.fire({
@@ -88,7 +88,7 @@ export const startDeletePurchaseOrder = (businessId, id) => {
                 dispatch(removePurchaseOrder(id))
             })
             .catch(err => {
-                if (err.response.status == 401) {
+                if (err.response.status === 401) {
                     dispatch({type: 'LOGOUT'})
                 }
                 Swal.fire({

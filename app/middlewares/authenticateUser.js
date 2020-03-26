@@ -9,12 +9,12 @@ const authenticateUser = (req, res, next) => {
             if(user) {
                 req.user = user
                 req.token = token
-                Business.find({'members.user': user._id}, '_id name members')
+                Business.find({'members.user': user._id}, '_id name address phone members')
                     .then(businesses => {
                         req.businesses = []
                         businesses.forEach(business => {
                             const find = business.members.find(member => String(member.user) == user._id)
-                            req.businesses.push({_id: business._id, name: business.name,permissions: find.permissions.join(' ')})
+                            req.businesses.push({_id: business._id, name: business.name, phone: business.phone, address: business.address, permissions: find.permissions.join(' ')})
                         })
                         next()
                     })

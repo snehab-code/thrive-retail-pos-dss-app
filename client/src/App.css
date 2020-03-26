@@ -77,10 +77,8 @@ a {
 }
 
 .loginPanel {
-    margin-top:-10px;
+    margin-top:10px;
     border: 1px solid #f1f4f4;
-    /* border: 1px solid #6fb98f; */
-    /* border: 2px solid #ffd800; */
     border-radius: 7px;
     display:flex;
     flex-direction: column;
@@ -198,13 +196,41 @@ button:hover {
 
 .businessCardLink, .businessInvite {
     border-radius: 15px;
-    width: calc(50% + 10em);
-    max-width: 80%;
-    min-height:100px;
+    width: calc(40% + 10em);
+    max-width: 400px;
+    min-height:120px;
     margin:10px;
     background: #f1f4f4;
     color: #004445;
-    font-size: min(3vmin, 12px);
+    font-size: min(3vmin, 14px);
+    border: 2px solid#fff;
+}
+
+.businessCard {
+    width: 100%;
+    padding: 10px;
+    display:flex;
+    justify-content: stretch;
+    align-items: stretch;
+    min-height: 120px;
+    border-radius: 15px;
+    border: 1px solid #edf7f7
+}
+
+.businessLogo {
+    width: 50%;
+    max-width: 100px;
+    border: 1px solid #dbf0f0;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.businessInfo {
+    width: 100%;
+    padding-left: 10px;
+    text-align: center;
 }
 
 .businessInvite {
@@ -218,15 +244,6 @@ button:hover {
     margin-bottom: 0px;
     margin-top:5px;
     font-size:4.2vmin;
-}
-
-.businessCard {
-    width: calc(100% - 2em);
-    padding-left:10px;
-    padding-bottom:10px;
-    display:flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 .businessInvite .businessCard {
@@ -248,8 +265,9 @@ button:hover {
 }
 
 .businessCard h2{
-    font-size: 7vmin;
-    margin:10px;
+    font-size: 5vmin;
+    margin:0px;
+    padding: 0px;
     margin-bottom: 0px;
 }
 
@@ -486,5 +504,89 @@ button:hover {
     .halfbox {
         width: 100%;
         margin-top: 10px;
+    }
+}
+
+/* team */
+
+.cardGrid {
+    width: 100%;
+    margin-top:5px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.cardContainer {
+    width: 48%;
+    margin-bottom:10px;
+    max-width: 420px;
+    min-height: 100px;
+    border-radius: 15px;
+    border: 1px solid #fff;
+}
+
+.memberCard{
+    display: flex;
+    align-items: center;
+    background: #f1f4f4;
+    color: #004445;
+    font-size: min(4vmin, 12px);
+    padding: 10px;
+    border-radius: 15px;
+    border: 1px solid #edf7f7;
+    height: 100%;
+}
+
+.memberAvatar {
+    width:80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid pink;
+    border-radius: 12px;
+    margin-right: 10px;
+}
+
+.memberInfo {
+    flex-grow: 2;
+    max-width:320px;
+    word-wrap: break-word;
+}
+
+.memberName {
+    font-size: max(18px, 4vmin);
+    display: flex;
+    align-items: center;
+}
+
+.memberPermission {
+    color: #ffc916;
+    font-size: max(2vmin, 10px);
+    padding-bottom: 1px;
+    padding-left: 4px;
+    padding-right: 4px;
+    border: 1px solid #ffc916;
+    border-radius: 8px;
+}
+
+.memberActions {
+    display: none;
+    float: right;
+    width: 40%;
+    text-align: right;
+}
+
+.memberCard:hover .memberActions{
+    display: inherit; 
+}
+
+@media screen and (max-width: 600px) {
+    .cardGrid {
+        flex-direction: column;
+    }
+    .memberCard {
+        width: 95%;
     }
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import {startPostUserLogout, setActiveBusiness} from '../../actions/user'
+import {startUserLogout, setActiveBusiness} from '../../actions/user'
 import MenuIcon from '@material-ui/icons/Menu'
 import Drawer from '@material-ui/core/Drawer'
 import List from '@material-ui/core/List'
@@ -26,8 +26,11 @@ class Header extends React.Component {
 
     componentDidMount() {
         const id = this.props.location.pathname.slice(12, 36)
-        if (this.props.user.activeBusiness !== id) {
-            this.props.dispatch(setActiveBusiness(id))
+        if (!this.props.user.isLoaded || this.props.user.activeBusiness._id !== id) {
+            const business = {
+                _id: id
+            }
+            this.props.dispatch(setActiveBusiness(business))
         }
     }
 
@@ -53,35 +56,35 @@ class Header extends React.Component {
                 <List>
                     <ListItem button  onClick={() => {
                         this.toggleDrawer(false)
-                        this.props.history.push(`/businesses/${this.props.user.activeBusiness}/invoices`)
+                        this.props.history.push(`/businesses/${this.props.user.activeBusiness._id}/invoices`)
                     }}>
                         <ListItemIcon><StorefrontIcon/></ListItemIcon>
                         <ListItemText primary={'Invoices'} />
                     </ListItem>
                     <ListItem button  onClick={() => {
                         this.toggleDrawer(false)
-                        this.props.history.push(`/businesses/${this.props.user.activeBusiness}/orders`)
+                        this.props.history.push(`/businesses/${this.props.user.activeBusiness._id}/orders`)
                     }}>
                         <ListItemIcon><ShoppingBasketIcon/></ListItemIcon>
                         <ListItemText primary={'Orders'} />
                     </ListItem>
                     <ListItem button  onClick={() => {
                         this.toggleDrawer(false)
-                        this.props.history.push(`/businesses/${this.props.user.activeBusiness}/expenses`)
+                        this.props.history.push(`/businesses/${this.props.user.activeBusiness._id}/expenses`)
                     }}>
                         <ListItemIcon><AccountBalanceWalletIcon/></ListItemIcon>
                         <ListItemText primary={'Expenses'} />
                     </ListItem>
                     <ListItem button  onClick={() => {
                         this.toggleDrawer(false)
-                        this.props.history.push(`/businesses/${this.props.user.activeBusiness}/reports`)
+                        this.props.history.push(`/businesses/${this.props.user.activeBusiness._id}/reports`)
                     }}>
                         <ListItemIcon><ShowChartIcon/></ListItemIcon>
                         <ListItemText primary={'Reports'} />
                     </ListItem>
                     <ListItem button  onClick={() => {
                         this.toggleDrawer(false)
-                        this.props.history.push(`/businesses/${this.props.user.activeBusiness}/teams`)
+                        this.props.history.push(`/businesses/${this.props.user.activeBusiness._id}/teams`)
                     }}>
                         <ListItemIcon><PeopleIcon/></ListItemIcon>
                         <ListItemText primary={'Team'} />
@@ -105,7 +108,7 @@ class Header extends React.Component {
                     <div className="headerLinks">
                     <Link to ="/businesses">Businesses</Link>
                     <Link to ="/user">Settings</Link>
-                    <Link to ="/" onClick={() => {this.props.dispatch(startPostUserLogout())}}>Logout</Link>
+                    <Link to ="/" onClick={() => {this.props.dispatch(startUserLogout(this.props.history))}}>Logout</Link>
                     </div>
                     :
                     <div className="headerLinks">

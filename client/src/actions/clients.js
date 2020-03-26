@@ -25,7 +25,7 @@ export const startGetClients = (businessId) => {
             dispatch(setClients(clients))
         })
         .catch(err => {
-            if (err.response.status == 401) {
+            if (err.response.status === 401) {
                 dispatch({type: 'LOGOUT'})
             }
         })
@@ -66,7 +66,7 @@ export const startPutClient = (businessId, id, formData, history) => {
             }
         })
         .catch(err => {
-            if (err.response.status == 401) {
+            if (err.response.status === 401) {
                 dispatch({type: 'LOGOUT'})
             }
             Swal.fire({
@@ -88,7 +88,7 @@ export const startDeleteClient = (businessId, id) => {
                 dispatch(removeClient(id))
             })
             .catch(err => {
-                if (err.response.status == 401) {
+                if (err.response.status === 401) {
                     dispatch({type: 'LOGOUT'})
                 }
                 Swal.fire({

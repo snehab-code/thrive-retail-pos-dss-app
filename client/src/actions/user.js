@@ -20,9 +20,9 @@ const failedLogin = (notice) => {
     }
 }
 
-export const setActiveBusiness = (id) => {
+export const setActiveBusiness = (business) => {
     return {
-        type: 'ACTIVE_BUSINESS', payload: id
+        type: 'ACTIVE_BUSINESS', payload: business
     }
 }
 
@@ -38,7 +38,7 @@ export const startCheckUserAuth = () => {
                     }
                     dispatch(loginUser(user))
                     dispatch(startGetBusinesses())
-                    const businessId = getState().user.activeBusiness
+                    const businessId = getState().user.activeBusiness._id
                     if (businessId) {
                         dispatch(startGetBusinessInfo(businessId))
                     }
@@ -65,7 +65,7 @@ export const startPostUserLogin = (formData, history) => {
                         username: response.data.userName,
                         invitedTo: response.data.invitedTo
                     }
-                    localStorage.setItem('authToken', token)
+                  localStorage.setItem('authToken', token)
                     dispatch(loginUser(user))
                     dispatch(startGetBusinesses())
                     history.push('/businesses')
@@ -77,13 +77,14 @@ export const startPostUserLogin = (formData, history) => {
     }
 }
 
-export const startPostUserLogout = (formData) => {
+export const startUserLogout = (history) => {
     return dispatch => {
-        axios.delete('/users/logout', formData)
+        axios.delete('/users/logout')
             .then(() => {
-                localStorage.clear()
                 dispatch(logoutUser())
                 dispatch({type: 'LOGOUT'})
+                localStorage.clear()
+                history.push('/')
             })
             .catch(err => {
                 console.log('Logout error', err)

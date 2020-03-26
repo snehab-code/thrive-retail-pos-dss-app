@@ -11,7 +11,7 @@ module.exports.show = (req, res) => {
     const id = req.params.id
     const businesses = req.businesses
     if (businesses.find(business => business._id == id)) {
-        Business.findById(id)
+        Business.findById(id).populate('members.user', 'username email')
         .then(business => {
             if (business) {
                 res.send(business)

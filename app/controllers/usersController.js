@@ -64,7 +64,7 @@ module.exports.logout = (req, res) => {
 
 
 module.exports.logoutAll = (req, res) => {
-    const {user, token} = req 
+    const {user} = req 
     User.findByIdAndUpdate(user._id, { $set: {tokens: []}}, {new: true})
         .then(user => {
             res.send({notice: 'succesfully logged out of all devices'})

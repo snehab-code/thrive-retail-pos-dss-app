@@ -1,5 +1,6 @@
 import axios from '../config/axios'
 import Swal from 'sweetalert2'
+import {setActiveBusiness} from './user'
 import {startGetCashBank} from './cashBank'
 import {startGetClients} from './clients'
 import {startGetCommodities} from './commodities'
@@ -31,6 +32,7 @@ const removeBusiness = (id) => {
 // replace with a promise.all later
 export const startGetBusinessInfo = (businessId) => {
     return (dispatch) => {
+        dispatch(startGetBusiness(businessId))
         dispatch(startGetCashBank(businessId))
         dispatch(startGetClients(businessId))
         dispatch(startGetCommodities(businessId))
@@ -53,9 +55,25 @@ export const startGetBusinesses = () => {
             dispatch(setBusinesses(businesses))
         })
         .catch(err => {
-            if (err.response.status == 401) {
+            if (err.response.status === 401) {
                 dispatch({type: 'LOGOUT'})
             }
+        })
+    }
+}
+
+export const startGetBusiness = (businessId) => {
+    return (dispatch) => {
+        axios.get(`/businesses/${businessId}`)
+        .then(response => {
+            const business = response.data
+            dispatch(setActiveBusiness(business))
+        })
+        .catch(err => {
+            Swal.fire({
+                icon: 'error', 
+                text: err
+            })
         })
     }
 }
@@ -93,7 +111,7 @@ export const startPutBusiness = (id, formData, history) => {
             }
         })
         .catch(err => {
-            if (err.response.status == 401) {
+            if (err.response.status === 401) {
                 dispatch({type: 'LOGOUT'})
             }
             Swal.fire({
@@ -115,7 +133,7 @@ export const startDeleteBusiness = (id) => {
             dispatch(removeBusiness(id))
         })
         .catch(err => {
-            if (err.response.status == 401) {
+            if (err.response.status === 401) {
                 dispatch({type: 'LOGOUT'})
             }
             Swal.fire({

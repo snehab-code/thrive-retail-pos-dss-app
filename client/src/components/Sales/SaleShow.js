@@ -10,7 +10,7 @@ function SaleShow(props) {
             {props.sale.client.name}
             <Link to={`/businesses/${props.sale.business}/invoices/${props.sale._id}/edit`}><Button>Edit Invoice</Button></Link>
             <Button onClick={() => props.handleRemove(props.sale._id)}>Remove Sale</Button>
-            // add cancel sale - preserves invoicenumber but marks transaction as cancelled
+            add cancel sale - preserves invoicenumber but marks transaction as cancelled
         </>
     )
 }

@@ -35,7 +35,7 @@ function CommodityForm(props) {
         >
         {
             (formikProps) => {
-                const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit} = formikProps
+                const { values, errors, handleChange, handleBlur, handleSubmit} = formikProps
                 return (
                 <Form onSubmit={handleSubmit}>
                     <div className="formSubGroup">

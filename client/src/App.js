@@ -18,22 +18,18 @@ import BusinessHome from './components/Admin/BusinessHome'
 import BusinessAdd from './components/Admin/BusinessAdd'
 
 import PurchaseList from './components/Purchases/PurchaseList'
-import PurchaseShow from './components/Purchases/PurchaseShow'
 import PurchaseAdd from './components/Purchases/PurchaseAdd'
 import PurchaseEdit from './components/Purchases/PurchaseEdit'
 
 import PayablesList from './components/Expenses/PayablesList'
-import PayableShow from './components/Expenses/PayableShow'
 import PayableAdd from './components/Expenses/PayableAdd'
 import PayableEdit from './components/Expenses/PayableEdit'
 
 import SalesList from './components/Sales/SalesList'
-import SaleShow from './components/Sales/SaleShow'
 import SaleAdd from './components/Sales/SaleAdd'
 import SaleEdit from './components/Sales/SaleEdit'
 
 import OrdersList from './components/Orders/OrdersList'
-import OrderShow from './components/Orders/OrderShow'
 import OrderAdd from './components/Orders/OrderAdd'
 import OrderEdit from './components/Orders/OrderEdit'
 
