@@ -150,8 +150,8 @@ a {
 }
 
 button {
-    font-size:min(4vmin, 16px) !important; 
-    margin:10px !important;
+    font-size:min(4vmin, 14px) !important; 
+    margin:5px !important;
     padding:5px !important;
     color: #2c7873 !important;
     /* width: 85%; */
@@ -406,10 +406,6 @@ button:hover {
     margin: 0px !important;
 }
 
-.showButton {
-    border: 10px solid pink
-}
-
 .modalForm form {
     display: flex;
     flex-direction: column;
@@ -589,4 +585,32 @@ button:hover {
     .memberCard {
         width: 95%;
     }
+}
+
+/* Order Show */
+.orderContainer {
+    border: 1px solid #cbd8d0;
+    padding: 10px;
+}
+
+.orderContainer h2 {
+    width: 100%;
+    text-align: center;
+}
+
+.orderDetails {
+    width: 100%;
+    display: flex;
+}
+
+.orderDetails div {
+    width: 50%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 1px dotted #cbd8d0;
+    border-bottom: 1px dotted #cbd8d0;
+}
+
+.orderContainer table {
+    border-bottom: 1px dotted #cbd8d0;
 }
