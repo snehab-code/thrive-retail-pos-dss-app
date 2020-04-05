@@ -62,7 +62,7 @@ export const startPutPayable = (businessId, id, formData, history) => {
                 const payable = response.data
                 const id = payable._id
                 dispatch(updatePayable(id, payable))
-                history && history.push(`/businesses/${businessId}/payables/${id}`)
+                history && history.push(`/businesses/${businessId}/expenses`)
             }
         })
         .catch(err => {

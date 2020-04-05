@@ -614,3 +614,10 @@ button:hover {
 .orderContainer table {
     border-bottom: 1px dotted #cbd8d0;
 }
+
+.MuiFormControlLabel-root {
+    height: 20px;
+    margin-top: 29px;
+    margin-left: -6px !important;
+    color: #6fb98f;
+}

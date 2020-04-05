@@ -9,6 +9,7 @@ import Modal from 'react-modal'
 import modalStyles from '../../config/modalCss'
 import { customStylesTable } from '../../config/dataTableTheme'
 import PayableShow from './PayableShow'
+import {startDeletePayable} from '../../actions/payables'
 
 const dataColumns = [{
     name: 'Date',
@@ -65,6 +66,11 @@ function PayablesList(props) {
         setModalState(true)
     }
 
+    const handleRemove = (id) => {
+        props.dispatch(startDeletePayable(props.match.params.businessId, id))
+        setModalState(false)
+    }
+
     const closeModal = () => {
         setModalState(false)
     }
@@ -78,7 +84,7 @@ function PayablesList(props) {
                 // onAfterOpen={this.afterOpenModal}
                 onRequestClose={closeModal}
             >
-                <PayableShow id={payableId}/>
+                <PayableShow id={payableId} handleRemove={handleRemove}/>
             </Modal>
             <div className='contentHeader'>
             <span className='headerText'>Expenses</span>

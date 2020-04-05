@@ -72,7 +72,7 @@ function BusinessList(props) {
             }
             
         </div>
-        hihi
+        ...
         </div>
         </div>
     )
