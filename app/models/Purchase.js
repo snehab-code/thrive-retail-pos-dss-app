@@ -25,6 +25,10 @@ const purchaseSchema = new Schema({
         required: true,
         unique: true
     },
+    order: {
+        type: Schema.Types.ObjectId,
+        ref: 'Order'
+    },
     documentDate: {
         type: Date,
         required: true

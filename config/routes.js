@@ -15,7 +15,7 @@ const journalController = require('../app/controllers/journalController')
 const payablesController = require('../app/controllers/payablesController')
 const purchaseOrdersController = require('../app/controllers/purchaseOrdersController')
 const suppliersController = require('../app/controllers/suppliersController')
-const transactionsController = require('../app/controllers/transactionController')
+// const transactionsController = require('../app/controllers/transactionController')
 const salesController = require('../app/controllers/salesController')
 const purchasesController = require('../app/controllers/purchasesController')
 const ordersController = require('../app/controllers/ordersController')
@@ -94,17 +94,21 @@ router.post('/api/businesses/:businessId/sales', authenticateUser, checkAuthoris
 router.put('/api/businesses/:businessId/sales/:saleId', authenticateUser, checkAuthorisation, salesController.update)
 router.delete('/api/businesses/:businessId/sales/:saleId', authenticateUser, checkAuthorisation, salesController.destroy)
 
-router.get('/api/businesses/:businessId/purchases', authenticateUser, checkAuthorisation, purchasesController.list)
-router.get('/api/businesses/:businessId/purchases/:purchaseId', authenticateUser, checkAuthorisation, purchasesController.show)
-router.post('/api/businesses/:businessId/purchases', authenticateUser, checkAuthorisation, purchasesController.create)
-router.put('/api/businesses/:businessId/purchases/:purchaseId', authenticateUser, checkAuthorisation, purchasesController.update)
-router.delete('/api/businesses/:businessId/purchases/:purchaseId', authenticateUser, checkAuthorisation, purchasesController.destroy)
 
 router.get('/api/businesses/:businessId/orders', authenticateUser, checkAuthorisation, ordersController.list)
 router.get('/api/businesses/:businessId/orders/:orderId', authenticateUser, checkAuthorisation, ordersController.show)
 router.post('/api/businesses/:businessId/orders', authenticateUser, checkAuthorisation, ordersController.create)
 router.put('/api/businesses/:businessId/orders/:orderId', authenticateUser, checkAuthorisation, ordersController.update)
 router.delete('/api/businesses/:businessId/orders/:orderId', authenticateUser, checkAuthorisation, ordersController.destroy)
+
+// router.post('/api/businesses/:businessId/orders/:orderId/delivery', authenticateUser, checkAuthorisation, ordersController.createPurchase)
+
+router.get('/api/businesses/:businessId/purchases', authenticateUser, checkAuthorisation, purchasesController.list)
+router.get('/api/businesses/:businessId/purchases/:purchaseId', authenticateUser, checkAuthorisation, purchasesController.show)
+router.post('/api/businesses/:businessId/purchases', authenticateUser, checkAuthorisation, purchasesController.create)
+router.put('/api/businesses/:businessId/purchases/:purchaseId', authenticateUser, checkAuthorisation, purchasesController.update)
+router.delete('/api/businesses/:businessId/purchases/:purchaseId', authenticateUser, checkAuthorisation, purchasesController.destroy)
+
 
 router.get('/api/users', usersController.list)
 router.post('/api/users/register', usersController.register)

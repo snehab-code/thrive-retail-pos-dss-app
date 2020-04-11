@@ -9,7 +9,7 @@ import creditorsReducer from '../reducers/creditorsReducer'
 import payablesReducer from '../reducers/payablesReducer'
 import purchaseOrdersReducer from '../reducers/purchaseOrdersReducer'
 import suppliersReducer from '../reducers/suppliersReducer'
-import transactionsReducer from '../reducers/transactionsReducer'
+// import transactionsReducer from '../reducers/transactionsReducer'
 import salesReducer from '../reducers/salesReducer'
 import purchasesReducer from '../reducers/purchasesReducer'
 import ordersReducer from '../reducers/ordersReducer'
@@ -24,7 +24,7 @@ const appReducer = combineReducers({
     payables: payablesReducer,
     purchaseOrders: purchaseOrdersReducer,
     suppliers: suppliersReducer,
-    transactions: transactionsReducer,
+    // transactions: transactionsReducer,
     sales: salesReducer,
     purchases: purchasesReducer,
     orders: ordersReducer

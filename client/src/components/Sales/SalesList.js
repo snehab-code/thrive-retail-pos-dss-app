@@ -169,11 +169,11 @@ function SalesList(props) {
                 </div>
                 <div className="subContentBox thirdbox">
                     <h3>Total Sales by period</h3>
-                    nothing now bec covid
+                    x
                 </div>
                 <div className="subContentBox thirdbox">
                     <h3>Things</h3>
-                    i don care bout no ghosts
+                    x
                 </div>
             </div>
         </div>

@@ -38,7 +38,7 @@ function BusinessHome(props){
                 />}
             </div>
             <div className="subContentBox halfbox">
-                hiya
+                ---
             </div>
         </div>
     </div>

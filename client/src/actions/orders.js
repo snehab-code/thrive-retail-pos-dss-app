@@ -51,7 +51,7 @@ export const startPostOrder = (businessId, formData, history) => {
 }
 
 export const startPutOrder = (businessId, id, formData, history) => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
         axios.put(`/businesses/${businessId}/orders/${id}`, formData)
         .then(response=>{
             if (response.data.errors) {
@@ -60,23 +60,37 @@ export const startPutOrder = (businessId, id, formData, history) => {
                     text: response.data.message,
                 })
             } else {
-                const order = response.data
+                let order = response.data
                 const id = order._id
+                const supplier = getState().suppliers.find(supplier => supplier._id === order.supplier)
+                const products = order.commodities.map(com => {
+                    const prod = getState().commodities.find(commodity => commodity._id === com.product)
+                    return {... com, ...{product: {_id: prod._id, name: prod.name}}}
+                })
+                const data = {
+                    supplier: {
+                        _id: supplier._id,
+                        name: supplier.name
+                    },
+                    commodities: products
+                }
+                order = {...order, ...data}
+                console.log(order)
                 dispatch(updateOrder(id, order))
                 history && history.push(`/businesses/${businessId}/orders`)
             }
         })
         .catch(err => {
-            if (err.response.status === 401) {
+            if (err.response && err.response.status === 401) {
                 dispatch({type: 'LOGOUT'})
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: err,
+                    footer: 'Please try again'
+                  })
+                history.push('/account/login')
             }
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: err,
-                footer: 'Please try again'
-              })
-            history.push('/account/login')
         })
     }
 } 

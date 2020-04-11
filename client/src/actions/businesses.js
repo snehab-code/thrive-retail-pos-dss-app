@@ -40,7 +40,7 @@ export const startGetBusinessInfo = (businessId) => {
         dispatch(startGetPayables(businessId))
         dispatch(startGetPurchaseOrders(businessId))
         dispatch(startGetSuppliers(businessId))
-        dispatch(startGetTransactions(businessId))
+        // dispatch(startGetTransactions(businessId))
         dispatch(startGetSales(businessId))
         dispatch(startGetPurchases(businessId))
         dispatch(startGetOrders(businessId))
