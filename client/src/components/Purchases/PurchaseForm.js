@@ -13,6 +13,8 @@ import Autocomplete from '@material-ui/lab/Autocomplete'
 // validations pending
 function PurchaseForm(props) {
 
+    console.log(props)
+
     const [transactionDate, setDate] = useState(Date.now())
     // const [documentDate, setDocDate] = useState(Date.now())
     const [invoiceDate, setInvDate] = useState(Date.now())
@@ -24,8 +26,8 @@ function PurchaseForm(props) {
         const formData = {...val,...{
             supplier: supplier._id,
             transactionDate,
-            // documentDate,
             invoiceDate,
+            order: props.orders.find(order => order.orderNumber === props.orderNumber)._id,
             amount: val.commodities.length > 1 ? val.commodities.reduce((acc, currentval) => {
                 return acc.rate*acc.quantity + currentval.rate*currentval.quantity
             }) : val.commodities[0].rate*val.commodities[0].quantity
@@ -38,6 +40,7 @@ function PurchaseForm(props) {
         <Formik
             enableReinitialize 
             initialValues={{ 
+                order: props.order ? props.order : props.orderNumber ? props.orderNumber : '',
                 supplier: props.supplier ? props.supplier._id : '',
                 supplierInvoice: props.supplierInvoice ? props.supplierInvoice : '',
                 documentType: props.documentType ? props.documentType : '',
@@ -56,6 +59,7 @@ function PurchaseForm(props) {
         {
         (formikProps) => {
             const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit} = formikProps
+            console.log(values)
             return (
             <Form onSubmit={handleSubmit}>
                 <div className="formSubGroup">
@@ -66,6 +70,16 @@ function PurchaseForm(props) {
                         value={transactionDate}
                         format='MM/DD/YYYY'
                         label='Transaction Date'
+                    />
+                    <TextField
+                        error = {errors.order && touched.order}
+                        id='order'
+                        name='order'
+                        value={values.order}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        label='Order Number'
+                        helperText={errors.order}
                     />
                     {/* Invoice date */}
                     <KeyboardDatePicker
@@ -238,7 +252,7 @@ function PurchaseForm(props) {
                     )}
                 )}
                 {
-                    values.commodities[1].rate && values.commodities[1].quantity && (
+                    values.commodities[1] && values.commodities[1].rate && values.commodities[1].quantity && (
                     <div style={{padding:10, fontSize: '4vmin', width: '90%', height: '60px', textAlign: 'right'}}>
                         <span>
                             {
@@ -279,7 +293,8 @@ function PurchaseForm(props) {
 const mapStateToProps = (state) => {
     return {
         suppliers: state.suppliers,
-        products: state.commodities
+        products: state.commodities,
+        orders: state.orders
     }
 }
 

@@ -10,6 +10,7 @@ import modalStyles from '../../config/modalCss'
 import { customStylesTable } from '../../config/dataTableTheme'
 import OrderShow from './OrderShow'
 import { startDeleteOrder } from '../../actions/orders'
+import PurchaseAdd from '../Purchases/PurchaseAdd'
 
 const dataColumns = [{
     name: 'Date',
@@ -108,6 +109,7 @@ function OrderList(props) {
 
     const [modalIsOpen, setModalState] = useState(false)
     const [orderId, setOrderId] = useState('')
+    const [orderData, setOrderData] = useState({})
 
     Modal.setAppElement('#root')  
 
@@ -121,8 +123,14 @@ function OrderList(props) {
         setModalState(false)
     }
 
+    const handleDelivery = (orderData) => {
+        setModalState(true)
+        setOrderData(orderData)
+    }
+
     const closeModal = () => {
         setModalState(false)
+        setOrderData({})
     }
 
     return (
@@ -134,7 +142,13 @@ function OrderList(props) {
                 // onAfterOpen={this.afterOpenModal}
                 onRequestClose={closeModal}
             >
-                <OrderShow id={orderId} handleRemove={handleRemove}/>
+                {
+                    orderData.orderNumber ? 
+                    <PurchaseAdd orderData={orderData} id={props.match.params.businessId}/>
+                    :
+                    <OrderShow id={orderId} handleDelivery={handleDelivery} handleRemove={handleRemove}/>
+                }
+                
             </Modal>
             <div className='contentHeader'>
             <span className='headerText'>Orders</span>

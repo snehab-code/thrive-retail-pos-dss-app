@@ -101,8 +101,6 @@ router.post('/api/businesses/:businessId/orders', authenticateUser, checkAuthori
 router.put('/api/businesses/:businessId/orders/:orderId', authenticateUser, checkAuthorisation, ordersController.update)
 router.delete('/api/businesses/:businessId/orders/:orderId', authenticateUser, checkAuthorisation, ordersController.destroy)
 
-// router.post('/api/businesses/:businessId/orders/:orderId/delivery', authenticateUser, checkAuthorisation, ordersController.createPurchase)
-
 router.get('/api/businesses/:businessId/purchases', authenticateUser, checkAuthorisation, purchasesController.list)
 router.get('/api/businesses/:businessId/purchases/:purchaseId', authenticateUser, checkAuthorisation, purchasesController.show)
 router.post('/api/businesses/:businessId/purchases', authenticateUser, checkAuthorisation, purchasesController.create)

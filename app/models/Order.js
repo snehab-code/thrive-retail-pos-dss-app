@@ -42,8 +42,14 @@ const orderSchema = new Schema({
         }, 
         igst: {
             type: Number
+        },
+        isCompleted: {
+            type: Boolean,
+            default: false
         }
     }],
+    // change to boolean? isCompleted?
+    // #TODO
     status: {
         type: String,
         enum: ['Pending Delivery', 'Delivered', 'Completed'],
