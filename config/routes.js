@@ -13,9 +13,7 @@ const clientsController = require('../app/controllers/clientsController')
 const commoditiesController = require('../app/controllers/commoditiesController')
 const journalController = require('../app/controllers/journalController')
 const payablesController = require('../app/controllers/payablesController')
-const purchaseOrdersController = require('../app/controllers/purchaseOrdersController')
 const suppliersController = require('../app/controllers/suppliersController')
-// const transactionsController = require('../app/controllers/transactionController')
 const salesController = require('../app/controllers/salesController')
 const purchasesController = require('../app/controllers/purchasesController')
 const ordersController = require('../app/controllers/ordersController')
@@ -40,11 +38,13 @@ router.post('/api/businesses/:businessId/cash-bank', authenticateUser, checkAuth
 router.put('/api/businesses/:businessId/cash-bank/:cashBankId', authenticateUser, checkAuthorisation, cashBankController.update)
 router.delete('/api/businesses/:businessId/cash-bank/:cashBankId', authenticateUser, checkAuthorisation, commoditiesController.destroy)
 
+
 router.get('/api/businesses/:businessId/clients', authenticateUser, checkAuthorisation, clientsController.list)
 router.get('/api/businesses/:businessId/clients/:clientId', authenticateUser, checkAuthorisation, clientsController.show)
 router.post('/api/businesses/:businessId/clients', authenticateUser, checkAuthorisation, clientsController.create)
 router.put('/api/businesses/:businessId/clients/:clientId', authenticateUser, checkAuthorisation, clientsController.update)
 router.delete('/api/businesses/:businessId/clients/:clientId', authenticateUser, checkAuthorisation, clientsController.destroy)
+
 
 router.get('/api/businesses/:businessId/commodities', authenticateUser, checkAuthorisation, commoditiesController.list)
 router.get('/api/businesses/:businessId/commodities/:commodityId', authenticateUser, checkAuthorisation, commoditiesController.show)
@@ -52,11 +52,13 @@ router.post('/api/businesses/:businessId/commodities', authenticateUser, checkAu
 router.put('/api/businesses/:businessId/commodities/:commodityId', authenticateUser, checkAuthorisation, commoditiesController.update)
 router.delete('/api/businesses/:businessId/commodities/:commodityId', authenticateUser, checkAuthorisation, commoditiesController.destroy)
 
+
 router.get('/api/businesses/:businessId/creditors', authenticateUser, checkAuthorisation, creditorsController.list)
 router.get('/api/businesses/:businessId/creditors/:creditorId', authenticateUser, checkAuthorisation, creditorsController.show)
 router.post('/api/businesses/:businessId/creditors', authenticateUser, checkAuthorisation, creditorsController.create)
 router.put('/api/businesses/:businessId/creditors/:creditorId', authenticateUser, checkAuthorisation, creditorsController.update)
 router.delete('/api/businesses/:businessId/creditors/:creditorId', authenticateUser, checkAuthorisation, creditorsController.destroy)
+
 
 router.get('/api/businesses/:businessId/journal-entries', authenticateUser, checkAuthorisation, journalController.list)
 router.get('/api/businesses/:businessId/journal-entries/:journalId', authenticateUser, checkAuthorisation, journalController.show)
@@ -64,17 +66,13 @@ router.post('/api/businesses/:businessId/journal-entries', authenticateUser, che
 router.put('/api/businesses/:businessId/journal-entries/:journalId', authenticateUser, checkAuthorisation, journalController.update)
 router.delete('/api/businesses/:businessId/journal-entries/:journalId', authenticateUser, checkAuthorisation, journalController.destroy)
 
+
 router.get('/api/businesses/:businessId/payables', authenticateUser, checkAuthorisation, payablesController.list)
 router.get('/api/businesses/:businessId/payables/:payableId', authenticateUser, checkAuthorisation, payablesController.show)
 router.post('/api/businesses/:businessId/payables', authenticateUser, checkAuthorisation, payablesController.create)
 router.put('/api/businesses/:businessId/payables/:payableId', authenticateUser, checkAuthorisation, payablesController.update)
 router.delete('/api/businesses/:businessId/payables/:payableId', authenticateUser, checkAuthorisation, payablesController.destroy)
 
-router.get('/api/businesses/:businessId/purchase-orders', authenticateUser, checkAuthorisation, purchaseOrdersController.list)
-router.get('/api/businesses/:businessId/purchase-orders/:purchaseOrderId', authenticateUser, checkAuthorisation, purchaseOrdersController.show)
-router.post('/api/businesses/:businessId/purchase-orders', authenticateUser, checkAuthorisation, purchaseOrdersController.create)
-router.put('/api/businesses/:businessId/purchase-orders/:purchaseOrderId', authenticateUser, checkAuthorisation, purchaseOrdersController.update)
-router.delete('/api/businesses/:businessId/purchase-orders/:purchaseOrderId', authenticateUser, checkAuthorisation, purchaseOrdersController.destroy)
 
 router.get('/api/businesses/:businessId/suppliers', authenticateUser, checkAuthorisation, suppliersController.list)
 router.get('/api/businesses/:businessId/suppliers/:supplierId', authenticateUser, checkAuthorisation, suppliersController.show)
@@ -82,11 +80,6 @@ router.post('/api/businesses/:businessId/suppliers', authenticateUser, checkAuth
 router.put('/api/businesses/:businessId/suppliers/:supplierId', authenticateUser, checkAuthorisation, suppliersController.update)
 router.delete('/api/businesses/:businessId/suppliers/:supplierId', authenticateUser, checkAuthorisation, suppliersController.destroy)
 
-// router.get('/api/businesses/:businessId/transactions', authenticateUser, checkAuthorisation, transactionsController.list)
-// router.get('/api/businesses/:businessId/transactions/:transactionId', authenticateUser, checkAuthorisation, transactionsController.show)
-// router.post('/api/businesses/:businessId/transactions', authenticateUser, checkAuthorisation, transactionsController.create)
-// router.put('/api/businesses/:businessId/transactions/:transactionId', authenticateUser, checkAuthorisation, transactionsController.update)
-// router.delete('/api/businesses/:businessId/transactions/:transactionId', authenticateUser, checkAuthorisation, transactionsController.destroy)
 
 router.get('/api/businesses/:businessId/sales', authenticateUser, checkAuthorisation, salesController.list)
 router.get('/api/businesses/:businessId/sales/:saleId', authenticateUser, checkAuthorisation, salesController.show)
@@ -100,6 +93,7 @@ router.get('/api/businesses/:businessId/orders/:orderId', authenticateUser, chec
 router.post('/api/businesses/:businessId/orders', authenticateUser, checkAuthorisation, ordersController.create)
 router.put('/api/businesses/:businessId/orders/:orderId', authenticateUser, checkAuthorisation, ordersController.update)
 router.delete('/api/businesses/:businessId/orders/:orderId', authenticateUser, checkAuthorisation, ordersController.destroy)
+
 
 router.get('/api/businesses/:businessId/purchases', authenticateUser, checkAuthorisation, purchasesController.list)
 router.get('/api/businesses/:businessId/purchases/:purchaseId', authenticateUser, checkAuthorisation, purchasesController.show)

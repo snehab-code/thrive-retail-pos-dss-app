@@ -35,7 +35,7 @@ const cashBankSchema = new Schema({
     mode: {
         type: String,
         enum: ['Cash', 'Bank'],
-        required: true
+        default: 'Bank'
     },    
     user: {
         type: Schema.Types.ObjectId,

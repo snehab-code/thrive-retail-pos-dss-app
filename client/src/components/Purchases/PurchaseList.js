@@ -111,7 +111,7 @@ function PurchaseList(props) {
 
 const mapStateToProps = (state) => {
     return {
-        orders: state.purchaseOrders.map(order => {
+        orders: state.purchases.map(order => {
             const newData = {
                 transactionDate: {date: order.transactionDate, id: order._id},
                 amount: order.quantity * order.rate,

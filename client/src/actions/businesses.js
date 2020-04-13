@@ -6,9 +6,7 @@ import {startGetClients} from './clients'
 import {startGetCommodities} from './commodities'
 import {startGetCreditors} from './creditors'
 import {startGetPayables} from './payables'
-import {startGetPurchaseOrders} from './purchaseOrders'
 import {startGetSuppliers} from './suppliers'
-import {startGetTransactions} from './transactions'
 import {startGetPurchases} from './purchases'
 import {startGetSales} from './sales'
 import {startGetOrders} from './orders'
@@ -38,9 +36,7 @@ export const startGetBusinessInfo = (businessId) => {
         dispatch(startGetCommodities(businessId))
         dispatch(startGetCreditors(businessId))
         dispatch(startGetPayables(businessId))
-        dispatch(startGetPurchaseOrders(businessId))
         dispatch(startGetSuppliers(businessId))
-        // dispatch(startGetTransactions(businessId))
         dispatch(startGetSales(businessId))
         dispatch(startGetPurchases(businessId))
         dispatch(startGetOrders(businessId))

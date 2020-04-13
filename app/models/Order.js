@@ -72,6 +72,7 @@ const orderSchema = new Schema({
 orderSchema.methods.markProductCompletion = function() {
     const order = this
     // if the product is fully delivered/accounted for otherwise and if so - mark the order commodity as completed.
+    // #TODO
 }
 
 const Order = mongoose.model('Order', orderSchema)

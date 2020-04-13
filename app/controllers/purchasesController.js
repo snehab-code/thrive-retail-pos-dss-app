@@ -27,6 +27,7 @@ module.exports.show = (req, res) => {
 module.exports.create = (req, res) => {
     if (req.business.permissions.includes('admin') || req.business.permissions.includes('create')) {
         const body = req.body
+        body.amount = body.commodities.length > 1 ? body.commodities.reduce((acc, cv) => acc.rate*acc.quantity + cv.rate*cv.quantity) : body.commodities[0].rate*body.commodities[0].quantity
         body.user = req.user._id
         body.business = req.business._id
         if (body.order) {
@@ -44,7 +45,7 @@ module.exports.create = (req, res) => {
                         if (find) {
                             if (find.quantity < body.commodities[i].quantity && body.documentType!== 'Credit Note') {
                                 // do not use res.send here because the rest of the code still runs and there's an unhandled promise rejection each time because it runs into the next res.send
-                                // also do not use return res.send, because res.send returns the request object, and your save is still trying to run.
+                                // also do not use `return res.send`, because this returns the whole request object, and so the next .then is still called and your save is still trying to run and erroring out because it can't make a document with the request object. So while it "works", it's terrible code.
                                 return Promise.reject({error: 'To account for excess material received, create a Credit Note'})
                             }
                         } else {
@@ -67,17 +68,15 @@ module.exports.create = (req, res) => {
                     res.send(err)
                 })
         } else {
-            res.send('testing')
-            // const purchase = new Purchase(body)
-            // purchase.save()
-            //     .then(purchase => {
-            //         res.send(purchase)
-            //     })
-            //     .catch(err => {
-            //         res.send(err)
-            //     })
+            const purchase = new Purchase(body)
+            purchase.save()
+                .then(purchase => {
+                    res.send(purchase)
+                })
+                .catch(err => {
+                    res.send(err)
+                })
         }
-        
     } else {
         res.sendStatus('401')
     }

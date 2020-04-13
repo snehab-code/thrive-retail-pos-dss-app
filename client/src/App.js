@@ -33,6 +33,10 @@ import OrdersList from './components/Orders/OrdersList'
 import OrderAdd from './components/Orders/OrderAdd'
 import OrderEdit from './components/Orders/OrderEdit'
 
+import PaymentsList from './components/Payments/PaymentsList'
+import PaymentAdd from './components/Payments/PaymentAdd'
+import PaymentEdit from './components/Payments/PaymentEdit'
+
 import ReportList from './components/Reports/ReportList'
 import TeamList from './components/Team/TeamList'
 
@@ -70,6 +74,10 @@ function App() {
       <Route path="/businesses/:businessId/expenses" component={PayablesList} exact/>
       <Route path="/businesses/:businessId/expenses/new" component={PayableAdd} exact />
       <Route path="/businesses/:businessId/expenses/:expenseId/edit" component={PayableEdit} />
+
+      <Route path="/businesses/:businessId/payments" component={PaymentsList} exact/>
+      <Route path="/businesses/:businessId/payments/new" component={PaymentAdd} exact />
+      <Route path="/businesses/:businessId/payments/:paymentId/edit" component={PaymentEdit} />
 
       <Route path="/businesses/:businessId/reports" component={ReportList} exact/>
       <Route path="/businesses/:businessId/teams" component={TeamList} exact/>

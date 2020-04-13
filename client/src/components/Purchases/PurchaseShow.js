@@ -4,15 +4,15 @@ import {connect} from 'react-redux'
 function PurchaseShow(props) {
     return (
         <>
-            <h3>Order details</h3>
-            {props.order.commodity.name}
+            <h3>Purchase details</h3>
+            {props.purchase.commodity.name}
         </>
     )
 }
 
 const mapStateToProps = (state, props) => {
     return {
-        order: state.purchaseOrders.find(order => order._id === props.id)
+        purchase: state.purchases.find(purchase => purchase._id === props.id)
     }
 }
 
