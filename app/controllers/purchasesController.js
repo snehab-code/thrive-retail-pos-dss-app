@@ -43,10 +43,12 @@ module.exports.create = (req, res) => {
                         const find = unrecordedProducts.find(unrecProduct => body.commodities[i].product === unrecProduct.product)
                         if (find) {
                             if (find.quantity < body.commodities[i].quantity && body.documentType!== 'Credit Note') {
-                                return res.send({error: 'To account for excess material received, create a Credit Note'})
+                                // do not use res.send here because the rest of the code still runs and there's an unhandled promise rejection each time because it runs into the next res.send
+                                // also do not use return res.send, because res.send returns the request object, and your save is still trying to run.
+                                return Promise.reject({error: 'To account for excess material received, create a Credit Note'})
                             }
                         } else {
-                            return res.send({error: 'Some of these products have already been delivered'})
+                            return Promise.reject({error: 'Some of these products have already been delivered'})
                         }
                     }
                     return body

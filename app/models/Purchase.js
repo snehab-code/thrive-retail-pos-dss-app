@@ -90,7 +90,7 @@ purchaseSchema.statics.findUnrecordedProducts = function(order) {
     const Purchase = this
     return Purchase.find({order: order._id}, 'commodities')
         .then(purchases => {
-
+            
             let unrecordedProducts = order.commodities.map(commodity => {
                 return {
                     product: String(commodity.product), 
