@@ -86,6 +86,38 @@ const purchaseSchema = new Schema({
     }
 })
 
+purchaseSchema.statics.findUnrecordedProducts = function(order) {
+    const Purchase = this
+    return Purchase.find({order: order._id}, 'commodities')
+        .then(purchases => {
+
+            let unrecordedProducts = order.commodities.map(commodity => {
+                return {
+                    product: String(commodity.product), 
+                    quantity: commodity.quantity
+                }
+            })
+
+            purchases.forEach(purchase => {
+                purchase.commodities.forEach(commodity => {
+                    const find = unrecordedProducts.find(unrecProduct => {
+                        return String(commodity.product) === unrecProduct.product
+                    })
+
+                    if(find) {
+                        find.quantity -= commodity.quantity
+                    }
+                })
+            })
+
+
+            return Promise.resolve(unrecordedProducts)
+        })
+        .catch(err => {
+            return Promise.reject(err)
+        })
+}
+
 const Purchase = mongoose.model('Purchase', purchaseSchema)
 
 module.exports = Purchase

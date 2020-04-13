@@ -1,4 +1,5 @@
 const Purchase = require('../models/Purchase')
+const Order = require('../models/Order')
 
 module.exports.list = (req, res) => {
     const businessId = req.business._id
@@ -28,14 +29,53 @@ module.exports.create = (req, res) => {
         const body = req.body
         body.user = req.user._id
         body.business = req.business._id
-        const purchase = new Purchase(body)
-        purchase.save()
-            .then(purchase => {
-                res.send(purchase)
-            })
-            .catch(err => {
-                res.send(err)
-            })
+        if (body.order) {
+            Order.findById(body.order)
+                .then(order => {
+                    if (body.supplier !== String(order.supplier)) {
+                        res.send({error: 'Supplier mismatch'})
+                    } else {
+                        return Purchase.findUnrecordedProducts(order)
+                    }
+                })
+                .then(unrecordedProducts => {
+                    for (let i=0; i<body.commodities.length; i++) {
+                        const find = unrecordedProducts.find(unrecProduct => body.commodities[i].product === unrecProduct.product)
+                        if (find) {
+                            if (find.quantity < body.commodities[i].quantity && body.documentType!== 'Credit Note') {
+                                return res.send({error: 'To account for excess material received, create a Credit Note'})
+                            }
+                        } else {
+                            return res.send({error: 'Some of these products have already been delivered'})
+                        }
+                    }
+                    return body
+                })
+                .then(body => {
+                    const purchase = new Purchase(body)
+                    purchase.save()
+                        .then(purchase => {
+                            res.send(purchase)
+                        })
+                        .catch(err => {
+                            res.send(err)
+                        })
+                })
+                .catch(err => {
+                    res.send(err)
+                })
+        } else {
+            res.send('testing')
+            // const purchase = new Purchase(body)
+            // purchase.save()
+            //     .then(purchase => {
+            //         res.send(purchase)
+            //     })
+            //     .catch(err => {
+            //         res.send(err)
+            //     })
+        }
+        
     } else {
         res.sendStatus('401')
     }

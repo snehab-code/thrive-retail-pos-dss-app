@@ -69,8 +69,11 @@ const orderSchema = new Schema({
     }
 })
 
-const Order = mongoose.model('Order', orderSchema)
+orderSchema.methods.markProductCompletion = function() {
+    const order = this
+    // if the product is fully delivered/accounted for otherwise and if so - mark the order commodity as completed.
+}
 
-// on editing an order, when order item is marked as delivered - maybe have a seperate err whatsitcalledahahaha a different url for that. 
+const Order = mongoose.model('Order', orderSchema)
 
 module.exports = Order
