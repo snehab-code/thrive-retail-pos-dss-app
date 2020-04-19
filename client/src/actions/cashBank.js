@@ -25,7 +25,7 @@ export const startGetCashBank = (businessId) => {
             dispatch(setCashBank(cashBank))
         })
         .catch(err => {
-            if (err.response.status === 401) {
+            if (err.response && err.response.status === 401) {
                 dispatch({type: 'LOGOUT'})
             }
         })
@@ -81,6 +81,7 @@ export const startPutCashBank = (businessId, id, formData, history) => {
 } 
 
 export const startDeleteCashBank = (businessId, id) => {
+    console.log('hi')
     return (dispatch) => {
         axios.delete(`/businesses/${businessId}/cash-bank/${id}`)
             .then(response => {

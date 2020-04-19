@@ -15,7 +15,7 @@ import ordersReducer from '../reducers/ordersReducer'
 const appReducer = combineReducers({
     user: userReducer,
     businesses: businessesReducer,
-    cashbank: cashBankReducer,
+    cashBank: cashBankReducer,
     clients: clientsReducer,
     commodities: commoditiesReducer,
     creditors: creditorsReducer,
