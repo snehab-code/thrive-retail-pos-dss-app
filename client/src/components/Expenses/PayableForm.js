@@ -116,7 +116,7 @@ function PayableForm(props) {
                     <Autocomplete
                     style={{width:'100%'}}
                     options={props.creditors}
-                    getOptionLabel={option => option.name}
+                    getOptionLabel={option => option.name ? option.name : ''}
                     name="payableTo" 
                     id="payableToac"
                     disableClearable

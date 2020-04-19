@@ -1,9 +1,9 @@
 import React from 'react'
-import PaymentForm from './PaymentForm'
+import CashForm from './CashForm'
 import {connect} from 'react-redux'
 import {startPostCashBank} from '../../actions/cashBank'
 
-function PaymentAdd(props) {
+function CashAdd(props) {
 
     const handleSubmit = (formData) => {
         props.dispatch(startPostCashBank(props.match.params.businessId, formData, props.history))
@@ -11,11 +11,11 @@ function PaymentAdd(props) {
 
     return (
         <div className="businessForms">
-        <h1>Add a Payment</h1>
+        <h1>Add a transaction</h1>
         
-        <PaymentForm businessId={props.match.params.businessId} handleSubmit={handleSubmit}/>
+        <CashForm businessId={props.match.params.businessId} handleSubmit={handleSubmit}/>
         </div>
     )
 }
 
-export default connect()(PaymentAdd)
+export default connect()(CashAdd)

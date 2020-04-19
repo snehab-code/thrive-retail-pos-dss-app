@@ -92,7 +92,7 @@ function SaleForm(props) {
                             <Autocomplete
                             style={{width:'100%'}}
                             options={props.clients}
-                            getOptionLabel={option => option.name}
+                            getOptionLabel={option => option.name ? option.name : ''}
                             name="client" 
                             id="clientac"
                             disableClearable

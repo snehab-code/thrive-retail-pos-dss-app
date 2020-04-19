@@ -77,10 +77,10 @@ class Header extends React.Component {
                     </ListItem>
                     <ListItem button  onClick={() => {
                         this.toggleDrawer(false)
-                        this.props.history.push(`/businesses/${this.props.user.activeBusiness._id}/payments`)
+                        this.props.history.push(`/businesses/${this.props.user.activeBusiness._id}/cashbook`)
                     }}>
                         <ListItemIcon><AccountBalanceWalletIcon/></ListItemIcon>
-                        <ListItemText primary={'Payments'} />
+                        <ListItemText primary={'Cash Book'} />
                     </ListItem>
                     <ListItem button  onClick={() => {
                         this.toggleDrawer(false)

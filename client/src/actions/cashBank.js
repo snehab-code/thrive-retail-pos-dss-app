@@ -81,7 +81,6 @@ export const startPutCashBank = (businessId, id, formData, history) => {
 } 
 
 export const startDeleteCashBank = (businessId, id) => {
-    console.log('hi')
     return (dispatch) => {
         axios.delete(`/businesses/${businessId}/cash-bank/${id}`)
             .then(response => {

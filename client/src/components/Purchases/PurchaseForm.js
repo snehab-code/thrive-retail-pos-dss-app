@@ -98,7 +98,7 @@ function PurchaseForm(props) {
                         <Autocomplete
                         style={{width:'100%'}}
                         options={props.suppliers}
-                        getOptionLabel={option => option.name}
+                        getOptionLabel={option => option.name ? option.name : ''}
                         name="supplier" 
                         id="supplierac"
                         disableClearable

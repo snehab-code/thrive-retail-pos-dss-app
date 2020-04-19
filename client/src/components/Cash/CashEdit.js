@@ -1,9 +1,9 @@
 import React from 'react'
-import PaymentForm from './PaymentForm'
+import CashForm from './CashForm'
 import {startPutCashBank} from '../../actions/cashBank'
 import {connect} from 'react-redux'
 
-function PaymentEdit(props) {
+function CashEdit(props) {
     const handleSubmit = (formData) => {
         props.dispatch(startPutCashBank(props.match.params.businessId, props.payable._id, formData, props.history))
     }
@@ -12,7 +12,7 @@ function PaymentEdit(props) {
         <div className="businessForms">
         <h1>Edit Expense</h1>
         
-        {props.payable && props.payable._id && <PaymentForm businessId={props.match.params.businessId} {...props.payable} handleSubmit={handleSubmit}/>}
+        {props.payable && props.payable._id && <CashForm businessId={props.match.params.businessId} {...props.payable} handleSubmit={handleSubmit}/>}
         </div>
     )
 }
@@ -23,4 +23,4 @@ const mapStateToProps = (state, props) => {
     }
 }
 
-export default connect(mapStateToProps)(PaymentEdit)
+export default connect(mapStateToProps)(CashEdit)

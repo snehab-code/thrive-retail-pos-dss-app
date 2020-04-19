@@ -8,7 +8,7 @@ import Add from '@material-ui/icons/Add'
 import Modal from 'react-modal'
 import modalStyles from '../../config/modalCss'
 import { customStylesTable } from '../../config/dataTableTheme'
-import PaymentShow from './PaymentShow'
+import CashShow from './CashShow'
 import {startDeleteCashBank} from '../../actions/cashBank'
 
 const dataColumns = [{
@@ -45,17 +45,15 @@ const dataColumns = [{
 }
 ]
 
-function PaymentsList(props) {
-
-	console.log(props.payments)
+function CashList(props) {
 
     const [modalIsOpen, setModalState] = useState(false)
-    const [paymentId, setPaymentId] = useState('')
+    const [cashId, setCashId] = useState('')
 
     Modal.setAppElement('#root')  
 
     const handleRowClicked = (row) => {
-        setPaymentId(row.transactionDate.id)
+        setCashId(row.transactionDate.id)
         setModalState(true)
     }
 
@@ -77,11 +75,11 @@ function PaymentsList(props) {
                 // onAfterOpen={this.afterOpenModal}
                 onRequestClose={closeModal}
             >
-                <PaymentShow id={paymentId} handleRemove={handleRemove}/>
+                <CashShow id={cashId} handleRemove={handleRemove}/>
             </Modal>
             <div className='contentHeader'>
-            <span className='headerText'>Payments</span>
-            <Link to={`/businesses/${props.match.params.businessId}/payments/new`}><IconButton className='tableButton' >
+            <span className='headerText'>Cash Book</span>
+            <Link to={`/businesses/${props.match.params.businessId}/cashbook/new`}><IconButton className='tableButton' >
                 <Add />
             </IconButton>
             </Link>
@@ -99,11 +97,11 @@ function PaymentsList(props) {
             <div className="businessSubContent">
                 <div className="subContentBox thirdbox">
                     <h3>More actions</h3>
-                    Payments by period
+                    Cash Transactions by period
                 </div>
                 <div className="subContentBox thirdbox">
-                    <h3>Creditors</h3>
-                    See a list of your creditors
+                    <h3>???</h3>
+                    ???
                 </div>
                 <div className="subContentBox thirdbox">
                     <h3>Stats</h3>
@@ -134,4 +132,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(PaymentsList)
+export default connect(mapStateToProps)(CashList)

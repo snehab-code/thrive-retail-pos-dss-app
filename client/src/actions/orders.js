@@ -65,7 +65,7 @@ export const startPutOrder = (businessId, id, formData, history) => {
                 const supplier = getState().suppliers.find(supplier => supplier._id === order.supplier)
                 const products = order.commodities.map(com => {
                     const prod = getState().commodities.find(commodity => commodity._id === com.product)
-                    return {... com, ...{product: {_id: prod._id, name: prod.name}}}
+                    return {...com, ...{product: {_id: prod._id, name: prod.name}}}
                 })
                 const data = {
                     supplier: {
