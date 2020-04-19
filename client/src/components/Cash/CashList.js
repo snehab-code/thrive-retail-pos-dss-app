@@ -18,7 +18,7 @@ const dataColumns = [{
     cell: row => `${moment(row.transactionDate.date).format('MMM DD')}`
 },
 {
-    name: 'Paid To',
+    name: 'Party',
     selector: row => row.creditTo ? row.creditTo.name : row.debitFrom ? row.debitFrom.name : '',
     sortable: true
 },
@@ -27,11 +27,12 @@ const dataColumns = [{
     selector: 'amount',
     center: true
 },
-// {
-//     name: 'Related Document',
-//     selector: 'linkedTo.name',
-// 	sortable: true
-// },
+{
+    name: 'Related Document',
+    selector: 'linkedTo',
+    sortable: true,
+    cell: row => !row.linkedTo ? 'loading' : row.linkedTo.documentNumber ? row.linkedTo.documentNumber : row.linkedTo.invoiceNumber ? row.linkedTo.invoiceNumber : row.linkedTo.payableTo ? row.linkedTo.invoice : 'Does not exist'
+},
 {
     name: 'Notes',
     selector: 'remark',
@@ -118,6 +119,7 @@ const mapStateToProps = (state) => {
         payments: state.cashBank.map(payment => {
 			const stakeholders = [...state.clients, ...state.creditors, ...state.suppliers]
             const entries = [...state.purchases, ...state.sales, ...state.payables]
+            console.log(entries)
             const newData = {
                 transactionDate: {date: payment.transactionDate, id: payment._id},
                 linkedTo: entries.find(entry => entry._id === payment.linkedTo)

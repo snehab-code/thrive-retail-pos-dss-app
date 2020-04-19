@@ -25,14 +25,22 @@ function CashForm(props) {
     // }
 
     const handleSubmit = (val, {setSubmitting}) => {
-        const formData = {...val,...{
-            transactionDate
-        }}
-        console.log(formData)
+        const formData = {
+            transactionDate,
+            mode: val.mode,
+            remark: val.remark,
+            amount: val.amount,
+            linkedTo: linkedTo._id
+        }
+        if (val.type === 'Receipt') {
+            formData.debitFrom = party._id
+        } else if (val.type === 'Payment') {
+            formData.creditTo = party._id
+        }
         props.handleSubmit(formData)
         setSubmitting(false)
+        // console.log(formData)
     }
-    
 
     return (
         <>
@@ -44,7 +52,7 @@ function CashForm(props) {
             <CommodityAdd businessId={props.businessId} closeModal={closeModal}/>
         </Modal> */}
         <Formik
-            enableReinitialize 
+            // enableReinitialize 
             initialValues={{
                 mode: props.mode ? props.mode : '',
                 type: props.debitFrom ? 'Receipt' : props.creditTo ? 'Payment' : '',

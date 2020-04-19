@@ -36,7 +36,7 @@ router.get('/api/businesses/:businessId/cash-bank', authenticateUser, checkAutho
 router.get('/api/businesses/:businessId/cash-bank/:cashBankId', authenticateUser, checkAuthorisation, cashBankController.show)
 router.post('/api/businesses/:businessId/cash-bank', authenticateUser, checkAuthorisation, cashBankController.create)
 router.put('/api/businesses/:businessId/cash-bank/:cashBankId', authenticateUser, checkAuthorisation, cashBankController.update)
-router.delete('/api/businesses/:businessId/cash-bank/:cashBankId', authenticateUser, checkAuthorisation, commoditiesController.destroy)
+router.delete('/api/businesses/:businessId/cash-bank/:cashBankId', authenticateUser, checkAuthorisation, cashBankController.destroy)
 
 
 router.get('/api/businesses/:businessId/clients', authenticateUser, checkAuthorisation, clientsController.list)

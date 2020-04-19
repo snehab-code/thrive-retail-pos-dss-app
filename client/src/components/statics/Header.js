@@ -9,11 +9,12 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import Divider from '@material-ui/core/Divider'
-import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet';
-import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import AccountBalanceWalletIcon from '@material-ui/icons/AccountBalanceWallet'
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket'
 import StorefrontIcon from '@material-ui/icons/Storefront'
-import ShowChartIcon from '@material-ui/icons/ShowChart';
-import PeopleIcon from '@material-ui/icons/People';
+import ShowChartIcon from '@material-ui/icons/ShowChart'
+import PeopleIcon from '@material-ui/icons/People'
+import MoneyIcon from '@material-ui/icons/Money'
 
 class Header extends React.Component {
 
@@ -79,7 +80,7 @@ class Header extends React.Component {
                         this.toggleDrawer(false)
                         this.props.history.push(`/businesses/${this.props.user.activeBusiness._id}/cashbook`)
                     }}>
-                        <ListItemIcon><AccountBalanceWalletIcon/></ListItemIcon>
+                        <ListItemIcon><MoneyIcon/></ListItemIcon>
                         <ListItemText primary={'Cash Book'} />
                     </ListItem>
                     <ListItem button  onClick={() => {

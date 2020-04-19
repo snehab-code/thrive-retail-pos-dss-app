@@ -62,6 +62,7 @@ module.exports.destroy = (req, res) => {
         const id = req.params.cashBankId
      CashBank.findByIdAndDelete(id)
             .then(cashBank => {
+                console.log(cashBank)
                 res.send(cashBank)
             }) 
             .catch(err => {
