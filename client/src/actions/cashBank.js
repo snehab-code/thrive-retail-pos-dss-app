@@ -32,13 +32,14 @@ export const startGetCashBank = (businessId) => {
     }
 }
 
-export const startPostCashBank = (businessId, formData) => {
+export const startPostCashBank = (businessId, formData, history) => {
     return (dispatch) => {
         axios.post(`/businesses/${businessId}/cash-bank`, formData)
             .then(response => {
                 console.log(response)
                 const cashBank = response.data
                 dispatch(addCashBank(cashBank))
+                history.push(`/businesses/${businessId}/cashbook`)
             })
             .catch(err => {
                 Swal.fire({
@@ -62,7 +63,7 @@ export const startPutCashBank = (businessId, id, formData, history) => {
                 const cashBank = response.data
                 const id = cashBank._id
                 dispatch(updateCashBank(id, cashBank))
-                history && history.push(`/businesses/${businessId}/cash-bank/${id}`)
+                history && history.push(`/businesses/${businessId}/cashbook`)
             }
         })
         .catch(err => {

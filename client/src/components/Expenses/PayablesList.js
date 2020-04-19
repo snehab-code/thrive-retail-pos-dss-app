@@ -11,50 +11,65 @@ import { customStylesTable } from '../../config/dataTableTheme'
 import PayableShow from './PayableShow'
 import {startDeletePayable} from '../../actions/payables'
 
-const dataColumns = [{
-    name: 'Date',
-    selector: 'transactionDate',
-    sortable: true,
-    cell: row => `${moment(row.transactionDate.date).format('MMM DD')}`
-},
-{
-    name: 'Invoice',
-    selector: 'invoice',
-    sortable: true
-},
-{
-    name: 'Pay to',
-    selector: 'payableTo.name',
-    sortable: true,
-    grow:2
-},
-{
-    name: 'Amount', 
-    selector: 'amount',
-    center: true
-},
-{
-    name: 'Notes',
-    selector: 'remark',
-    center: true,
-    sortable: true
-},
-{
-    name: 'Due',
-    selector: 'dueDate',
-    sortable: true,
-    cell: row => `${moment(row.dueDate.date).format('MMM DD')}`
-},
-{
-    name: 'Status',
-    selector: 'isPaid',
-    center: true,
-    sortable: true,
-    cell: row => row.isPaid ? 'paid' : 'pending'
-}
-]
-
 function PayablesList(props) {
+
+    const dataColumns = [{
+        name: 'Date',
+        selector: 'transactionDate',
+        sortable: true,
+        cell: row => `${moment(row.transactionDate.date).format('MMM DD')}`
+    },
+    {
+        name: 'Invoice',
+        selector: 'invoice',
+        sortable: true
+    },
+    {
+        name: 'Pay to',
+        selector: 'payableTo.name',
+        sortable: true,
+        grow:2
+    },
+    {
+        name: 'Amount', 
+        selector: 'amount',
+        center: true
+    },
+    {
+        name: 'pending',
+        center: true,
+        cell: row => {
+            const transactions = props.cashBank.filter(trn => trn.linkedTo === row._id)
+            const balance = transactions.reduce((acc, currentVal) => {
+                if (currentVal.creditTo) {
+                    return acc - currentVal.amount
+                } else {
+                    return acc + currentVal.amount
+                }
+            }, row.amount)
+            return balance > 0 ? <span style={{color: 'red'}}>{balance}</span> : <span style={{color: 'green'}}>{balance}</span>
+        }
+    },
+    {
+        name: 'Notes',
+        selector: 'remark',
+        center: true,
+        sortable: true
+    },
+    {
+        name: 'Due',
+        selector: 'dueDate',
+        sortable: true,
+        cell: row => `${moment(row.dueDate.date).format('MMM DD')}`
+    },
+    {
+        name: 'Status',
+        selector: 'isPaid',
+        center: true,
+        sortable: true,
+        cell: row => row.isPaid ? 'paid' : 'pending'
+    }
+    ]
 
     const [modalIsOpen, setModalState] = useState(false)
     const [payableId, setPayableId] = useState('')
@@ -130,7 +145,8 @@ const mapStateToProps = (state) => {
                 transactionDate: {date: payable.transactionDate, id: payable._id}
             }
             return {...payable, ...newData}
-        })
+        }),
+        cashBank: state.cashBank
     }
 }
 

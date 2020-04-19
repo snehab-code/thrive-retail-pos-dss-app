@@ -31,10 +31,18 @@ function CashForm(props) {
         }
     })
 
-    console.log(linkedTo, 'linkedTo', party, 'party')
+    const balance = props.cashBank[0] && party && props.cashBank.filter(trn => trn.creditTo === party._id || trn.debitFrom === party._id).reduce((total, currentVal) => {
+        console.log(total, linkedTo)
+        if (currentVal.creditTo) {
+            return total - currentVal.amount
+        } else {
+            return total + currentVal.amount
+        }
+    }, !linkedTo ? 0 : linkedTo.client ? 0 - linkedTo.amount : linkedTo.amount)
+
+    
 
     const handleSubmit = (val, {setSubmitting}) => {
-        console.log(linkedTo, party)
         const formData = {
             transactionDate,
             mode: val.mode,
@@ -47,7 +55,6 @@ function CashForm(props) {
         } else if (val.type === 'Payment') {
             formData.creditTo = party._id
         }
-        // console.log(formData)
         props.handleSubmit(formData)
         setSubmitting(false)
     }
@@ -74,7 +81,6 @@ function CashForm(props) {
         {
         (formikProps) => {
             const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit} = formikProps
-            console.log(values, 'values')
             return (
             <Form onSubmit={handleSubmit}>
                 <div className="formSubGroup">
@@ -205,7 +211,16 @@ function CashForm(props) {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         label='Amount'
-                        helperText={errors.amount ? errors.amount : linkedTo ? linkedTo.amount : ''}
+                        helperText={
+                            errors.amount 
+                            ? 
+                            errors.amount 
+                            : 
+                            linkedTo && party 
+                            ? 
+                            `${Math.abs(balance)} currently due on ${linkedTo.invoice ? linkedTo.invoice : linkedTo.invoiceNumber ? linkedTo.invoiceNumber : linkedTo.supplierInvoice ? linkedTo.supplierInvoice : 'bill'}`
+                            :
+                            ''}
                     />
                     <TextField
                         error = {errors.remark && touched.remark}
@@ -214,7 +229,7 @@ function CashForm(props) {
                         value={values.remark}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        label='Nature of Cash Transaction'
+                        label='Note'
                         helperText={errors.remark}
                     />
                 </div>
@@ -231,7 +246,8 @@ function CashForm(props) {
 const mapStateToProps = (state) => {
     return {
         parties: [...state.suppliers, ...state.creditors, ...state.clients],
-        transactions: [...state.payables, ...state.sales, ...state.purchases]
+        transactions: [...state.payables, ...state.sales, ...state.purchases],
+        cashBank: state.cashBank
     }
 }
 
