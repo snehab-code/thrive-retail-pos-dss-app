@@ -4,22 +4,23 @@ import {startPutCashBank} from '../../actions/cashBank'
 import {connect} from 'react-redux'
 
 function CashEdit(props) {
+
     const handleSubmit = (formData) => {
-        props.dispatch(startPutCashBank(props.match.params.businessId, props.payable._id, formData, props.history))
+        props.dispatch(startPutCashBank(props.match.params.businessId, props.entry._id, formData, props.history))
     }
 
     return (
         <div className="businessForms">
-        <h1>Edit Expense</h1>
+        <h1>Edit Entry</h1>
         
-        {props.payable && props.payable._id && <CashForm businessId={props.match.params.businessId} {...props.payable} handleSubmit={handleSubmit}/>}
+        {props.entry && props.entry._id && <CashForm businessId={props.match.params.businessId} {...props.entry} handleSubmit={handleSubmit}/>}
         </div>
     )
 }
 
 const mapStateToProps = (state, props) => {
     return {
-        payable: state.cashBank.find(payable => payable._id === props.match.params.expenseId)
+        entry: state.cashBank.find(entry => entry._id === props.match.params.cashbookId)
     }
 }
 

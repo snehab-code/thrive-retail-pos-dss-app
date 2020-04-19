@@ -11,7 +11,7 @@ function CashAdd(props) {
 
     return (
         <div className="businessForms">
-        <h1>Add a transaction</h1>
+        <h1>Add an Entry</h1>
         
         <CashForm businessId={props.match.params.businessId} handleSubmit={handleSubmit}/>
         </div>

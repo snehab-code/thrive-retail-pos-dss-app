@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
 // import Modal from 'react-modal'
 import {Formik, Form} from 'formik'
@@ -15,16 +15,26 @@ function CashForm(props) {
 
     // const [modalIsOpen, setModalState] = useState(false)
     const [transactionDate, setDate] = useState(Date.now())
-    const [party, setParty] = useState(props.creditTo ? props.creditTo : props.debitFrom ? props.debitFrom : '')
-    const [linkedTo, setLinkedTo] = useState(props.linkedTo ? props.linkedTo : '')
+    const [party, setParty] = useState('')
+    const [linkedTo, setLinkedTo] = useState('')
 
-    // Modal.setAppElement('#root')  
+    useEffect(() => {
+        if (props.linkedTo && (props.debitFrom || props.creditTo)) {
+            const findLinkedTo =  props.transactions.find(transaction => transaction._id === props.linkedTo)
+            const findParty = props.creditTo ? props.parties.find(party => party._id === props.creditTo) : props.debitFrom ? props.parties.find(party => party._id === props.debitFrom) : ''
+            if (findLinkedTo) {
+                setLinkedTo(findLinkedTo)    
+            }
+            if (findParty) {
+                setParty(findParty)
+            }
+        }
+    })
 
-    // const closeModal = () => {
-    //     setModalState(false)
-    // }
+    console.log(linkedTo, 'linkedTo', party, 'party')
 
     const handleSubmit = (val, {setSubmitting}) => {
+        console.log(linkedTo, party)
         const formData = {
             transactionDate,
             mode: val.mode,
@@ -37,20 +47,13 @@ function CashForm(props) {
         } else if (val.type === 'Payment') {
             formData.creditTo = party._id
         }
+        // console.log(formData)
         props.handleSubmit(formData)
         setSubmitting(false)
-        // console.log(formData)
     }
 
     return (
         <>
-        {/* <Modal
-            style={modalStyles}
-            isOpen={modalIsOpen}
-            onRequestClose={closeModal}
-        >
-            <CommodityAdd businessId={props.businessId} closeModal={closeModal}/>
-        </Modal> */}
         <Formik
             // enableReinitialize 
             initialValues={{
@@ -128,10 +131,21 @@ function CashForm(props) {
                         getOptionLabel={option => option.name ? option.name : ''}
                         name="party" 
                         id="party"
-                        disableClearable
+                        // disableClearable
                         value={party}
-                        onChange={(e, newValue) => setParty(newValue)
-                        }
+                        onChange={(e, newValue) => {
+                            let party = newValue
+                            if (linkedTo && newValue) {
+                                if (linkedTo.payableTo && linkedTo.payableTo._id!==newValue._id) {
+                                    party = linkedTo.payableTo
+                                } else if(linkedTo.client) {
+                                    party = linkedTo.client
+                                } else if(linkedTo.supplier) {
+                                    party = props.parties.find(party => party._id === linkedTo.supplier)
+                                }
+                            }
+                            setParty(party)
+                        }}
                         renderInput={params => 
                             <TextField {...params} 
                                 label="party" 
@@ -144,13 +158,27 @@ function CashForm(props) {
                     />
                     <Autocomplete
                         style={{width:'100%'}}
-                        options={props.transactions}
+                        options={party && party._id ? props.transactions.filter(trn => trn.supplier ? trn.supplier === party._id : trn.client ? trn.client._id === party._id : trn.payableTo._id === party._id) : props.transactions}
                         getOptionLabel={option => option.documentNumber ? option.documentNumber : option.invoiceNumber ? option.invoiceNumber : option.payableTo ? option.invoice : ''}
                         name="linkedTo" 
                         id="linkedTo"
-                        disableClearable
+                        // disableClearable
                         value={linkedTo}
-                        onChange={(e, newValue) => setLinkedTo(newValue)
+                        onChange={(e, newValue) => {
+                            if (newValue) {
+                                let newParty
+                                if (newValue.payableTo && newValue.payableTo._id !== party) {
+                                    newParty = newValue.payableTo
+                                } else if(newValue.client && newValue.client._id !== party) {
+                                    newParty = newValue.client
+                                } else if(newValue.supplier && newValue.supplier !== party) {
+                                    newParty = props.parties.find(party => party._id === newValue.supplier)
+                                }
+                                setParty(newParty)
+                            }
+                            
+                            setLinkedTo(newValue)
+                        }
                         }
                         renderInput={params => 
                             <TextField {...params} 
@@ -177,7 +205,7 @@ function CashForm(props) {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         label='Amount'
-                        helperText={errors.amount}
+                        helperText={errors.amount ? errors.amount : linkedTo ? linkedTo.amount : ''}
                     />
                     <TextField
                         error = {errors.remark && touched.remark}

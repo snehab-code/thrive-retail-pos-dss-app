@@ -42,6 +42,7 @@ module.exports.create = (req, res) => {
 }
 
 module.exports.update = (req, res) => {
+    console.log('i ran')
     if (req.business.permissions.includes('admin') || req.business.permissions.includes('update')) {
         const body = req.body
         const id = req.params.cashBankId

@@ -36,7 +36,7 @@ function CashShow(props) {
                     }
                 </div>
                 <div style={{display:'flex', width: '100%', justifyContent: 'center'}}>
-                <Link to={`/businesses/${props.cashTransaction.business}/expenses/${props.cashTransaction._id}/edit`}>
+                <Link to={`/businesses/${props.cashTransaction.business}/cashbook/${props.cashTransaction._id}/edit`}>
                     <Button><EditIcon /></Button>
                 </Link>
                 <Button onClick={() => props.handleRemove(props.cashTransaction._id)}><DeleteIcon /></Button>
