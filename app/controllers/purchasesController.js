@@ -1,9 +1,10 @@
 const Purchase = require('../models/Purchase')
 const Order = require('../models/Order')
+const Supplier = require('../models/Supplier')
 
 module.exports.list = (req, res) => {
     const businessId = req.business._id
-    Purchase.find({business: businessId}).populate('commodities.product', 'name').populate('party', 'name')
+    Purchase.find({business: businessId}).populate('commodities.product', 'name').populate('supplier', 'name supplierCode').populate('order', 'orderNumber')
         .then(purchases => {
             res.send(purchases)
         })
@@ -27,55 +28,84 @@ module.exports.show = (req, res) => {
 module.exports.create = (req, res) => {
     if (req.business.permissions.includes('admin') || req.business.permissions.includes('create')) {
         const body = req.body
+        // recalculate amount in case of submission error
         body.amount = body.commodities.length > 1 ? body.commodities.reduce((acc, cv) => acc.rate*acc.quantity + cv.rate*cv.quantity) : body.commodities[0].rate*body.commodities[0].quantity
+        // assign user and business
         body.user = req.user._id
         body.business = req.business._id
+        // if body.order included: 
         if (body.order) {
             Order.findById(body.order)
-                .then(order => {
-                    if (body.supplier !== String(order.supplier)) {
-                        res.send({error: 'Supplier mismatch'})
-                    } else {
-                        return Purchase.findUnrecordedProducts(order)
-                    }
-                })
-                .then(unrecordedProducts => {
-                    for (let i=0; i<body.commodities.length; i++) {
-                        const find = unrecordedProducts.find(unrecProduct => body.commodities[i].product === unrecProduct.product)
-                        if (find) {
-                            if (find.quantity < body.commodities[i].quantity && body.documentType!== 'Credit Note') {
-                                // do not use res.send here because the rest of the code still runs and there's an unhandled promise rejection each time because it runs into the next res.send
-                                // also do not use `return res.send`, because this returns the whole request object, and so the next .then is still called and your save is still trying to run and erroring out because it can't make a document with the request object. So while it "works", it's terrible code.
-                                return Promise.reject({error: 'To account for excess material received, create a Credit Note'})
-                            }
-                        } else {
-                            return Promise.reject({error: 'Some of these products have already been delivered'})
+            .then(order => {
+                if (body.supplier !== String(order.supplier)) {
+                    res.send({error: 'Supplier mismatch'})
+                } else {
+                    return Purchase.findUnrecordedProducts(order)
+                }
+            })
+            .then(unrecordedProducts => {
+                for (let i=0; i<body.commodities.length; i++) {
+                    const find = unrecordedProducts.find(unrecProduct => body.commodities[i].product === unrecProduct.product)
+                    if (find) {
+                        if (find.quantity < body.commodities[i].quantity && body.documentType!== 'Credit Note') {
+                            return Promise.reject({error: 'To account for excess material received, create a Credit Note'})
                         }
+                    } else {
+                        return Promise.reject({error: 'Some of these products have already been delivered'})
+                    }
+                }
+                return body
+            })
+            .then(body => {
+                Supplier.findById(body.supplier)
+                .then(supplier => {
+                    if (body.supplierInvoice.indexOf(supplier.supplierCode) !== 0) {
+                        body.supplierInvoice = supplier.supplierCode + body.supplierInvoice
                     }
                     return body
                 })
                 .then(body => {
                     const purchase = new Purchase(body)
                     purchase.save()
-                        .then(purchase => {
-                            res.send(purchase)
-                        })
-                        .catch(err => {
-                            res.send(err)
-                        })
+                    .then(purchase => {
+                        res.send(purchase)
+                    })
+                    .catch(err => {
+                        res.send(err)
+                    })
                 })
                 .catch(err => {
                     res.send(err)
                 })
+            })
+            .catch(err => {
+                res.send(err)
+            })
         } else {
-            const purchase = new Purchase(body)
-            purchase.save()
-                .then(purchase => {
-                    res.send(purchase)
-                })
-                .catch(err => {
-                    res.send(err)
-                })
+            Supplier.findById(body.supplier)
+            .then(supplier => {
+                if (supplier) {
+                    if (body.supplierInvoice.indexOf(supplier.supplierCode) !== 0) {
+                        body.supplierInvoice = supplier.supplierCode + body.supplierInvoice
+                    }
+                    return body
+                }
+                else {
+                    return Promise.reject({error: 'Supplier does not exist'})
+                }
+            })
+            .then(body => {
+                const purchase = new Purchase(body)
+                return purchase.save()
+            })
+            .then(purchase => {
+                console.log('not err')
+                res.send(purchase)
+            })
+            .catch(err => {
+                console.log(err)
+                res.send(err)
+            })
         }
     } else {
         res.sendStatus('401')

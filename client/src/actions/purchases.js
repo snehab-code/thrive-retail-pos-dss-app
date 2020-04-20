@@ -32,13 +32,19 @@ export const startGetPurchases = (businessId) => {
     }
 }
 
-export const startPostPurchase = (businessId, formData) => {
+export const startPostPurchase = (businessId, formData, history) => {
     return (dispatch) => {
         axios.post(`/businesses/${businessId}/purchases`, formData)
             .then(response => {
-                console.log(response)
-                const purchase = response.data
-                dispatch(addPurchase(purchase))
+                if (!response.data.error) {
+                    const purchase = response.data
+                    dispatch(addPurchase(purchase))
+                    if (history.location.pathname.includes('orders') ) {
+                        history.push(`/businesses/${businessId}/orders`) 
+                    } else {
+                        history.push(`/businesses/${businessId}/purchases`)
+                    }
+                }
             })
             .catch(err => {
                 Swal.fire({

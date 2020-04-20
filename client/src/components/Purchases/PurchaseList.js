@@ -9,25 +9,21 @@ import Modal from 'react-modal'
 import modalStyles from '../../config/modalCss'
 import { customStylesTable } from '../../config/dataTableTheme'
 import PurchaseShow from './PurchaseShow'
+import {startDeletePurchase} from '../../actions/purchases'
 
 const dataColumns = [{
     name: 'Date',
     selector: 'transactionDate',
     sortable: true,
-    cell: row => `${moment(row.transactionDate.date).format('MMM DD')}`,
-    width: '60px'
+    width:'65px',
+    cell: row => `${moment(row.transactionDate).format('MMM DD')}`
 },
 {
     name: '#',
-    selector: 'orderNumber',
-    width:'75px',
-    sortable: true
-},
-{
-    name: 'Item',
-    selector: 'commodity.name',
-    grow: 2,
-    sortable: true
+    selector: 'documentNumber',
+    width:'80px',
+    sortable: true,
+    cell: row => row.documentType && `${row.documentType}-${row.documentNumber}`
 },
 {
     name: 'Supplier',
@@ -36,42 +32,101 @@ const dataColumns = [{
     sortable: true
 },
 {
-    name: 'Status',
-    selector: 'status',
-    center: true,
+    name: 'Invoice',
+    selector: 'supplierInvoice',
+    minWidth:'100px',
+    maxWidth: '100px',
     sortable: true
 },
 {
-    name: 'Quantity',
-    selector: 'qty',
-    minWidth: '50px',
-    maxWidth: '75px',
-    center: true
+    name: 'Due',
+    selector: 'creditPeriodDays',
+    sortable: true,
+    width: '65px',
+    cell: row => `${moment(moment(row.invoiceDate) + moment(row.creditPeriodDays)).format('MMM DD')}`
 },
 {
-    name: 'Amount', 
+    name: 'Item',
+    selector: 'commodities',
+    sortable: true,
+    grow: 1,
+    cell: row => (
+            <div className="subList textSubList">
+                {row.commodities.map(commodity => {
+                    return (
+                        <span key ={commodity.product._id}>{commodity.product.name}</span>
+                    )
+                })}
+            </div>)
+},
+{
+    name: 'Quantity',
+    selector: 'commodities',
+    minWidth: '50px',
+    maxWidth: '75px',
+    right: true,
+    cell: row => (
+            <div className="subList">
+                {row.commodities.map(commodity => {
+                    return (
+                        <span key ={commodity.product._id}>{commodity.quantity}</span>
+                    )
+                })}
+            </div>)
+},
+{
+    name: 'Rate',
+    selector: 'rate',
+    minWidth: '50px',
+    maxWidth: '75px',
+    right: true,
+    cell: row => (
+        <div className="subList">
+            {row.commodities.map(commodity => {
+                return (
+                    <span key ={commodity.product._id}>{commodity.rate}</span>
+                )
+            })}
+    </div>)
+},
+{
+    name: 'Total', 
     selector: 'amount',
     minWidth: '50px',
     maxWidth:'70px',
     center: true
+},
+{
+    name: 'Order',
+    selector: 'order',
+    width:'75px',
+    sortable: true,
+    cell: row => row.order ? row.order.orderNumber : 'None'
 }
 ]
 
 function PurchaseList(props) {
 
     const [modalIsOpen, setModalState] = useState(false)
-    const [orderId, setOrderId] = useState('')
+    const [purchaseId, setPurchaseId] = useState('')
 
     Modal.setAppElement('#root')  
 
+    const handleRemove = (id) => {
+        props.dispatch(startDeletePurchase(props.match.params.businessId, id))
+        setModalState(false)
+    }
+
     const handleRowClicked = (row) => {
-        setOrderId(row.transactionDate.id)
+        setPurchaseId(row._id)
         setModalState(true)
     }
 
     const closeModal = () => {
         setModalState(false)
     }
+
+
 
     return (
         <>
@@ -81,12 +136,12 @@ function PurchaseList(props) {
                 // onAfterOpen={this.afterOpenModal}
                 onRequestClose={closeModal}
             >
-                <PurchaseShow id={orderId}/>
+                <PurchaseShow id={purchaseId} handleRemove={handleRemove}/>
             </Modal>
             <div className='contentHeader'>
             <span className='headerText'>Purchases</span>
             <Link to={`/businesses/${props.match.params.businessId}/purchases/new`}><IconButton className='tableButton' >
-                <Add />
+                <Add/>
             </IconButton>
             </Link>
             </div>
@@ -96,7 +151,7 @@ function PurchaseList(props) {
                 highlightOnHover
                 striped
                 columns={dataColumns}
-                data={props.orders}
+                data={props.purchases}
                 customStyles={customStylesTable}
                 onRowClicked={handleRowClicked}
             />
@@ -111,14 +166,7 @@ function PurchaseList(props) {
 
 const mapStateToProps = (state) => {
     return {
-        orders: state.purchases.map(order => {
-            const newData = {
-                transactionDate: {date: order.transactionDate, id: order._id},
-                amount: order.quantity * order.rate,
-                qty: order.quantity + ' ' + order.unit
-            }
-            return {...order, ...newData}
-        })
+        purchases: state.purchases
     }
 }
 

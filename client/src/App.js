@@ -65,7 +65,7 @@ function App() {
 
       <Route path="/businesses/:businessId/purchases" component={PurchaseList} exact/>
       <Route path="/businesses/:businessId/purchases/new" component={PurchaseAdd} exact />
-      <Route path="/businesses/:businessId/purchases/:purchaseIdedit" component={PurchaseEdit} />
+      <Route path="/businesses/:businessId/purchases/:purchaseId/edit" component={PurchaseEdit} />
 
       <Route path="/businesses/:businessId/orders" component={OrdersList} exact/>
       <Route path="/businesses/:businessId/orders/new" component={OrderAdd} exact />

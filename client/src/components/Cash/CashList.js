@@ -15,6 +15,7 @@ const dataColumns = [{
     name: 'Date',
     selector: 'transactionDate',
     sortable: true,
+    width:'65px',
     cell: row => `${moment(row.transactionDate.date).format('MMM DD')}`
 },
 {

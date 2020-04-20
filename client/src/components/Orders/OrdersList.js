@@ -144,7 +144,7 @@ function OrderList(props) {
             >
                 {
                     orderData.orderNumber ? 
-                    <PurchaseAdd orderData={orderData} id={props.match.params.businessId}/>
+                    <PurchaseAdd closeModal={closeModal} orderData={orderData} id={props.match.params.businessId} history={props.history}/>
                     :
                     <OrderShow id={orderId} handleDelivery={handleDelivery} handleRemove={handleRemove}/>
                 }
@@ -170,7 +170,7 @@ function OrderList(props) {
             <div className="businessSubContent">
                 <div className="subContentBox thirdbox">
                     <h3>More actions</h3>
-                    See your completed purchases
+                    <Link to={`/businesses/${props.match.params.businessId}/purchases`}>See your completed purchases</Link>
                 </div>
                 <div className="subContentBox thirdbox">
                     <h3>Stats</h3>

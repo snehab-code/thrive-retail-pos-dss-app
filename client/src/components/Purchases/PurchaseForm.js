@@ -24,14 +24,18 @@ function PurchaseForm(props) {
     const handleSubmit = (val, {setSubmitting}) => {
         val.commodities = val.commodities.slice(0, count.length)
         const formData = {...val,...{
-            supplier: supplier._id,
+            supplier: supplier && supplier._id,
             transactionDate,
             invoiceDate,
-            order: props.orders.find(order => order.orderNumber === props.orderNumber)._id,
             amount: val.commodities.length > 1 ? val.commodities.reduce((acc, currentval) => {
                 return acc.rate*acc.quantity + currentval.rate*currentval.quantity
             }) : val.commodities[0].rate*val.commodities[0].quantity
         }}
+        val.order ? (
+            formData.order = props.orders.find(order => order.orderNumber === val.order)._id
+        )
+        :
+        delete formData.order
         props.handleSubmit(formData)
         setSubmitting(false)
     }
@@ -40,7 +44,7 @@ function PurchaseForm(props) {
         <Formik
             enableReinitialize 
             initialValues={{ 
-                order: props.order ? props.order : props.orderNumber ? props.orderNumber : '',
+                order: props.order ? props.order.orderNumber : props.orderNumber ? props.orderNumber : '',
                 supplier: props.supplier ? props.supplier._id : '',
                 supplierInvoice: props.supplierInvoice ? props.supplierInvoice : '',
                 documentType: props.documentType ? props.documentType : '',
