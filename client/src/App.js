@@ -39,6 +39,9 @@ import CashEdit from './components/Cash/CashEdit'
 
 import ReportList from './components/Reports/ReportList'
 import TeamList from './components/Team/TeamList'
+import CommodityList from './components/Commodities/CommodityList'
+import CreditorList from './components/Creditors/CreditorList'
+import SupplierList from './components/Suppliers/SupplierList'
 
 
 function App() {
@@ -81,6 +84,9 @@ function App() {
 
       <Route path="/businesses/:businessId/reports" component={ReportList} exact/>
       <Route path="/businesses/:businessId/teams" component={TeamList} exact/>
+      <Route path="/businesses/:businessId/products" component={CommodityList} exact />
+      <Route path="/businesses/:businessId/creditors" component={CreditorList} exact />
+      <Route path="/businesses/:businessId/suppliers" component={SupplierList} exact />
 
       </Switch>
       </div>

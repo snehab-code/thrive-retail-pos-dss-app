@@ -171,6 +171,7 @@ function OrderList(props) {
                 <div className="subContentBox thirdbox">
                     <h3>More actions</h3>
                     <Link to={`/businesses/${props.match.params.businessId}/purchases`}>See your completed purchases</Link>
+                    <Link to={`/businesses/${props.match.params.businessId}/suppliers`}>Supplier List</Link>
                 </div>
                 <div className="subContentBox thirdbox">
                     <h3>Stats</h3>

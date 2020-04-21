@@ -126,7 +126,7 @@ function PayablesList(props) {
                 </div>
                 <div className="subContentBox thirdbox">
                     <h3>Creditors</h3>
-                    See a list of your creditors
+                    <Link to={`/businesses/${props.match.params.businessId}/creditors`}>See a list of your creditors</Link>
                 </div>
                 <div className="subContentBox thirdbox">
                     <h3>Stats</h3>

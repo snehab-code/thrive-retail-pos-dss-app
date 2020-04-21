@@ -165,7 +165,7 @@ function SalesList(props) {
             <div className="businessSubContent">
                 <div className="subContentBox thirdbox">
                     <h3>More actions</h3>
-                    See and edit your product catalogue
+                    <Link to={`/businesses/${props.match.params.businessId}/products`}>See and edit your product catalogue</Link>
                 </div>
                 <div className="subContentBox thirdbox">
                     <h3>Total Sales by period</h3>
