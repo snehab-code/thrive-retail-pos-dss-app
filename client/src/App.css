@@ -7,6 +7,12 @@ a {
     color: #6fb98f;
 }
 
+.linkText {
+    text-decoration: underline;
+    color: #6fb98f;
+    cursor: pointer;
+}
+
 .header {
     background: #004445;
     display:flex;
@@ -589,7 +595,8 @@ button:hover {
 
 /* Order Show */
 .orderContainer {
-    border: 1px solid #cbd8d0;
+    border: 1px solid #dbf0f0;
+    border-radius: 12px;
     padding: 10px;
 }
 
@@ -607,7 +614,6 @@ button:hover {
     width: 50%;
     padding-top: 10px;
     padding-bottom: 10px;
-    border-top: 1px dotted #cbd8d0;
     border-bottom: 1px dotted #cbd8d0;
 }
 

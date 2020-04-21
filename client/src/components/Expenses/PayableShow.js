@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button'
 import EditIcon from '@material-ui/icons/Edit'
 import DeleteIcon from '@material-ui/icons/Delete'
 
+
 function PayableShow(props) {
 
     return (
@@ -14,9 +15,11 @@ function PayableShow(props) {
             <div className="orderContainer">
                 <div className="orderDetails">
                 <div>
-                    <strong>{props.payable.payableTo.name} - {props.payable.invoice}</strong>
+                    <strong>{props.payable.payableTo.name}</strong>
                     <br/>
-                    <span></span>
+                    <strong>Invoice: {props.payable.invoice}</strong>
+                    <br/>
+                    <strong>Amount: {props.payable.amount}</strong>
                 </div>
                 <div style={{textAlign:"right"}}>
                     {
@@ -24,6 +27,7 @@ function PayableShow(props) {
                     }
                     <br/>
                     {/* CHANGE TO NAME */}
+                    created by user:
                     {
                         props.business.members.find(member => member.user._id === props.payable.user).user.username
                     }
@@ -31,18 +35,31 @@ function PayableShow(props) {
                 </div>
                 
                 <div style={{marginBottom: 10, width: '100%', textAlign: 'center'}}>
-                    <h3>{props.payable.amount}</h3>
+                    <h3 style={{color: 'red', marginBottom:'5px'}}>Pending: {props.pending}</h3>
+                    <i>
                     {
                         props.payable.remark
                     }
+                    </i>
                 </div>
-                <div style={{display:'flex', width: '100%', justifyContent: 'center'}}>
+            </div>
+            {
+                !props.isPaid &&
+                <div style={{width:'100%', textAlign:'center'}}>
+                    Record payment -
+                <span className="linkText" style={{marginLeft: '5px',marginRight:'5px'}} onClick={() => console.log('partial payment click')}>Partial</span>
+                <span className="linkText" style={{marginLeft:'5px'}} onClick={() => console.log('paid click')}>Full</span>
+                </div>
+            }
+            <div style={{display:'flex', width: '100%', justifyContent: 'center'}}>
+
+                
+                    
                 <Link to={`/businesses/${props.payable.business}/expenses/${props.payable._id}/edit`}>
                     <Button><EditIcon /></Button>
                 </Link>
                 <Button onClick={() => props.handleRemove(props.payable._id)}><DeleteIcon /></Button>
                 </div>
-            </div>
         </>
     )
 }

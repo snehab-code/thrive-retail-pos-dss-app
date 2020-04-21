@@ -29,7 +29,7 @@ function CashForm(props) {
                 setParty(findParty)
             }
         }
-    })
+    }, [props.linkedTo, props.debitFrom, props.creditTo, props.transactions, props.parties])
 
     const balance = props.cashBank[0] && party && props.cashBank.filter(trn => trn.creditTo === party._id || trn.debitFrom === party._id).reduce((total, currentVal) => {
         console.log(total, linkedTo)
