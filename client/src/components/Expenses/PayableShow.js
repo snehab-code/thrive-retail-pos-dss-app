@@ -10,6 +10,10 @@ import DeleteIcon from '@material-ui/icons/Delete'
 
 function PayableShow(props) {
 
+    const markPaid = (data) => {
+        console.log('markpaid')
+    }
+
     return (
         <>
             <div className="orderContainer">
@@ -41,14 +45,38 @@ function PayableShow(props) {
                         props.payable.remark
                     }
                     </i>
+                    <h4>Related transactions</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Note</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {
+                            props.cashBank.map(trn=>{
+                                return (
+                                <tr key={trn._id}>
+                                    <td>{moment(trn.transactionDate).format('DD-MM-YYYY')}</td>
+                                    <td>{trn.creditTo ? <span style={{color: 'red'}}>{-trn.amount}</span> : <span style={{color: 'green'}}>{trn.amount}</span>}</td>
+                                    <td>{trn.remark}</td>
+                                </tr>
+                                )
+                            })
+                        }
+                        </tbody> 
+                    </table>
+                    
                 </div>
             </div>
             {
                 !props.isPaid &&
                 <div style={{width:'100%', textAlign:'center'}}>
                     Record payment -
-                <span className="linkText" style={{marginLeft: '5px',marginRight:'5px'}} onClick={() => console.log('partial payment click')}>Partial</span>
-                <span className="linkText" style={{marginLeft:'5px'}} onClick={() => console.log('paid click')}>Full</span>
+                <span className="linkText" style={{marginLeft: '5px',marginRight:'5px'}} onClick={() => markPaid()}>Partial</span>
+                <span className="linkText" style={{marginLeft:'5px'}} onClick={markPaid}>Full</span>
                 </div>
             }
             <div style={{display:'flex', width: '100%', justifyContent: 'center'}}>
@@ -67,7 +95,8 @@ function PayableShow(props) {
 const mapStateToProps = (state, props) => {
     return {
         payable: state.payables.find(payable => payable._id === props.id),
-        business: state.user.activeBusiness
+        business: state.user.activeBusiness,
+        cashBank: state.cashBank.filter(trn => trn.linkedTo === props.id)
     }
 }
 
