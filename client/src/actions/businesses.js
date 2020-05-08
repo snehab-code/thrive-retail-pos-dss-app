@@ -51,7 +51,7 @@ export const startGetBusinesses = () => {
             dispatch(setBusinesses(businesses))
         })
         .catch(err => {
-            if (err.response.status === 401) {
+            if (err.response && err.response.status === 401) {
                 dispatch({type: 'LOGOUT'})
             }
         })
@@ -138,6 +138,18 @@ export const startDeleteBusiness = (id) => {
                 text: 'There was an error while deleting your business',
                 footer: 'Please try again'
                 })
+        })
+    }
+}
+
+export const startPostCreateInvite = (id, formData) => {
+    return (dispatch) => {
+        axios.post(`/businesses/${id}/invites`, formData)
+        .then(response => {
+            !response.data.notice && dispatch(updateBusiness(response.data))
+        })
+        .catch(err => {
+            console.log(err)
         })
     }
 }

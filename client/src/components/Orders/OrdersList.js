@@ -152,10 +152,13 @@ function OrderList(props) {
             </Modal>
             <div className='contentHeader'>
             <span className='headerText'>Orders</span>
-            <Link to={`/businesses/${props.match.params.businessId}/orders/new`}><IconButton className='tableButton' >
+            {
+                props.permissions && props.permissions.includes('admin' || 'create') && 
+                <Link to={`/businesses/${props.match.params.businessId}/orders/new`}><IconButton className='tableButton' >
                 <Add />
-            </IconButton>
-            </Link>
+                </IconButton>
+                </Link>
+            }
             </div>
             <DataTable
                 noHeader
@@ -205,7 +208,8 @@ const mapStateToProps = (state) => {
                 amount: typeof(amount) === 'number' ? amount : amount.rate*amount.quantity
             }
             return {...order, ...newData}
-        })
+        }),
+        permissions: state.businesses[0] && state.businesses.find(business => business._id === state.user.activeBusiness._id).permissions
     }
 }
 

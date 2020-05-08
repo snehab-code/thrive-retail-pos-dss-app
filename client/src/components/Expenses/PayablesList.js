@@ -104,10 +104,13 @@ function PayablesList(props) {
             </Modal>
             <div className='contentHeader'>
             <span className='headerText'>Expenses</span>
-            <Link to={`/businesses/${props.match.params.businessId}/expenses/new`}><IconButton className='tableButton' >
+            {
+                props.permissions && props.permissions.includes('admin' || 'create') && 
+                <Link to={`/businesses/${props.match.params.businessId}/expenses/new`}><IconButton className='tableButton' >
                 <Add />
-            </IconButton>
-            </Link>
+                </IconButton>
+                </Link>
+            }
             </div>
             <DataTable
                 noHeader
@@ -156,7 +159,8 @@ const mapStateToProps = (state) => {
             }
             return {...payable, ...newData}
         }),
-        cashBank: state.cashBank
+        cashBank: state.cashBank,
+        permissions: state.businesses[0] && state.businesses.find(business => business._id === state.user.activeBusiness._id).permissions
     }
 }
 

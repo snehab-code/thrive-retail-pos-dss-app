@@ -38,7 +38,10 @@ import CashAdd from './components/Cash/CashAdd'
 import CashEdit from './components/Cash/CashEdit'
 
 import ReportList from './components/Reports/ReportList'
+
 import TeamList from './components/Team/TeamList'
+import TeamAdd from './components/Team/TeamAdd'
+import TeamEdit from './components/Team/TeamEdit'
 
 import CommodityList from './components/Commodities/CommodityList'
 import CommodityAdd from './components/Commodities/CommodityAdd'
@@ -96,7 +99,10 @@ function App() {
       <Route path="/businesses/:businessId/cashbook/:cashbookId/edit" component={CashEdit} />
 
       <Route path="/businesses/:businessId/reports" component={ReportList} exact/>
+
       <Route path="/businesses/:businessId/teams" component={TeamList} exact/>
+      <Route path="/businesses/:businessId/teams/new" component={TeamAdd} exact />
+      <Route path="/businesses/:businessId/teams/:memberId/edit" component={TeamEdit} />
 
       <Route path="/businesses/:businessId/products" component={CommodityList} exact />
       <Route path="/businesses/:businessId/products/new" component={CommodityAdd} exact />

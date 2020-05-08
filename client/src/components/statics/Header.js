@@ -27,6 +27,7 @@ class Header extends React.Component {
 
     componentDidMount() {
         const id = this.props.location.pathname.slice(12, 36)
+        console.log(id)
         if (!this.props.user.isLoaded || this.props.user.activeBusiness._id !== id) {
             const business = {
                 _id: id

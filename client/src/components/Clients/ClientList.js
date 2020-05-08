@@ -18,7 +18,8 @@ function ClientList(props) {
 
 const mapStateToProps = (state) => {
 	return {
-		clients: state.clients
+		clients: state.clients,
+        permissions: state.businesses[0] && state.businesses.find(business => business._id === state.user.activeBusiness._id).permissions
 	}
 }
 

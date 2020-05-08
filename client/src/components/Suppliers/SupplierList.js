@@ -18,7 +18,8 @@ function SupplierList(props) {
 
 const mapStateToProps = (state) => {
 	return {
-		suppliers: state.suppliers
+		suppliers: state.suppliers,
+        permissions: state.businesses[0] && state.businesses.find(business => business._id === state.user.activeBusiness._id).permissions
 	}
 }
 

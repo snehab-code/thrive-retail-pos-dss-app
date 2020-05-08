@@ -51,6 +51,19 @@ export const startCheckUserAuth = () => {
     }
 }
 
+export const startPostUserRegistration = (formData, history) => {
+    return dispatch => {
+        axios.post('/users/register', formData)
+        .then(response => {
+            console.log(response.data)
+            history.push('/login')
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+}
+
 export const startPostUserLogin = (formData, history) => {
     return dispatch => {
         axios.post('/users/login', formData)

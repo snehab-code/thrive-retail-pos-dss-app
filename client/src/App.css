@@ -588,7 +588,7 @@ button:hover {
     .cardGrid {
         flex-direction: column;
     }
-    .memberCard {
+    .cardContainer {
         width: 95%;
     }
 }

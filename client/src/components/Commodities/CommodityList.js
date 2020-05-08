@@ -18,7 +18,8 @@ function CommodityList(props) {
 
 const mapStateToProps = (state) => {
 	return {
-		commodities: state.commodities
+		commodities: state.commodities,
+        permissions: state.businesses[0] && state.businesses.find(business => business._id === state.user.activeBusiness._id).permissions
 	}
 }
 

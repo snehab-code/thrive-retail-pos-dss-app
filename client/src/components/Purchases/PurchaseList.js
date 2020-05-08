@@ -140,10 +140,13 @@ function PurchaseList(props) {
             </Modal>
             <div className='contentHeader'>
             <span className='headerText'>Purchases</span>
-            <Link to={`/businesses/${props.match.params.businessId}/purchases/new`}><IconButton className='tableButton' >
-                <Add/>
-            </IconButton>
-            </Link>
+            {
+                props.permissions && props.permissions.includes('admin' || 'create') && 
+                <Link to={`/businesses/${props.match.params.businessId}/purchases/new`}><IconButton className='tableButton' >
+                <Add />
+                </IconButton>
+                </Link>
+            }
             </div>
             <DataTable
                 noHeader
@@ -166,7 +169,8 @@ function PurchaseList(props) {
 
 const mapStateToProps = (state) => {
     return {
-        purchases: state.purchases
+        purchases: state.purchases,
+        permissions: state.businesses[0] && state.businesses.find(business => business._id === state.user.activeBusiness._id).permissions
     }
 }
 

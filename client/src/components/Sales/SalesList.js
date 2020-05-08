@@ -147,10 +147,13 @@ function SalesList(props) {
             </Modal>
             <div className='contentHeader'>
             <span className='headerText'>Sales</span>
-            <Link to={`/businesses/${props.match.params.businessId}/invoices/new`}><IconButton className='tableButton' >
+            {
+                props.permissions && props.permissions.includes('admin' || 'create') && 
+                <Link to={`/businesses/${props.match.params.businessId}/invoices/new`}><IconButton className='tableButton' >
                 <Add />
-            </IconButton>
-            </Link>
+                </IconButton>
+                </Link>
+            }
             </div>
             <DataTable
                 noHeader
@@ -198,7 +201,8 @@ const mapStateToProps = (state) => {
                 commodities
             }
             return {...sale, ...newData}
-        })
+        }),
+        permissions: state.businesses[0] && state.businesses.find(business => business._id === state.user.activeBusiness._id).permissions
     }
 }
 

@@ -18,7 +18,8 @@ function CreditorList(props) {
 
 const mapStateToProps = (state) => {
 	return {
-		creditors: state.creditors
+		creditors: state.creditors,
+        permissions: state.businesses[0] && state.businesses.find(business => business._id === state.user.activeBusiness._id).permissions
 	}
 }
 

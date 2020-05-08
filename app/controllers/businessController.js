@@ -11,7 +11,7 @@ module.exports.show = (req, res) => {
     const id = req.params.id
     const businesses = req.businesses
     if (businesses.find(business => business._id == id)) {
-        Business.findById(id).populate('members.user', 'username email')
+        Business.findById(id).populate('members.user', 'username name phone email')
         .then(business => {
             if (business) {
                 res.send(business)
@@ -96,6 +96,7 @@ module.exports.update = (req, res) => {
     const id = req.params.id
     const body = req.body
     const find = req.businesses.find(business => business._id == id)
+    console.log(find)
     if (find && find.permissions.includes('update') || find.permissions.includes('admin')) {
         Business.findByIdAndUpdate(id, body, {new: true, runValidators: true})
             .then(business => {
