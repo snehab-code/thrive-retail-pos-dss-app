@@ -1,14 +1,14 @@
 import React from 'react'
 import {connect} from 'react-redux'
 
-function CreditorList(props) {
+function ClientList(props) {
 	return (
 		<>
 		<h1>Products</h1>
 		{
-			props.creditors.map(creditor => {
+			props.clients.map(client => {
 				return (
-					<div>{creditor.name}</div>
+					<div>{client.name}</div>
 				)
 			})
 		}
@@ -18,8 +18,8 @@ function CreditorList(props) {
 
 const mapStateToProps = (state) => {
 	return {
-		creditors: state.creditors
+		clients: state.clients
 	}
 }
 
-export default connect(mapStateToProps)(CreditorList)
+export default connect(mapStateToProps)(ClientList)

@@ -3,7 +3,7 @@ import {Formik, Form} from 'formik'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 
-function CreditorForm(props) {
+function SupplierForm(props) {
 
     const handleSubmit = (val) => {
         const formData = {}
@@ -142,4 +142,4 @@ function CreditorForm(props) {
     )
 }
 
-export default CreditorForm
+export default SupplierForm
