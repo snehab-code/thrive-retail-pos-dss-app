@@ -39,9 +39,22 @@ import CashEdit from './components/Cash/CashEdit'
 
 import ReportList from './components/Reports/ReportList'
 import TeamList from './components/Team/TeamList'
+
 import CommodityList from './components/Commodities/CommodityList'
+import CommodityAdd from './components/Commodities/CommodityAdd'
+import CommodityEdit from './components/Commodities/CommodityEdit'
+
 import CreditorList from './components/Creditors/CreditorList'
+import CreditorAdd from './components/Creditors/CreditorAdd'
+import CreditorEdit from './components/Creditors/CreditorEdit'
+
 import SupplierList from './components/Suppliers/SupplierList'
+import SupplierAdd from './components/Suppliers/SupplierAdd'
+import SupplierEdit from './components/Suppliers/SupplierEdit'
+
+import ClientList from './components/Clients/ClientList'
+import ClientAdd from './components/Clients/ClientAdd'
+import ClientEdit from './components/Clients/ClientEdit'
 
 
 function App() {
@@ -84,9 +97,22 @@ function App() {
 
       <Route path="/businesses/:businessId/reports" component={ReportList} exact/>
       <Route path="/businesses/:businessId/teams" component={TeamList} exact/>
+
       <Route path="/businesses/:businessId/products" component={CommodityList} exact />
+      <Route path="/businesses/:businessId/products/new" component={CommodityAdd} exact />
+      <Route path="/businesses/:businessId/products/:productId/edit" component={CommodityEdit} />
+
       <Route path="/businesses/:businessId/creditors" component={CreditorList} exact />
+      <Route path="/businesses/:businessId/creditorss/new" component={CreditorAdd} exact />
+      <Route path="/businesses/:businessId/creditorss/:creditorsId/edit" component={CreditorEdit} />
+
       <Route path="/businesses/:businessId/suppliers" component={SupplierList} exact />
+      <Route path="/businesses/:businessId/suppliers/new" component={SupplierAdd} exact />
+      <Route path="/businesses/:businessId/suppliers/:supplierId/edit" component={SupplierEdit} />
+
+      <Route path="/businesses/:businessId/clients" component={ClientList} exact />
+      <Route path="/businesses/:businessId/clients/new" component={ClientAdd} exact />
+      <Route path="/businesses/:businessId/clients/:clientId/edit" component={ClientEdit} />
 
       </Switch>
       </div>
