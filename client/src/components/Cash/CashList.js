@@ -123,7 +123,6 @@ const mapStateToProps = (state) => {
         payments: state.cashBank.map(payment => {
 			const stakeholders = [...state.clients, ...state.creditors, ...state.suppliers]
             const entries = [...state.purchases, ...state.sales, ...state.payables]
-            console.log(entries)
             const newData = {
                 transactionDate: {date: payment.transactionDate, id: payment._id},
                 linkedTo: entries.find(entry => entry._id === payment.linkedTo)

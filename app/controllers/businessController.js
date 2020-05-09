@@ -96,7 +96,6 @@ module.exports.update = (req, res) => {
     const id = req.params.id
     const body = req.body
     const find = req.businesses.find(business => business._id == id)
-    console.log(find)
     if (find && find.permissions.includes('update') || find.permissions.includes('admin')) {
         Business.findByIdAndUpdate(id, body, {new: true, runValidators: true})
             .then(business => {

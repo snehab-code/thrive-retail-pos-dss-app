@@ -8,7 +8,7 @@ function TeamEdit(props) {
 	const [memberRoles, setMemberRoles] = useState([])
 
 	const onSelect = (roleData) => {
-		console.log(roleData, memberRoles)
+		
 		const newMemberRoles = memberRoles.filter(member => member.id !== roleData.id)
 		newMemberRoles.push(roleData)
 

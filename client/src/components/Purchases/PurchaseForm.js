@@ -13,8 +13,6 @@ import Autocomplete from '@material-ui/lab/Autocomplete'
 // validations pending
 function PurchaseForm(props) {
 
-    console.log(props)
-
     const [transactionDate, setDate] = useState(Date.now())
     // const [documentDate, setDocDate] = useState(Date.now())
     const [invoiceDate, setInvDate] = useState(Date.now())
@@ -63,7 +61,7 @@ function PurchaseForm(props) {
         {
         (formikProps) => {
             const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit} = formikProps
-            console.log(values)
+
             return (
             <Form onSubmit={handleSubmit}>
                 <div className="formSubGroup">

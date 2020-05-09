@@ -15,8 +15,6 @@ function OrderShow(props) {
 
     const [commodityArray, setCommodities] = useState(props.order.commodities.map(comm => {return {'_id': comm._id, isSelected: false, isCompleted: comm.isCompleted}}))
 
-    console.log(commodityArray)
-
     const handleAllDelivered = () => {
         const orderData = {
             commodities: props.order.commodities.filter(commodity => commodity.isCompleted === false),
@@ -57,9 +55,8 @@ function OrderShow(props) {
                     moment(props.order.transactionDate).format('DD-MM-YYYY')
                 }
                 <br/>
-                {/* CHANGE TO NAME */}
                 {
-                    props.business.members.find(member => member.user._id === props.order.user).user.username
+                    props.business.members.find(member => member.user._id === props.order.user).user.name
                 }
             </div>
             </div>

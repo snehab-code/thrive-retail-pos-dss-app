@@ -104,7 +104,6 @@ businessSchema.methods.addMember = function(user, body) {
 businessSchema.methods.createInvite = function(body) {
     const business = this
     const checkDuplicate = business.teamInvitations.find(invite => String(invite.user) == body.user)
-    console.log(checkDuplicate)
     if (!checkDuplicate) {
         business.teamInvitations.push(body)
 

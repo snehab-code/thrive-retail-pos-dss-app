@@ -46,7 +46,7 @@ function PayableForm(props) {
             transactionDate,
             dueDate
         }}
-        console.log(formData)
+        
         props.handleSubmit(formData)
         setSubmitting(false)
     }

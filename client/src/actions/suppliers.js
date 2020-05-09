@@ -36,7 +36,6 @@ export const startPostSupplier = (businessId, formData) => {
     return (dispatch) => {
         axios.post(`/businesses/${businessId}/suppliers`, formData)
             .then(response => {
-                console.log(response)
                 const supplier = response.data
                 dispatch(addSupplier(supplier))
             })

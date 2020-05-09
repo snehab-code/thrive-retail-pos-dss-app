@@ -24,8 +24,6 @@ function TeamList(props) {
         setEditMode(!editMode)
     }
 
-    console.log(editMode)
-
     return (
         <div className='businessContentContainer' style={{flexDirection:'column'}}>
             <div className='businessContent'>
@@ -124,6 +122,11 @@ function TeamList(props) {
 const mapStateToProps = (state) => {
     return {
         business: state.user.activeBusiness,
+        members: state.user.activeBusiness && state.user.activeBusiness.members && state.user.activeBusiness.members.sort((a,b) => {
+            if (a.user.name.toLowerCase() < b.user.name.toLowerCase()) return -1
+            if (a.user.name.toLowerCase() > b.user.name.toLowerCase()) return 1
+            return 0
+        }),
         invitations: state.businesses[0] && state.businesses.find(business => business._id === state.user.activeBusiness._id).teamInvitations,
         permissions: state.businesses[0] && state.businesses.find(business => business._id === state.user.activeBusiness._id).permissions
     }

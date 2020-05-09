@@ -28,9 +28,9 @@ class RoleForm extends React.Component{
 	}
 
 	render() {
-		console.log(this.state)
+		
 		return (
-			<form onBlur={this.handleSelect}>
+			<div onBlur={this.handleSelect}>
 			<Checkbox
 				name='admin'
 				checked={this.state.admin}
@@ -51,7 +51,7 @@ class RoleForm extends React.Component{
 				checked={this.state.update}
 				onChange={this.handleChange}
 			/>
-			</form>
+			</div>
 		)
 	}
 }

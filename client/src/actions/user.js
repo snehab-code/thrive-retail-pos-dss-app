@@ -30,7 +30,6 @@ export const startCheckUserAuth = () => {
     return (dispatch, getState) => {
         axios.get('/users/relogin')
             .then(response => {
-                console.log(response)
                 if (response.data.username) {
                     const user = {
                         username: response.data.username,
@@ -55,7 +54,6 @@ export const startPostUserRegistration = (formData, history) => {
     return dispatch => {
         axios.post('/users/register', formData)
         .then(response => {
-            console.log(response.data)
             history.push('/login')
         })
         .catch(err => {
@@ -72,7 +70,6 @@ export const startPostUserLogin = (formData, history) => {
                     const notice = response.data.notice
                     dispatch(failedLogin(notice))
                 } else {
-                    console.log(response)
                     const token = response.data.token
                     const user = {
                         username: response.data.userName,

@@ -36,7 +36,6 @@ export const startPostPayable = (businessId, formData) => {
     return (dispatch) => {
         axios.post(`/businesses/${businessId}/payables`, formData)
             .then(response => {
-                console.log(response)
                 const payable = response.data
                 dispatch(addPayable(payable))
             })

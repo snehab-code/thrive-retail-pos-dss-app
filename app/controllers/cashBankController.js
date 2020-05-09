@@ -42,7 +42,6 @@ module.exports.create = (req, res) => {
 }
 
 module.exports.update = (req, res) => {
-    console.log('i ran')
     if (req.business.permissions.includes('admin') || req.business.permissions.includes('update')) {
         const body = req.body
         const id = req.params.cashBankId
@@ -63,7 +62,6 @@ module.exports.destroy = (req, res) => {
         const id = req.params.cashBankId
      CashBank.findByIdAndDelete(id)
             .then(cashBank => {
-                console.log(cashBank)
                 res.send(cashBank)
             }) 
             .catch(err => {

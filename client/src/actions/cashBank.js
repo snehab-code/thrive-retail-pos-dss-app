@@ -36,7 +36,6 @@ export const startPostCashBank = (businessId, formData, history) => {
     return (dispatch) => {
         axios.post(`/businesses/${businessId}/cash-bank`, formData)
             .then(response => {
-                console.log(response)
                 const cashBank = response.data
                 dispatch(addCashBank(cashBank))
                 history.push(`/businesses/${businessId}/cashbook`)
@@ -85,12 +84,10 @@ export const startDeleteCashBank = (businessId, id) => {
     return (dispatch) => {
         axios.delete(`/businesses/${businessId}/cash-bank/${id}`)
             .then(response => {
-                console.log(response, 'resp')
                 const id = response.data._id
                 dispatch(removeCashBank(id))
             })
             .catch(err => {
-                console.log(err)
                 if (err.response.status === 401) {
                     dispatch({type: 'LOGOUT'})
                 }

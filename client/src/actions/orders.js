@@ -36,7 +36,6 @@ export const startPostOrder = (businessId, formData, history) => {
     return (dispatch) => {
         axios.post(`/businesses/${businessId}/orders`, formData)
             .then(response => {
-                console.log(response)
                 const order = response.data
                 dispatch(addOrder(order))
                 history.push(`/businesses/${businessId}/orders`)
@@ -75,7 +74,7 @@ export const startPutOrder = (businessId, id, formData, history) => {
                     commodities: products
                 }
                 order = {...order, ...data}
-                console.log(order)
+                
                 dispatch(updateOrder(id, order))
                 history && history.push(`/businesses/${businessId}/orders`)
             }
@@ -96,11 +95,9 @@ export const startPutOrder = (businessId, id, formData, history) => {
 } 
 
 export const startDeleteOrder = (businessId, id) => {
-    console.log(businessId, id)
     return (dispatch) => {
         axios.delete(`/businesses/${businessId}/orders/${id}`)
             .then(response => {
-                console.log(response)
                 const id = response.data._id
                 dispatch(removeOrder(id))
             })

@@ -9,6 +9,7 @@ function SaleEdit(props) {
         props.dispatch(startPutSale(props.match.params.businessId, props.sale._id, formData, props.history))
     }
 
+    console.log('hi')
     return (
         <div className="businessForms">
         <h1>Sale Edit</h1>
