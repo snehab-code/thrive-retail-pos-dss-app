@@ -27,7 +27,8 @@ function SaleForm(props) {
                 return acc.rate*acc.quantity + currentval.rate*currentval.quantity
             }) : val.commodities[0].rate*val.commodities[0].quantity
         }}
-        props.handleSubmit(formData)
+        // props.handleSubmit(formData)
+        console.log(formData)
         setSubmitting(false)
     }
 
@@ -53,6 +54,25 @@ function SaleForm(props) {
             onSubmit={handleSubmit}
             validate = {values => {
                 const errors = {}
+                if (!transactionDate) {
+                    errors.transactionDate = 'Required'
+                }
+                if (!invoiceDate) {
+                    errors.invoiceDate = 'Required'
+                }
+                if (!client) {
+                    errors.client = 'Required'
+                }
+                if (!values.invoiceNumber) {
+                    errors.invoiceNumber = 'Required'
+                }
+                if (!values.remark) {
+                    errors.remark = 'required'
+                }
+                if (!(values.commodities[0].rate*values.commodities[0].quantity)) {
+                   errors.amount = 'No products added' 
+                }
+                console.log('errors', errors)
                 return errors
             }}
         >
@@ -72,20 +92,24 @@ function SaleForm(props) {
                         
                         <div className="formSubGroup">
                             <KeyboardDatePicker
+                                error = {errors.transactionDate && true}
                                 id='transactionDate'
                                 name='transactionDate'
                                 onChange={(date) => setTransactionDate(date)}
                                 value={transactionDate}
                                 format='MM/DD/YYYY'
-                                label='Transaction Date'
+                                label={'Transaction Date'}
+                                helperText={errors.transactionDate}
                             />
                             <KeyboardDatePicker
+                                error = {errors.invoiceDate && true}
                                 id='invoiceDate'
                                 name='invoiceDate'
                                 onChange={(date) => setInvoiceDate(date)}
                                 value={invoiceDate}
                                 format='MM/DD/YYYY'
                                 label='Invoice Date'
+                                helperText={errors.invoiceDate}
                             />
                         </div>
                         <div className="formSubGroup">
@@ -101,15 +125,17 @@ function SaleForm(props) {
                             }
                             renderInput={params => 
                                 <TextField {...params} 
+                                    error = {errors.client && true}
                                     label="client" 
                                     id="clientac" 
                                     value={values.client}
                                     onChange={handleChange}
                                     margin="normal"
+                                    helperText={errors.client}
                                 />}
                             />
                             <TextField
-                                error = {errors.invoiceNumber && touched.invoiceNumber}
+                                error = {errors.invoiceNumber && true}
                                 id='invoiceNumber'
                                 name='invoiceNumber'
                                 value={values.invoiceNumber}
@@ -178,6 +204,7 @@ function SaleForm(props) {
                         </div>
                             )}
                         )}
+                        {errors.amount && <span style={{color: 'red', fontSize: '0.8em', width:'100%', textAlign:'left'}}>{errors.amount}</span>}
                         <div style={{padding:10, fontSize: '4vmin', width: '90%', height: '60px', textAlign: 'right'}}>
                             <span>
                                 {
@@ -193,6 +220,7 @@ function SaleForm(props) {
                                 }
                             </span>
                         </div>
+
                         <div className="formSubGroup">
                             <TextField
                                 error = {errors.remark && touched.remark}
@@ -205,6 +233,7 @@ function SaleForm(props) {
                                 helperText={errors.remark}
                             />
                         </div>
+                        
                         <Button variant="outlined" type="submit" disabled={isSubmitting}>Submit</Button>
                         </Form>
                     )
