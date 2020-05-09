@@ -105,7 +105,7 @@ function PayablesList(props) {
             <div className='contentHeader'>
             <span className='headerText'>Expenses</span>
             {
-                props.permissions && props.permissions.includes('admin' || 'create') && 
+                props.permissions && (props.permissions.includes('admin') || props.permissions.includes('create')) &&  
                 <Link to={`/businesses/${props.match.params.businessId}/expenses/new`}><IconButton className='tableButton' >
                 <Add />
                 </IconButton>

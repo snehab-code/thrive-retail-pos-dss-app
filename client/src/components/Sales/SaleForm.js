@@ -27,8 +27,8 @@ function SaleForm(props) {
                 return acc.rate*acc.quantity + currentval.rate*currentval.quantity
             }) : val.commodities[0].rate*val.commodities[0].quantity
         }}
-        // props.handleSubmit(formData)
-        console.log(formData)
+        props.handleSubmit(formData)
+        // console.log(formData)
         setSubmitting(false)
     }
 
@@ -72,7 +72,7 @@ function SaleForm(props) {
                 if (!(values.commodities[0].rate*values.commodities[0].quantity)) {
                    errors.amount = 'No products added' 
                 }
-                console.log('errors', errors)
+                // console.log('errors', errors)
                 return errors
             }}
         >

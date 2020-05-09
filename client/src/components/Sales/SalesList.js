@@ -148,7 +148,7 @@ function SalesList(props) {
             <div className='contentHeader'>
             <span className='headerText'>Sales</span>
             {
-                props.permissions && props.permissions.includes('admin' || 'create') && 
+                props.permissions && (props.permissions.includes('admin') || props.permissions.includes('create')) && 
                 <Link to={`/businesses/${props.match.params.businessId}/invoices/new`}><IconButton className='tableButton' >
                 <Add />
                 </IconButton>

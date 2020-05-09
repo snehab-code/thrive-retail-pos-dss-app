@@ -72,8 +72,27 @@ function PayableForm(props) {
             }}
             onSubmit={handleSubmit}
             validate={values => {
-                const errors = {};
-                return errors;
+                const errors = {}
+                if (!transactionDate) {
+                    errors.transactionDate = 'Required'
+                }
+                if (!values.invoice) {
+                    errors.invoice = 'Required'
+                }
+                if (!dueDate) {
+                    errors.dueDate = 'Required'
+                }
+                if (!values.payableTo) {
+                    errors.payableTo = 'Required'
+                }
+                if (!values.remark) {
+                    errors.remark = 'Required'
+                }
+                if (!values.amount) {
+                    errors.amount = 'Required'
+                }
+                console.log(errors)
+                return errors
               }
             }
         >
@@ -90,6 +109,8 @@ function PayableForm(props) {
                             value={transactionDate}
                             format='MM/DD/YYYY'
                             label='Transaction Date'
+                            error = {errors.transactionDate && true}
+                            helperText={errors.transactionDate}
                         />
                     <TextField
                         error = {errors.invoice && touched.invoice}
@@ -107,7 +128,7 @@ function PayableForm(props) {
                         onChange={(date) => setDueDate(date)}
                         value={dueDate}
                         format='MM/DD/YYYY'
-                        label='Due Date'
+                        label='Due Date'    
                     />
                 </div>
 

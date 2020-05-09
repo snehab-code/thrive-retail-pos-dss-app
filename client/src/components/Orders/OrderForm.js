@@ -59,8 +59,27 @@ function OrderForm(props) {
             }}
             onSubmit={handleSubmit}
             validate={values => {
-                const errors = {};
-                return errors;
+                const errors = {}
+                if (!transactionDate) {
+                    errors.transactionDate = 'Required'
+                }
+                if (!values.remark) {
+                    errors.remark = 'required'
+                }
+                if (!(values.commodities[0].rate*values.commodities[0].quantity)) {
+                    errors.amount = 'No products added' 
+                }
+                if (!supplier) {
+                    errors.supplier = 'Required'
+                }
+                if (!values.orderNumber) {
+                    errors.orderNumber = 'Required'
+                }
+                if (!values.status) {
+                    errors.status = 'Required'
+                }
+                console.log(errors)
+                return errors
               }
             }
         >
@@ -76,6 +95,8 @@ function OrderForm(props) {
                         value={transactionDate}
                         format='MM/DD/YYYY'
                         label='Transaction Date'
+                        error = {errors.transactionDate && true}
+                        helperText={errors.transactionDate}
                     />
 
                 <div className="formSubGroup">
@@ -97,6 +118,8 @@ function OrderForm(props) {
                             value={values.supplier}
                             onChange={handleChange}
                             margin="normal"
+                            error = {errors.supplier && true}
+                            helperText = {errors.supplier}
                         />}
                     />
                     }
@@ -174,8 +197,24 @@ function OrderForm(props) {
                 </div>
                     )}
                 )}
+                {errors.amount && <span style={{color: 'red', fontSize: '0.8em', width:'100%', textAlign:'left'}}>{errors.amount}</span>}
+                <div style={{padding:10, fontSize: '4vmin', width: '90%', height: '60px', textAlign: 'right'}}>
+                    <span>
+                        {
+                            values.commodities.map(commodity => {
+                                if (commodity.rate && commodity.quantity) {
+                                    return commodity.rate * commodity.quantity
+                                } else {
+                                    return 0
+                                }
+                            }).reduce((acc, currentVal) => {
+                                return acc + currentVal
+                            })
+                        }
+                    </span>
+                </div>
                 <div className="formSubGroup">
-                    <FormControl>
+                    <FormControl required>
                     <InputLabel id="status">Status</InputLabel>
                     <Select
                         labelId="status"
@@ -185,6 +224,8 @@ function OrderForm(props) {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         label='status'
+                        // error = {errors.status && touched.status}
+                        // helperText={errors.status}
                         // helperText={errors.status}
                     >
                         {
@@ -194,6 +235,7 @@ function OrderForm(props) {
                         }
                     
                     </Select>
+                    {/* <FormHelperText>Some important helper text</FormHelperText> */}
                     </FormControl>
                     <TextField
                         error = {errors.remark && touched.remark}

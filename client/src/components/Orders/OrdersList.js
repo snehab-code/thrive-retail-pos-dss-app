@@ -153,7 +153,7 @@ function OrderList(props) {
             <div className='contentHeader'>
             <span className='headerText'>Orders</span>
             {
-                props.permissions && props.permissions.includes('admin' || 'create') && 
+                props.permissions && (props.permissions.includes('admin') || props.permissions.includes('create')) &&  
                 <Link to={`/businesses/${props.match.params.businessId}/orders/new`}><IconButton className='tableButton' >
                 <Add />
                 </IconButton>

@@ -141,7 +141,7 @@ function PurchaseList(props) {
             <div className='contentHeader'>
             <span className='headerText'>Purchases</span>
             {
-                props.permissions && props.permissions.includes('admin' || 'create') && 
+                props.permissions && (props.permissions.includes('admin') || props.permissions.includes('create')) &&  
                 <Link to={`/businesses/${props.match.params.businessId}/purchases/new`}><IconButton className='tableButton' >
                 <Add />
                 </IconButton>
