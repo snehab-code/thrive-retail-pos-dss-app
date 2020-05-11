@@ -28,14 +28,25 @@ module.exports.create = (req, res) => {
         const body = req.body
         body.user = req.user._id
         body.business = req.business._id
-        const sale = new Sale(body)
-        sale.save()
-            .then(sale => {
-                res.send(sale)
-            })
-            .catch(err => {
-                res.send(err)
-            })
+        Sale.find().sort('-invoiceNumber').limit(1)
+        .then(sale => {
+            // include an option for when someone tries to change the series/format
+            if (body.invoiceNumber > sale.invoiceNumber) {
+                const sale = new Sale(body)
+                sale.save()
+                .then(sale => {
+                    res.send(sale)
+                })
+                .catch(err => {
+                    res.send(err)
+                })
+            } else {
+                res.send({notice: 'Invalid invoice number'})
+            }
+        })
+        .catch(err => {
+            console.log(err)
+        })
     } else {
         res.sendStatus('401')
     }

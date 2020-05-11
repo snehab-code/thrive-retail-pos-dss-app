@@ -18,14 +18,11 @@ function SupplierForm(props) {
             enableReinitialize
             initialValues = {{
                 name: props.name ? props.name : '',
-                code: props.code ? props.code : '',
-                brand: props.brand ? props.brand : '',
-                category: props.category ? props.category : '',
-                gstRate: props.gstRate ? props.gstRate : '',
-                reorderPoint: props.reorderPoint ? props.reorderPoint : '',
-                sellingPrice: props.sellingPrice ? props.sellingPrice : '',
-                unit: props.unit ? props.unit : '',
-                stock: props.stock ? props.stock : ''
+                supplierCode: props.supplierCode ? props.supplierCode : '',
+                phone: props.phone ? props.phone : '',
+                address: props.address ? props.address : '',
+                remarks: props.remarks ? props.remarks : '',
+                email: props.email ? props.email : ''
             }}
             onSubmit={handleSubmit}
             validate={values => {
@@ -50,87 +47,70 @@ function SupplierForm(props) {
                         style={{flexGrow: 1}}
                     />
                     <TextField
-                        id="code"
-                        name="code"
-                        label="Code"
-                        value={values.code}
-                        helperText={errors.code}
+                        id="supplierCode"
+                        name="supplierCode"
+                        label="Supplier Code"
+                        value={values.supplierCode}
+                        helperText={errors.supplierCode}
                         onChange={handleChange}
                         onBlur={handleBlur}
-                        style={{maxWidth:60}}
+                        style={{maxWidth:120}}
                     />
                     <TextField
-                        id="gstRate"
-                        name="gstRate"
-                        label="GST"
-                        value={values.gstRate}
-                        helperText={errors.gstRate}
+                        id="phone"
+                        name="phone"
+                        label="Phone"
+                        value={values.phone}
+                        helperText={errors.phone}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         style={{maxWidth:50}}
                     /> 
-                    <span className="dimText" style={{paddingBottom:10, paddingLeft:0}}>%</span>
                     </div>
                     <div className="formSubGroup">
                     <TextField
-                        id="category"
-                        name="category"
-                        label="Category"
-                        value={values.category}
-                        helperText={errors.category}
+                        id="address"
+                        name="address"
+                        label="Address"
+                        multiline
+                        value={values.address}
+                        helperText={errors.address}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         style={{flexGrow: 1}}
                     />
+                    </div>
+                    <div className="formSubGroup">
                     <TextField
-                        id="brand"
-                        name="brand"
-                        label="Brand"
-                        value={values.brand}
-                        helperText={errors.brand}
+                        id="email"
+                        name="email"
+                        label="Email"
+                        value={values.email}
+                        helperText={errors.email}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                    />
+                    <TextField
+                        id="phone"
+                        name="phone"
+                        label="Phone"
+                        value={values.phone}
+                        helperText={errors.phone}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                    /> 
+                    </div>
+                    <div className="formSubGroup">
+                    <TextField
+                        id="remarks"
+                        name="remarks"
+                        label="Remarks"
+                        value={values.remarks}
+                        helperText={errors.remarks}
                         onChange={handleChange}
                         onBlur={handleBlur}
                         style={{flexGrow: 1}}
                     />
-                    <TextField
-                        id="unit"
-                        name="unit"
-                        label="Unit"
-                        value={values.unit}
-                        helperText={errors.unit}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        style={{maxWidth:100}}
-                    />
-                    </div>
-                    <div className="formSubGroup">
-                        <TextField
-                            id="sellingPrice"
-                            name="sellingPrice"
-                            label="Selling Price"
-                            value={values.sellingPrice}
-                            helperText={errors.sellingPrice}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                        />
-                        <TextField
-                            id="reorderPoint"
-                            name="reorderPoint"
-                            label="Reorder Point"
-                            value={values.reorderPoint}
-                            helperText={errors.reorderPoint}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                        />
-                        <TextField
-                            id="stock"
-                            name="stock"
-                            label="Stock"
-                            value={values.stock}
-                            helperText={errors.stock}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                        />
                     </div>
                     <Button type="submit">clickie</Button>
                 </Form>

@@ -72,8 +72,29 @@ function CashForm(props) {
             }}
             onSubmit={handleSubmit}
             validate={values => {
-                const errors = {};
-                return errors;
+                const errors = {}
+                if (!transactionDate) {
+                    errors.transactionDate = 'Required'
+                }
+                if (!party) {
+                    errors.party = 'Required'
+                }
+                if (!linkedTo) {
+                    errors.linkedTo = 'Required'
+                }
+                if (!values.mode) {
+                    errors.mode = 'Required'
+                }
+                if (!values.amount) {
+                    errors.amount = 'Required'
+                }
+                if (!values.remark) {
+                    errors.remark = 'Required'
+                }
+                if (!values.type) {
+                    errors.type = 'Required'
+                }
+                return errors
               }
             }
         >
@@ -82,7 +103,7 @@ function CashForm(props) {
             const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit} = formikProps
             return (
             <Form onSubmit={handleSubmit}>
-                <div className="formSubGroup">
+                <div className='formSubGroup'>
                     <KeyboardDatePicker
                         id='transactionDate'
                         name='transactionDate'
@@ -90,6 +111,8 @@ function CashForm(props) {
                         value={transactionDate}
                         format='MM/DD/YYYY'
                         label='Transaction Date'
+                        error = {errors.transactionDate && true}
+                        helperText={errors.transactionDate}
                     />
                     <FormControl>
                     <InputLabel>Mode</InputLabel>
@@ -129,18 +152,20 @@ function CashForm(props) {
                     </FormControl>
                 </div>
 
-                <div className="formSubGroup">
+                <div className='formSubGroup'>
                     <Autocomplete
                         style={{width:'100%'}}
                         options={props.parties}
                         getOptionLabel={option => option.name ? option.name : ''}
-                        name="party" 
-                        id="party"
+                        name='party' 
+                        id='party'
                         // disableClearable
                         value={party}
                         onChange={(e, newValue) => {
                             let party = newValue
+                            console.log(linkedTo, 'linkedto', newValue, 'newValue')
                             if (linkedTo && newValue) {
+                                console.log('hi?')
                                 if (linkedTo.payableTo && linkedTo.payableTo._id!==newValue._id) {
                                     party = linkedTo.payableTo
                                 } else if(linkedTo.client) {
@@ -153,20 +178,27 @@ function CashForm(props) {
                         }}
                         renderInput={params => 
                             <TextField {...params} 
-                                label="party" 
-                                id="party" 
+                                label='party' 
+                                id='party' 
                                 value={values.party}
                                 onChange={handleChange}
-                                margin="normal"
+                                margin='normal'
+                                error = {errors.party && true}
+                                helperText= {errors.party}
                             />
                         }
                     />
                     <Autocomplete
                         style={{width:'100%'}}
-                        options={party && party._id ? props.transactions.filter(trn => trn.supplier ? trn.supplier === party._id : trn.client ? trn.client._id === party._id : trn.payableTo._id === party._id) : props.transactions}
+                        options={party && party._id ? 
+                            props.transactions.filter(trn => trn.supplier ? 
+                            trn.supplier._id === party._id : 
+                            trn.client ? 
+                            trn.client._id === party._id : trn.payableTo._id === party._id) : 
+                            props.transactions}
                         getOptionLabel={option => option.documentNumber ? option.documentNumber : option.invoiceNumber ? option.invoiceNumber : option.payableTo ? option.invoice : ''}
-                        name="linkedTo" 
-                        id="linkedTo"
+                        name='linkedTo' 
+                        id='linkedTo'
                         // disableClearable
                         value={linkedTo}
                         onChange={(e, newValue) => {
@@ -176,22 +208,23 @@ function CashForm(props) {
                                     newParty = newValue.payableTo
                                 } else if(newValue.client && newValue.client._id !== party) {
                                     newParty = newValue.client
-                                } else if(newValue.supplier && newValue.supplier !== party) {
-                                    newParty = props.parties.find(party => party._id === newValue.supplier)
+                                } else if(newValue.supplier && newValue.supplier._id !== party) {
+                                    newParty = props.parties.find(party => party._id === newValue.supplier._id)
                                 }
                                 setParty(newParty)
                             }
-                            
                             setLinkedTo(newValue)
                         }
                         }
                         renderInput={params => 
                             <TextField {...params} 
-                                label="linkedTo" 
-                                id="linkedTo" 
+                                label='linkedTo' 
+                                id='linkedTo' 
                                 value={values.linkedTo}
                                 onChange={handleChange}
-                                margin="normal"
+                                margin='normal'
+                                error = {errors.linkedTo && true}
+                                helperText= {errors.linkedTo}
                             />
                         }
                     />
@@ -201,7 +234,7 @@ function CashForm(props) {
                     <span style={{paddingLeft:5, paddingTop:15, cursor: 'pointer'}} onClick={() => setModalState(true)}>New Creditor?</span>
                 </div> */}
 
-                <div className="formSubGroup">
+                <div className='formSubGroup'>
                     <TextField
                         error = {errors.amount && touched.amount}
                         id='amount'
@@ -233,7 +266,7 @@ function CashForm(props) {
                     />
                 </div>
 
-                <Button variant="outlined" type="submit" disabled={isSubmitting}>Submit</Button>
+                <Button variant='outlined' type='submit' disabled={isSubmitting}>Submit</Button>
             </Form>
             )
         }}

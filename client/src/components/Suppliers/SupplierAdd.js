@@ -11,7 +11,7 @@ function SupplierAdd(props) {
     }
     return (
         <div className="modalForm">
-        <h3>Add A Product</h3>
+        <h3>Add A Supplier</h3>
         <SupplierForm businessId={props.businessId} handleSubmit={handleSubmit}/>
         </div>
     )

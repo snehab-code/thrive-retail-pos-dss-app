@@ -11,7 +11,7 @@ function ClientAdd(props) {
     }
     return (
         <div className="modalForm">
-        <h3>Add A Product</h3>
+        <h3>Add A Client</h3>
         <ClientForm businessId={props.businessId} handleSubmit={handleSubmit}/>
         </div>
     )

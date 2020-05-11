@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import {connect} from 'react-redux'
 import {Formik, Form} from 'formik'
+import Modal from 'react-modal'
+import modalStyles from '../../config/modalCss'
 import { KeyboardDatePicker } from '@material-ui/pickers'
 import TextField from '@material-ui/core/TextField'
 import Select from '@material-ui/core/Select'
@@ -9,6 +11,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import Button from '@material-ui/core/Button'
 import Autocomplete from '@material-ui/lab/Autocomplete'
+import ClientAdd from '../Clients/ClientAdd'
 
 function SaleForm(props) {
 // modify to allow invoice date and transaction date to be set to today as a default option
@@ -16,6 +19,15 @@ function SaleForm(props) {
     const [invoiceDate, setInvoiceDate] = useState(Date.now())
     const [count, setCount] = useState(props.commodities ? Array(props.commodities.length).fill().map((item, i) => i + 1) : ['1'])
     const [client, setClient] = useState(props.client)
+    const [modalIsOpen, setModalState] = useState(false)
+
+    Modal.setAppElement('#root')  
+
+    const closeModal = () => {
+        setModalState(false)
+    }
+
+    console.log(props)
 
     const handleSubmit = (val, {setSubmitting}) => {
         val.commodities = val.commodities.slice(0, count.length)
@@ -33,6 +45,14 @@ function SaleForm(props) {
     }
 
     return (
+        <>
+        <Modal
+            style={modalStyles}
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+        >
+            <ClientAdd businessId={props.businessId} closeModal={closeModal}/>
+        </Modal>
         <Formik
             enableReinitialize 
             initialValues={{
@@ -120,7 +140,7 @@ function SaleForm(props) {
                             name="client" 
                             id="clientac"
                             disableClearable
-                            value={client}
+                            value={client || ''}
                             onChange={(e, newValue) => setClient(newValue)
                             }
                             renderInput={params => 
@@ -142,8 +162,15 @@ function SaleForm(props) {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 label='invoice Number'
+                                placeholder={props.sales[0] && props.sales.sort((a, b) => {
+                                    if (a.invoiceNumber < b.invoiceNumber) return 1
+                                    if (b.invoiceNumber < a.invoiceNumber) return -1
+                                })[0].invoiceNumber + ' is prev invoice'}
                                 helperText={errors.invoiceNumber}
                             />
+                        </div>
+                        <div style={{textAlign: 'left', width:'100%', color: '#cbd8d0'}}>
+                            <span style={{paddingLeft:5, paddingTop:15, cursor: 'pointer'}} onClick={() => setModalState(true)}>New Client?</span>
                         </div>
                         {
                             count.map(ele => {
@@ -240,13 +267,15 @@ function SaleForm(props) {
                 } 
             }
         </Formik>
+        </>
     )
 }
 
 const mapStateToProps = (state) => {
     return {
         clients: state.clients,
-        products: state.commodities
+        products: state.commodities,
+        sales: state.sales
     }
 }
 

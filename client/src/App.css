@@ -412,6 +412,13 @@ button:hover {
     margin: 0px !important;
 }
 
+.modalForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .modalForm form {
     display: flex;
     flex-direction: column;
@@ -627,3 +634,19 @@ button:hover {
     margin-left: -6px !important;
     color: #6fb98f;
 }
+
+.reportQueryContainer {
+    display: flex;
+    align-items: baseline;
+    margin-top: 20vh;
+}
+
+.queryTextField {
+    border: 1px solid #dbe6e3 !important; 
+    border-radius: '12px' !important;
+    padding: '10px' !important;
+}
+
+/* .queryTextField div + input {
+    border: 1px solid #ffc916
+} */

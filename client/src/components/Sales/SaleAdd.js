@@ -12,7 +12,7 @@ function SaleAdd(props) {
     return (
         <div className="businessForms">
         <h1> Generate an invoice </h1>
-        <SaleForm handleSubmit = {handleSubmit} />
+        <SaleForm businessId={props.match.params.businessId} handleSubmit = {handleSubmit} />
         </div>
     )
 }

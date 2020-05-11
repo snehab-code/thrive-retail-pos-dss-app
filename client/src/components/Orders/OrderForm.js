@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {connect} from 'react-redux'
 import CommodityAdd from '../Commodities/CommodityAdd'
+import SupplierAdd from '../Suppliers/SupplierAdd'
 import Modal from 'react-modal'
 import modalStyles from '../../config/modalCss'
 import {Formik, Form} from 'formik'
@@ -16,7 +17,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete'
 // validations pending
 function OrderForm(props) {
 
-    const [modalIsOpen, setModalState] = useState(false)
+    const [modalIsOpen, setModalState] = useState({open: false, component: ''})
     const [transactionDate, setDate] = useState(Date.now())
     const [count, setCount] = useState(props.commodities ? Array(props.commodities.length).fill().map((item, i) => i + 1) : ['1'])
     const [supplier, setSupplier] = useState(props.supplier)
@@ -24,7 +25,7 @@ function OrderForm(props) {
     Modal.setAppElement('#root')  
 
     const closeModal = () => {
-        setModalState(false)
+        setModalState({open: false, component: ''})
     }
 
     const handleSubmit = (val, {setSubmitting}) => {
@@ -43,10 +44,18 @@ function OrderForm(props) {
         <>
         <Modal
             style={modalStyles}
-            isOpen={modalIsOpen}
+            isOpen={modalIsOpen.open}
             onRequestClose={closeModal}
         >
-            <CommodityAdd businessId={props.businessId} closeModal={closeModal}/>
+            {
+                modalIsOpen.component === 'supplier' ?
+                <SupplierAdd businessId={props.businessId} closeModal={closeModal}/>
+                : modalIsOpen.component === 'product' ? 
+                <CommodityAdd businessId={props.businessId} closeModal={closeModal}/> 
+                : 
+                ''
+            }
+            
         </Modal>
         <Formik
             enableReinitialize 
@@ -135,8 +144,9 @@ function OrderForm(props) {
                         helperText={errors.orderNumber}
                     />
                 </div>
-                <div style={{textAlign: 'left', width:'100%', color: '#cbd8d0'}}>
-                    <span style={{paddingLeft:5, paddingTop:15, cursor: 'pointer'}} onClick={() => setModalState(true)}>New product?</span>
+                <div style={{textAlign: 'left', width:'100%', color: '#cbd8d0', display: 'flex', justifyContent: 'space-between'}}>
+                    <span style={{paddingLeft:5, paddingTop:15, cursor: 'pointer'}} onClick={() => setModalState({open: true, component: 'supplier'})}>New supplier?</span>
+                    <span style={{paddingLeft:5, paddingTop:15, cursor: 'pointer'}} onClick={() => setModalState({open: true, component: 'product'})}>New product?</span>
                 </div>
                 {
                     count.map(ele => {
@@ -213,6 +223,7 @@ function OrderForm(props) {
                         }
                     </span>
                 </div>
+                
                 <div className="formSubGroup">
                     <FormControl required>
                     <InputLabel id="status">Status</InputLabel>
